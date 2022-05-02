@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pages on Mainroad</title>
+    <link>https://recetasdevops.dev/page/</link>
+    <description>Recent content in Pages on Mainroad</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 02 May 2022 18:06:29 +0200</lastBuildDate><atom:link href="https://recetasdevops.dev/page/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About</title>
+      <link>https://recetasdevops.dev/page/about/</link>
+      <pubDate>Mon, 02 May 2022 18:06:29 +0200</pubDate>
+      
+      <guid>https://recetasdevops.dev/page/about/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
