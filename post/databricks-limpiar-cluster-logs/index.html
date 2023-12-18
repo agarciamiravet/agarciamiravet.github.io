@@ -65,7 +65,7 @@ Siempre achacábamos este alto coste, sin profundizar en que estos costes eran l
 <p>Pues durante un tiempo el mantra era &ldquo;Es elevado el coste por las operaciones que hacemos&rdquo;.</p>
 <p>Pero <strong>amiga/o</strong> ¿Que pasó un día que entramos en detalle en el coste de Databricks?. Pues vimos que el coste de los storages manejados (conocido como  DBFS Root) de nuestros workspaces de Databricks tenían un coste al mes muy elevado.</p>
 <p>Este storage es usado por el workspace de Databricks para mantener datos temporales, librerías instaladas en los clusteres, los ficheros python a ejecutar y los <strong>LOGS DE LOS CLUSTERS CREADOS&hellip;</strong>.  y es en los logs donde estaba el problema.</p>
-<img src="/images/002/05.png" style="zoom: 67%;" />
+<img src="images/002/05.png" style="zoom: 67%;" />
 <p>Como nosotros trabajamos usando <strong>Run Jobs</strong>, donde cada vez que lanzamos un job se crea un cluster, y cada día se lanzan más de 200 jobs fácilmente  pues podeís imaginaros la de logs que se generan.</p>
 <p>Es por esto por lo que os comparto el siguiente script de Powershell para que no os pase lo mismo:</p>
 <script src="https://gist.github.com/agarciamiravet/f4267fa0ce4cc7c8a5f7ed8f1e08990d.js"></script>
