@@ -62,10 +62,8 @@ Siempre achacábamos este alto coste al precio de las operaciones en los storage
 <p>Hace algún tiempo revisando los costes que teníamos en Azure Databricks, nos encontramos qué el coste de los Storage Accounts  que usamos en Databricks era bastante alto.</p>
 <p>Siempre achacábamos este alto coste al precio de las operaciones en los storage accounts. Nuestro mantra siempre era <strong>&ldquo;Es elevado el coste por el gran número de  operaciones que hacemos&rdquo;</strong> Si trabajáis con Databricks, aunque sea con un volumen de datos pequeño, se realizan muchas operaciones en los storage accounts. Y ya sabéis, a más operaciones pues más altos son los costes. Además suele ser más que probable que el coste de operaciones sea mayor que el precio del almacenamiento de los datos.</p>
 <p>Pero <strong>amiga/o</strong> ¿Qué pasó un día que entramos en detalle en el coste de Databricks?. Pues vimos que el coste de los storages manejados (conocido como  DBFS Root) de nuestros workspaces de Databricks tenían un coste al mes muy elevado.</p>
-<p>Este storage es usado por el workspace de Databricks para mantener datos temporales, librerías instaladas en los clusteres, los ficheros python a ejecutar y los <strong>LOGS DE LOS CLUSTERS CREADOS&hellip;</strong>. . Y es en los logs donde estaba el problema.</p>
-<br>
+<p>Este storage es usado por el workspace de Databricks para mantener datos temporales, librerías instaladas en los clusteres, los ficheros python a ejecutar, los LOGS DE LOS CLUSTERS CREADOS&hellip;<strong>. . Y es en los logs donde estaba el problema.</strong></p>
 <img src="../images/002/05.png" style="zoom: 67%;" />
-<br>
 <p>En nuestro caso, trabajamos usando <strong>Run Jobs</strong>. Esto significa que cada vez que lanzamos un job, se crea un cluster. Pues imaginaros lanzar más de 200 <strong>Run Jobs</strong> al día, la de logs que se pueden generar.</p>
 <p>Es por esto por lo que os comparto el siguiente script de Powershell para que no os pase lo mismo:</p>
 <script src="https://gist.github.com/agarciamiravet/f4267fa0ce4cc7c8a5f7ed8f1e08990d.js"></script>
