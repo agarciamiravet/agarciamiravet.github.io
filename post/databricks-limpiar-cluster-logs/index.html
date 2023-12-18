@@ -65,7 +65,8 @@ Siempre achacábamos este alto coste, sin profundizar en que estos costes eran l
 <p>Pues durante un tiempo el mantra era &ldquo;Es elevado el coste por las operaciones que hacemos&rdquo;.</p>
 <p>Pero <strong>amiga/o</strong> ¿Que pasó un día que entramos en detalle en el coste de Databricks?. Pues vimos que el coste de los storages manejados (conocido como  DBFS Root) de nuestros workspaces de Databricks tenían un coste al mes muy elevado.</p>
 <p>Este storage es usado por el workspace de Databricks para mantener datos temporales, librerías instaladas en los clusteres, los ficheros python a ejecutar y los <strong>LOGS DE LOS CLUSTERS CREADOS&hellip;</strong>.  y es en los logs donde estaba el problema.</p>
-<img src="../../images/002/05.png" style="zoom: 67%;" />
+<br/>
+<img src="../images/002/05.png" style="zoom: 67%;" />
 <p>Como nosotros trabajamos usando <strong>Run Jobs</strong>, donde cada vez que lanzamos un job se crea un cluster, y cada día se lanzan más de 200 jobs fácilmente  pues podeís imaginaros la de logs que se generan.</p>
 <p>Es por esto por lo que os comparto el siguiente script de Powershell para que no os pase lo mismo:</p>
 <script src="https://gist.github.com/agarciamiravet/f4267fa0ce4cc7c8a5f7ed8f1e08990d.js"></script>
@@ -74,24 +75,33 @@ Siempre achacábamos este alto coste, sin profundizar en que estos costes eran l
 <li>
 <p>Dentro del workspace, vamos a <strong>User Settings</strong></p>
 <img src="../images/002/06.png" style="zoom:67%;" />
+</li>
+</ol>
+<br/>
 <ol start="2">
 <li>
 <p>En el apartado <strong>User</strong>, pulsamos en <strong>Developer.</strong></p>
 <img src="../images/002/07.png" style="zoom:67%;" />
+<br/>
 </li>
 <li>
 <p>En el apartado de <strong>Access tokens</strong>, pulsamos en <strong>Manage</strong>.</p>
 <img src="../images/002/08.png" style="zoom:67%;" />
 </li>
+</ol>
+   <br/>
+<ol start="4">
 <li>
 <p>Una vez dentro pulsamos en <strong>Generate new token</strong></p>
 <img src="../images/002/09.png" style="zoom:67%;" />
-</li>
+   <br/>
+<ol start="5">
 <li>
 <p>Le damos un nombre al token y un tiempo de vida. Recordad que si dejáis vacío el campo <strong>Lifetime(days)</strong> ese token será de por vida.</p>
 <img src="../images/002/10.png" style="zoom:67%;" />
 </li>
 </ol>
+<br/>
 </li>
 </ol>
 <p>Espero el script os sirve de ayuda.</p>
