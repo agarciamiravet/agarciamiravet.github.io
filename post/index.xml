@@ -1,4 +1,26 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Recetas Devops</title><link>https://www.recetasdevops.dev/post/</link><description>Recent content in Posts on Recetas Devops</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 17 Dec 2023 15:53:23 +0100</lastBuildDate><atom:link href="https://www.recetasdevops.dev/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Azure Databricks - Limpia los logs de los clusters y ahorra dinero</title><link>https://www.recetasdevops.dev/post/databricks-limpiar-cluster-logs/</link><pubDate>Sun, 17 Dec 2023 15:53:23 +0100</pubDate><guid>https://www.recetasdevops.dev/post/databricks-limpiar-cluster-logs/</guid><description>En este artículo vamos a hablar de cómo podemos limpiar los logs de los clusters de Databricks.
-Pero antes de entrar en detalles, vamos a contar la historia detrás de este artículo:
-Hace algún tiempo revisando los costes que teníamos en Azure Databricks, nos encontramos qué el coste de los Storage Accounts era bastante alto.
-Siempre achacábamos este alto coste, sin profundizar en que estos costes eran los costes en operaciones de los storage accounts.</description></item><item><title>Primeros Pasos con Chaos Studio</title><link>https://www.recetasdevops.dev/post/primerospasoschaos/</link><pubDate>Mon, 02 May 2022 19:15:04 +0200</pubDate><guid>https://www.recetasdevops.dev/post/primerospasoschaos/</guid><description>Hola muy buenos dias , será para vosotros amigos¡¡¡¡</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Recetas Devops</title>
+    <link>https://www.recetasdevops.dev/post/</link>
+    <description>Recent content in Posts on Recetas Devops</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 17 Dec 2023 15:53:23 +0100</lastBuildDate>
+    <atom:link href="https://www.recetasdevops.dev/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Azure Databricks - Limpia los logs de los clusters y ahorra dinero</title>
+      <link>https://www.recetasdevops.dev/post/databricks-limpiar-cluster-logs/</link>
+      <pubDate>Sun, 17 Dec 2023 15:53:23 +0100</pubDate>
+      <guid>https://www.recetasdevops.dev/post/databricks-limpiar-cluster-logs/</guid>
+      <description>En este artículo vamos a hablar de cómo podemos limpiar los logs de los clusters de Databricks.&#xA;Pero antes de entrar en detalles, vamos a contar la historia detrás de este artículo:&#xA;Hace algún tiempo revisando los costes que teníamos en Azure Databricks, nos encontramos qué el coste de los Storage Accounts era bastante alto.&#xA;Siempre achacábamos este alto coste, sin profundizar en que estos costes eran los costes en operaciones de los storage accounts.</description>
+    </item>
+    <item>
+      <title>Primeros Pasos con Chaos Studio</title>
+      <link>https://www.recetasdevops.dev/post/primerospasoschaos/</link>
+      <pubDate>Mon, 02 May 2022 19:15:04 +0200</pubDate>
+      <guid>https://www.recetasdevops.dev/post/primerospasoschaos/</guid>
+      <description>Hola muy buenos dias , será para vosotros amigos¡¡¡¡</description>
+    </item>
+  </channel>
+</rss>
