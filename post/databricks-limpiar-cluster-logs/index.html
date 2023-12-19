@@ -91,7 +91,10 @@ En nuestro caso, trabajamos usando <strong>Run Jobs</strong>. Esto significa que
 <li>
 <p>Le damos un nombre al token y un tiempo de vida. Recordad que si dejáis vacío el campo <strong>Lifetime(days)</strong> ese token será de por vida.</p>
 <img src="../images/002/10.png" style="zoom:67%;" />
-<p>Espero el script os sirve de ayuda.</p>
+<p>Comentar del script lo siguiente:</p>
+<p>De la línea 21 a la 33, lo que hacemos es obtener todos los directorios de la carpeta <strong>cluster-logs</strong> a través de la api de Databricks. A no ser que se modifique la carpeta por defecto de los logs, está siempre será <strong>cluster-logs.</strong> Cada carpeta corresponde a los logs de cada uno de los clusters creados.</p>
+<p>Una vez obtenidos estos directorios, de la línea 35 a la 61 los recorremos y llamamos al endpoint de la api  <strong>/api/2.0/dbfs/delete</strong> para borrar cada uno de estos directorios.</p>
+<p>Espero el script os sirve de ayuda y sobretodo ahorrar dinero.</p>
 </li>
 </ol>
 
