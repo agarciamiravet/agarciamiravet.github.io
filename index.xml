@@ -16,6 +16,13 @@
       <description>En este artículo vamos a hablar de cómo podemos limpiar los logs de los clusters de Databricks.&#xA;Pero antes de entrar en detalles, vamos a contar la historia que hay detrás de este artículo:&#xA;Hace algún tiempo revisando los costes que teníamos en Azure Databricks, nos encontramos qué el coste de los Storage Accounts que usamos en Databricks era bastante alto.&#xA;Siempre achacábamos este alto coste al precio de las operaciones en los storage accounts.</description>
     </item>
     <item>
+      <title>Consultorio - ¿Se pueden renombrar resource groups en Azure?</title>
+      <link>https://www.recetasdevops.dev/post/renombrarresourcegroups/</link>
+      <pubDate>Mon, 02 May 2022 19:15:04 +0200</pubDate>
+      <guid>https://www.recetasdevops.dev/post/renombrarresourcegroups/</guid>
+      <description>Hola muy buenos dias , será para vosotros amigos¡¡¡¡</description>
+    </item>
+    <item>
       <title>Primeros Pasos con Chaos Studio</title>
       <link>https://www.recetasdevops.dev/post/primerospasoschaos/</link>
       <pubDate>Mon, 02 May 2022 19:15:04 +0200</pubDate>
