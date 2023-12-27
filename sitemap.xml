@@ -2,9 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://www.recetasdevops.dev/post/test/</loc>
-    <lastmod>2022-03-15T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://www.recetasdevops.dev/post/databricks-limpiar-cluster-logs/</loc>
     <lastmod>2023-12-17T15:53:23+01:00</lastmod>
   </url><url>
@@ -15,12 +12,6 @@
     <lastmod>2023-12-17T15:53:23+01:00</lastmod>
   </url><url>
     <loc>https://www.recetasdevops.dev/post/renombrarresourcegroups/</loc>
-    <lastmod>2022-05-02T19:15:04+02:00</lastmod>
-  </url><url>
-    <loc>https://www.recetasdevops.dev/post/primerospasoschaos/</loc>
-    <lastmod>2022-05-02T19:15:04+02:00</lastmod>
-  </url><url>
-    <loc>https://www.recetasdevops.dev/post/test/test/</loc>
     <lastmod>2022-05-02T19:15:04+02:00</lastmod>
   </url><url>
     <loc>https://www.recetasdevops.dev/categories/</loc>
