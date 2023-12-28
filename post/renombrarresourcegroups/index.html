@@ -13,8 +13,8 @@ Y la respuesta lamentablemente es NO, no se puede. Esta respuesta es extensible 
 Hay otras cosas en Azure que pueden ser renombradas, pero que en realidad no son recursos como tal." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.recetasdevops.dev/post/renombrarresourcegroups/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2022-05-02T19:15:04+02:00" />
-<meta property="article:modified_time" content="2022-05-02T19:15:04+02:00" />
+<meta property="article:published_time" content="2022-12-28T19:15:04+02:00" />
+<meta property="article:modified_time" content="2022-12-28T19:15:04+02:00" />
 
 
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,7 +55,7 @@ Hay otras cosas en Azure que pueden ser renombradas, pero que en realidad no son
 			<h1 class="post__title">¿Se pueden renombrar los grupos de recursos en Azure?</h1>
 			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2022-05-02T19:15:04&#43;02:00">May 02, 2022</time></div></div>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2022-12-28T19:15:04&#43;02:00">December 28, 2022</time></div></div>
 		</header>
 		<div class="content post__content clearfix">
 			<p>Una pregunta muy recurrente, que me han preguntado bastantes veces a lo largo del tiempo que llevo trabajando en Azure es la de <strong>¿Se pueden renombrar los grupos de recursos de Azure?</strong></p>
@@ -75,6 +75,7 @@ Hay otras cosas en Azure que pueden ser renombradas, pero que en realidad no son
 <li>
 <p>Seleccionamos todos los recursos del grupo de recursos.</p>
 <img src="/images/post_02/image03.png" style="zoom:67%;" />
+</br>
 </li>
 <li>
 <p>Pulsamos en el menú <strong>Move -&gt; Move to another resource group</strong>.</p>
@@ -88,12 +89,10 @@ Hay otras cosas en Azure que pueden ser renombradas, pero que en realidad no son
 </li>
 <li>
 <p>Pulsamos en <strong>Next</strong></p>
-</li>
-</ol>
 <p><img src="/images/post_02/image06.png" alt=""></p>
-<ol start="7">
+</li>
 <li>
-<p>En la siguiente ventana, validará que se pueden mover los recursos sin problema. Este proceso de validación suele demorarse unos minutos, así que paciencia.</p>
+<p>En la siguiente ventana, se validará que se pueden mover los recursos sin problema. Este proceso de validación suele demorarse unos minutos, así que paciencia. Hay algunos servicios que son &ldquo;especiales&rdquo; para ser movidos, o directamente no pueden moverse. Para más información sobre este asunto, ir al siguiente enlace: <a href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/move-resource-group-and-subscription#checklist-before-moving-resources">https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/move-resource-group-and-subscription#checklist-before-moving-resources</a></p>
 <p><img src="/images/post_02/image07.png" alt=""></p>
 </li>
 <li>
@@ -105,7 +104,7 @@ Hay otras cosas en Azure que pueden ser renombradas, pero que en realidad no son
 <p><img src="/images/post_02/image09.png" alt=""></p>
 </li>
 <li>
-<p>Por último, se nos enseña una pantalla resumen. Se nos advierte y se nos pide confirmación que deberemos cambiar nuestros scripts y herramientas a los nuevos identificadores de recursos que vamos a mover. Por ejemplo, si hacemos uso de Terraform pues deberemos de importar estos recursos que han sido movidos al nuevo grupo de recursos. Aceptamos y pulsamos en <strong>Move</strong>:</p>
+<p>Por último, se nos enseña una pantalla resumen. Se nos advierte y se nos pide confirmación que deberemos cambiar nuestros scripts y herramientas a los nuevos identificadores de los recursos que vamos a mover. Por ejemplo, si hacemos uso de Terraform pues deberemos de importar estos recursos que han sido movidos al nuevo grupo de recursos. Aceptamos y pulsamos en <strong>Move</strong>:</p>
 <p><img src="/images/post_02/image10.png" alt=""></p>
 </li>
 <li>
@@ -122,6 +121,19 @@ Hay otras cosas en Azure que pueden ser renombradas, pero que en realidad no son
 </ol>
 <p>Si se prefiere, en vez de hacerlo a través del portal de Azure, poedeís usar el siguiente script en Powershell para hacer lo mismo:</p>
 <script src="https://gist.github.com/agarciamiravet/9e60dce899cdc299261b41804bfc9006.js"></script>
+<p>Entre las líneas 2 y 5 configuramos las siguientes variables:</p>
+<ul>
+<li><strong>tenantid:</strong> Id del tenant.</li>
+<li><strong>subscriptionId</strong>: Id de la subscripción donde tenemos los grupos de recursos.</li>
+<li><strong>sourceResourceGroupName:</strong> El nombre del grupo de recursos origen.</li>
+<li><strong>destinationResourceGroupName:</strong> El nombre del grupo de recursos destino, donde vamos a mover los recursos desde el grupo de recursos origen.</li>
+</ul>
+<p>En las líneas 9 y 10, nos autenticamos  y configuramos que suscripción vamos a usar para el script.</p>
+<p>Entre las líneas 13 y 15, obtenemos los grupos de recursos y los recursos que vamos a mover.</p>
+<p>Entre las líneas 19 y 22, lanzamos el comando <strong>Invoke-AzResourceAction</strong>, para validar que se pueden mover los recursos. En casa de que la validación fallará, este comando lanzará un error con los problemas encontrados, y el script fallará y no seguirá.</p>
+<p>En la línea 26, lanzamos con el comando <strong>Move-AzResource</strong> el movimiento de los recursos. Este comando suele demorarse unos minutos.</p>
+<p>Por último en la línea 30, borramos el grupo de recursos antiguo.</p>
+<p>Espero os haya gustado, y ¡Hasta la próxima!</p>
 
 		</div>
 	</article>
