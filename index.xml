@@ -15,12 +15,5 @@
       <guid>https://www.recetasdevops.dev/post/databricks-limpiar-cluster-logs/</guid>
       <description>En este artículo vamos a hablar de cómo podemos limpiar los logs de los clusters de Databricks.&#xA;Pero antes de entrar en detalles, vamos a contar la historia que hay detrás de este artículo:&#xA;Hace algún tiempo revisando los costes que teníamos en Azure Databricks, nos encontramos qué el coste de los Storage Accounts que usamos en Databricks era bastante alto.&#xA;Siempre achacábamos este alto coste al precio de las operaciones en los storage accounts.</description>
     </item>
-    <item>
-      <title>¿Se pueden renombrar los grupos de recursos en Azure?</title>
-      <link>https://www.recetasdevops.dev/post/renombrarresourcegroups/</link>
-      <pubDate>Wed, 28 Dec 2022 19:15:04 +0200</pubDate>
-      <guid>https://www.recetasdevops.dev/post/renombrarresourcegroups/</guid>
-      <description>Una pregunta muy recurrente, que me han preguntado bastantes veces a lo largo del tiempo que llevo trabajando en Azure es la de ¿Se pueden renombrar los grupos de recursos de Azure?&#xA;Y la respuesta lamentablemente es NO, no se puede. Esta respuesta es extensible a cualquier recurso creado en Azure, desde el nombre de una máquina virtual, servidor de Azure SQL, nombre de una ip pública etc&amp;hellip;&#xA;Hay otras cosas en Azure que pueden ser renombradas, pero que en realidad no son recursos como tal.</description>
-    </item>
   </channel>
 </rss>
