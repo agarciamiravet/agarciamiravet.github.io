@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Recetas Devops</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 Dec 2023 19:15:04 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jan 2024 00:00:00 +0100</lastBuildDate>
     <atom:link href="https://www.recetasdevops.dev/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cost Management - Controla el gasto en Azure con los presupuestos y alertas</title>
+      <link>https://www.recetasdevops.dev/post/alertascostmanagement/</link>
+      <pubDate>Tue, 02 Jan 2024 00:00:00 +0100</pubDate>
+      <guid>https://www.recetasdevops.dev/post/alertascostmanagement/</guid>
+      <description>En esta primera entrada del blog del año, vamos a hablar de como podemos controlar el gasto en Azure.&#xA;Para ello vamos a hacer uso de Cost Management, creando un presupuesto (budget) y creando una alerta en base a ese presupuesto(budget).&#xA;Pero antes que nada, vamos a decir que es Cost Management y para que sirve. Si vamos a a las definiciones oficiales por parte de Microsoft, estas dicen:&#xA;Microsoft Cost Management es un conjunto de herramientas que ayudan a las organizaciones a supervisar, asignar y optimizar el costo de sus cargas de trabajo de Microsoft Cloud.</description>
+    </item>
     <item>
       <title>¿Se pueden renombrar los grupos de recursos en Azure?</title>
       <link>https://www.recetasdevops.dev/post/renombrarresourcegroups/</link>

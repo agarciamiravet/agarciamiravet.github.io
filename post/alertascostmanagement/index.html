@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Cost Management - Controla el gasto en Azure con los presupuestos y alertas - Recetas Devops</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Cost Management - Controla el gasto en Azure con los presupuestos y alertas" />
+<meta property="og:description" content="En esta primera entrada del blog del año, vamos a hablar de como podemos controlar el gasto en Azure.
+Para ello vamos a hacer uso de Cost Management, creando un presupuesto (budget) y creando una alerta en base a ese presupuesto(budget).
+Pero antes que nada, vamos a decir que es Cost Management y para que sirve. Si vamos a a las definiciones oficiales por parte de Microsoft, estas dicen:
+Microsoft Cost Management es un conjunto de herramientas que ayudan a las organizaciones a supervisar, asignar y optimizar el costo de sus cargas de trabajo de Microsoft Cloud." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.recetasdevops.dev/post/alertascostmanagement/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-01-02T00:00:00+01:00" />
+<meta property="article:modified_time" content="2024-01-02T00:00:00+01:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="Recetas Devops" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.png">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">Recetas Devops</div>
+					<div class="logo__tagline">Tus recetas para DevOps de confianza</div>
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Cost Management - Controla el gasto en Azure con los presupuestos y alertas</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2024-01-02T00:00:00&#43;01:00">January 02, 2024</time></div></div>
+		</header>
+		<div class="content post__content clearfix">
+			<p>En esta primera entrada del blog del año, vamos a hablar de como podemos controlar el gasto en Azure.</p>
+<img src="/images/post_03/meme.jpg" style="zoom:75%;" />
+<p>Para ello vamos a hacer uso de <strong>Cost Management</strong>, creando un presupuesto (budget) y creando una alerta en base a ese presupuesto(budget).</p>
+<p>Pero antes que nada, vamos a decir que es <strong>Cost Management</strong> y para que sirve. Si vamos a a las definiciones oficiales por parte de Microsoft, estas dicen:</p>
+<p><em>Microsoft Cost Management es un conjunto de herramientas que ayudan a las organizaciones a supervisar, asignar y optimizar el costo de sus cargas de trabajo de Microsoft Cloud.</em></p>
+<p><em>Cost Management es un conjunto de herramientas de FinOps que le permiten analizar, administrar y optimizar los costos.</em></p>
+<p>Para ver una introducción sobre <strong>Cost Management</strong> , ver el siguiente enlace:</p>
+<p><a href="https://learn.microsoft.com/es-es/azure/cost-management-billing/cost-management-billing-overview">https://learn.microsoft.com/es-es/azure/cost-management-billing/cost-management-billing-overview</a></p>
+<p>Una vez explicado brevemente que es y para que sirve Cost Management, vamos a partir del siguiente ejemplo demostrar como crear un presupuesto y una alerta:</p>
+<p><em>Imaginemos que tenemos una suscripción de Azure que usamos para pruebas. De media, nos estamos gastando cada mes 40€. Nosotros queremos que cuando nos hayamos gastado el 90% de los 40€ (es decir 36€), nos avise de que hemos superado ese gasto.</em></p>
+<p>Los pasos que deberíamos seguir es:</p>
+<ol>
+<li>
+<p>Vamos a portal de Azure,  buscamos Suscriptions y pulsamos sobre la opción <strong>Suscriptions</strong> .</p>
+<img src="images/post_03/image_01.png" style="zoom: 80%;" />
+</li>
+<li>
+<blockquote>
+<p>Buscamos la suscripción donde queremos crear el presupuesto y la alerta.</p>
+</blockquote>
+<img src="images/post_03/image_02.png" style="zoom: 80%;" />
+</li>
+</ol>
+<ol start="3">
+<li>Una vez dentro, pulsamos en <strong>Cost Management-&gt; Budgets</strong></li>
+</ol>
+<img src="images/post_03/image_03.png" style="zoom:67%;" />
+<ol start="4">
+<li>
+<p>Pulsamos en <strong>+ Add</strong>  para crear un nuevo presupuesto</p>
+<img src="/images/post_03/image_04.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Una vez dentro, podemos hacer uso de la opción <strong>Filters</strong>. Con filter, podemos crear un presupuesto específico. Por ejemplo para un único grupo de recursos, un tipo de recurso específico (por ejemplo Storage), etc&hellip; En nuestro caso queremos un presupuesto para toda la suscripción, es por ello que dejamos la opción <strong>Filters</strong> vacía.</p>
+<img src="/images/post_03/image_05.png" style="zoom:67%;" />
+</li>
+<li>
+<p>Asignamos un nombre al presupuesto.</p>
+<img src="/images/post_03/image_06.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Con <strong>Reset Period</strong>, configuramos el período de tiempo que se analiza para la evaluación del presupuesto. En nuestro caso va a ser <strong>Billing month</strong>.</p>
+<img src="/images/post_03/image_07.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Definimos <strong>Creation date</strong>.</p>
+<img src="/images/post_03/image_08.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Definimos <strong>Expiration date</strong>. Por desgracia, no hay la opción de ponerlo indefinido.</p>
+<img src="/images/post_03/image_09.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Ponemos la cantidad del presupuesto, en nuestro caso 40€.</p>
+<img src="/images/post_03/image_10.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Pulsamos en Next</p>
+<img src="/images/post_03/image_11.png" style="zoom:80%;" />
+</li>
+<li>
+<p>En <strong>Alert conditions</strong>, definimos como Type <strong>Actual</strong> y en <strong>% of budget</strong>  90% (es decir 36€).</p>
+<img src="/images/post_03/image_12.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Configuramos los mails a los que se les notificará cuando las alerts conditions se cumplan.</p>
+<img src="/images/post_03/image_13.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Configuramos el idioma del texto de los emails que se recibirán.</p>
+<img src="/images/post_03/image_14.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Pulsamos en <strong>Create</strong></p>
+<img src="/images/post_03/image_15.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Al final en el listado de presupuestos, veremos el presupuesto creado.</p>
+<img src="/images/post_03/image_16.png" style="zoom:80%;" />
+</li>
+</ol>
+<p>Crear presupuestos y alertas asociado a estos, debería de ser de los primeros pasos que deberíais hacer en cuanto empezarais con  Azure.  Es fácil pasar un día de tener 0 coste, al día siguiente gastarse  lo que no habíais gastado en la vida. En el caso en que tengáis cuenta de Azure asociadas a suscripciones de MSDN (créditos), pues tenéis el límite de gasto, y bueno pues si te has gastado los créditos de 50€ no es un drama pero sí hace daño jaja. Pero la cosa cambia con cuentas de Azure Pay as you Go o asociado a un CSP, donde no hay límite de gasto. De cualquier manera mi consejo es <strong>&ldquo;PON PRESUPUESTO Y ALERTAS DE GASTO DESDE EL PRIMER DÍA EN CUALQUIER SUSCRIPCIÓN&rdquo;</strong></p>
+<p>Aunque estas alertas están bien, no son suficientes ni mucho menos para controlar el coste y no sirven para evitar el coste, ya que estas alertas saltarán una vez el daño ya está hecho. Por ejemplo imaginemos que un día creamos una VM,  nos equivocamos y creamos una VM que cuesta cada hora 30€. En algún momento dependiendo del presupuesto que hayamos configurado, la alerta saltará (menos mal) pero el gasto innecesario ya estará realizado. Algunas maneras para poder evitar este gasto hubiese sido:</p>
+<ul>
+<li>Tener una Azure Policy, para que únicamente se permita crear una serie de VMs.</li>
+<li>Crear alerta/s en el Activity Log cuando recursos son creados y poder ver que se han creado recursos &ldquo;costosos&rdquo;</li>
+</ul>
+<p>Estos 2 formas de poder evitar el coste, las abordaré más adelante en sendos artículos.</p>
+<p>Y nada más que deciros, nada más que desearos un muy feliz año.</p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Alejandro García avatar" src="/img/avatar.png" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Alejandro García</span>
+	</div>
+	<div class="authorbox__description">
+		Apasionado por la tecnología.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/renombrarresourcegroups/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">¿Se pueden renombrar los grupos de recursos en Azure?</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://www.recetasdevops.dev/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/alertascostmanagement/">Cost Management - Controla el gasto en Azure con los presupuestos y alertas</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/renombrarresourcegroups/">¿Se pueden renombrar los grupos de recursos en Azure?</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/databricks-limpiar-cluster-logs/">Azure Databricks - Limpia los logs de los clusters y ahorra dinero</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 Recetas Devops.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>
