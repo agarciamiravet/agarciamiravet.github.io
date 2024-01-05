@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Recetas Devops</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jan 2024 00:00:00 +0100</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jan 2024 00:00:00 +0200</lastBuildDate>
     <atom:link href="https://www.recetasdevops.dev/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Limitar el borrados de blobs en Azure Storage con permisos muy específicos usando RBAC y conditions</title>
+      <link>https://www.recetasdevops.dev/post/limitaraccesostorageblob/</link>
+      <pubDate>Thu, 04 Jan 2024 00:00:00 +0200</pubDate>
+      <guid>https://www.recetasdevops.dev/post/limitaraccesostorageblob/</guid>
+      <description>Hace no mucho tiempo, necesitábamos crear un proceso que borrara ciertos blobs de unas rutas determinadas de unos storage accounts. Para ello creamos un rbac custom role que sólo permitiera listar los blobs y borrarlos.&#xA;Pero como a mí, y supongo que a más de uno como yo, cuando oye la palabra borrar pues le da un poco de &amp;ldquo;miedito&amp;rdquo; (jajaja). Y claro el permiso de borrar los blobs es para todo el storage account no sólo las carpeta que queremos borrar.</description>
+    </item>
     <item>
       <title>Cost Management - Controla el gasto en Azure con los presupuestos y alertas</title>
       <link>https://www.recetasdevops.dev/post/alertascostmanagement/</link>
@@ -28,13 +35,6 @@
       <pubDate>Sun, 17 Dec 2023 15:53:23 +0100</pubDate>
       <guid>https://www.recetasdevops.dev/post/databricks-limpiar-cluster-logs/</guid>
       <description>En este artículo vamos a hablar de cómo podemos limpiar los logs de los clusters de Databricks.&#xA;Pero antes de entrar en detalles, vamos a contar la historia que hay detrás de este artículo:&#xA;Hace algún tiempo revisando los costes que teníamos en Azure Databricks, nos encontramos qué el coste de los Storage Accounts que usamos en Databricks era bastante alto.&#xA;Siempre achacábamos este alto coste al precio de las operaciones en los storage accounts.</description>
-    </item>
-    <item>
-      <title>Limitar el borrados de blobs en Azure Storage con permisos muy específicos usando RBAC y conditions</title>
-      <link>https://www.recetasdevops.dev/post/limitaraccesostorageblob/</link>
-      <pubDate>Wed, 04 Jan 2023 00:00:00 +0200</pubDate>
-      <guid>https://www.recetasdevops.dev/post/limitaraccesostorageblob/</guid>
-      <description>Hace no mucho tiempo, necesitábamos crear un proceso que borrara ciertos blobs de unas rutas determinadas de unos storage accounts. Para ello creamos un rbac custom role que sólo permitiera listar los blobs y borrarlos.&#xA;Pero como a mí, y supongo que a más de uno como yo, cuando oye la palabra borrar pues le da un poco de &amp;ldquo;miedito&amp;rdquo; (jajaja). Y claro el permiso de borrar los blobs es para todo el storage account no sólo las carpeta que queremos borrar.</description>
     </item>
   </channel>
 </rss>
