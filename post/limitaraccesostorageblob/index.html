@@ -60,7 +60,7 @@ Pero como a mí, y supongo que a más de uno como yo, cuando oye la palabra borr
 			<p>Hace no mucho tiempo, necesitábamos crear un proceso que borrara ciertos blobs de unas rutas determinadas de unos storage accounts. Para ello creamos un rbac custom role que sólo permitiera listar los blobs y borrarlos.</p>
 <p>Pero como  a mí, y supongo que a  más de uno como yo, cuando oye la palabra borrar pues le da un poco de &ldquo;miedito&rdquo; (jajaja). Y claro el permiso de borrar los blobs es para todo el storage account no sólo las carpeta que queremos borrar.</p>
 <img src="/images/post_04/meme.jpg" style="zoom:70%;" />
-<br/>
+<br>
 <p>Entonces buscando, descubrimos una forma llamada <strong>Conditions</strong>, en la que aparte de asignar un rol, puedes especificar unas condiciones específicas de qué <strong>puedes hacer</strong> con ese permiso que has asignado.</p>
 <p><strong>Conditions</strong> actualmente solo esta disponible para roles custom y out-of-the-box que tienen permisos de tipo <strong>blob storage data actions</strong> y <strong>queue storage data actions</strong>. Estos roles out-of-the-box son:</p>
 <ul>
