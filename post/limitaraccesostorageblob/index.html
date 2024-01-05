@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Limitar el borrados de blobs en Azure Storage con permisos muy específicos usando RBAC y conditions - Recetas Devops</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Limitar el borrados de blobs en Azure Storage con permisos muy específicos usando RBAC y conditions" />
+<meta property="og:description" content="Hace no mucho tiempo, necesitábamos crear un proceso que borrara ciertos blobs de unas rutas determinadas de unos storage accounts. Para ello creamos un rbac custom role que sólo permitiera listar los blobs y borrarlos.
+Pero como a mí, y supongo que a más de uno como yo, cuando oye la palabra borrar pues le da un poco de &ldquo;miedito&rdquo; (jajaja). Y claro el permiso de borrar los blobs es para todo el storage account no sólo las carpeta que queremos borrar." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.recetasdevops.dev/post/limitaraccesostorageblob/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-01-04T00:00:00+02:00" />
+<meta property="article:modified_time" content="2023-01-04T00:00:00+02:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="Recetas Devops" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.png">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">Recetas Devops</div>
+					<div class="logo__tagline">Tus recetas para DevOps de confianza</div>
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Limitar el borrados de blobs en Azure Storage con permisos muy específicos usando RBAC y conditions</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2023-01-04T00:00:00&#43;02:00">January 04, 2023</time></div></div>
+		</header>
+		<div class="content post__content clearfix">
+			<p>Hace no mucho tiempo, necesitábamos crear un proceso que borrara ciertos blobs de unas rutas determinadas de unos storage accounts. Para ello creamos un rbac custom role que sólo permitiera listar los blobs y borrarlos.</p>
+<p>Pero como  a mí, y supongo que a  más de uno como yo, cuando oye la palabra borrar pues le da un poco de &ldquo;miedito&rdquo; (jajaja). Y claro el permiso de borrar los blobs es para todo el storage account no sólo las carpeta que queremos borrar.</p>
+<img src="/images/post_04/meme.jpg" style="zoom:70%;" />
+<p>Entonces buscando, descubrimos una forma llamada <strong>Conditions</strong>, en la que aparte de asignar un rol, puedes especificar unas condiciones específicas de qué <strong>puedes hacer</strong> con ese permiso que has asignado.</p>
+<p><strong>Conditions</strong> actualmente solo esta disponible para roles custom y out-of-the-box que tienen permisos de tipo <strong>blob storage data actions</strong> y <strong>queue storage data actions</strong>. Estos roles out-of-the-box son:</p>
+<ul>
+<li>Storage Blob Data Contributor</li>
+<li>Storage Blob Data Owner</li>
+<li>Storage Blob Data Reader</li>
+<li>Storage Queue Data Contributor</li>
+<li>Storage Queue Data Message Processor</li>
+<li>Storage Queue Data Message Sender</li>
+<li>Storage Queue Data Reader</li>
+</ul>
+<p>Para más información sobre <strong>Conditions</strong> visitar la siguiente página:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/role-based-access-control/conditions-role-assignments-portal">https://learn.microsoft.com/en-us/azure/role-based-access-control/conditions-role-assignments-portal</a></p>
+<p>Con un custom rol que sólo borré blobs y haciendo uso de Conditions, ya tenemos todos los ingredientes para poder crear nuestro proceso de manera segura.</p>
+<p>Imaginemos que tenemos la siguiente estructura de carpetas y ficheros en un Storage Account:</p>
+<img src="/images/post_04/img_01.png" style="zoom:80%;" />
+<p>Nosotros queremos que únicamente se pueda borrar los blobs de la carpeta  <strong>PleaseDeleteMe</strong>.</p>
+<p>Pongámonos manos a la obra, los pasos a seguir serían:</p>
+<ol>
+<li>
+<p>Crear un custom rol que solo permita listar y borrar blobs. Lo más recomendable es crear el rol haciendo uso de Powershell. Para ello creamos un fichero llamado <strong>StorageBlobDeleteOperator.json</strong> con el siguiente contenido:</p>
+<script src="https://gist.github.com/agarciamiravet/8d21a172f649880487c9df49454fc3e2.js"></script>
+<p>Nosotros vamos a crear este rol a nivel de suscripción. Por ello en la línea 21 de este json deberéis sustituir <strong>[PUT_YOUR_SUBSCRIPTIONID_HERE]</strong> por vuestro id de vuestra suscripción.</p>
+<p>Vale una vez tenemos el json configurado, lo guardamos. En nuestro ejemplo, vamos a guardarlo en la ruta <strong>C:\customroles\StorageBlobDeleteOperator.json</strong></p>
+</li>
+<li>
+<p>Ahora vamos a crear el custom rol usando el siguiente script de Powershell:</p>
+<script src="https://gist.github.com/agarciamiravet/850b9bd039f2a161be96f43dd1b509f5.js"></script>
+<p>En la línea 2 debes poner tu identificador del tenant.</p>
+<p>En la línea 3 debes de poner tu identificador de la suscripción.</p>
+<p>Por último debes en la línea 4 , la ruta donde esta el json con la definición del custom rol.</p>
+<p>En las líneas 7 y 8 nos identificamos y seleccionamos el contexto en la suscripción donde vamos a crear el rol.</p>
+<p>Por último, en la línea 11 vamos a crear el custom rol.</p>
+</li>
+<li>
+<p>Vale ya tenemos nuestro custom role creado. Vamos desde el portal de Azure al storage account  donde queremos asignar el custom rol. Pulsamos en <strong>Access Control (IAM)</strong>  <strong>&ndash;&gt; + Add &ndash;&gt; Add role assignment</strong></p>
+<img src="/images/post_04/img_02.png" style="zoom: 80%;" />
+</li>
+<li>
+<p>Ahora buscamos el rol que hemos creado, recordad <strong>Storage Blob Delete Operator</strong>. Seleccionamos el rol y pulsamos  en <strong>Next</strong>.</p>
+<img src="/images/post_04/img_03.png" style="zoom: 70%;" />
+</li>
+<li>
+<p>Seleccionamos a quien vamos a asignar el rol, ya sea usuario, service principal y managed identity. Por último pulsamos en <strong>Next</strong>.</p>
+   <img src="/images/post_04/img_04.png" style="zoom:67%;" />
+</li>
+<li>
+<p>En este paso viene lo bueno, configurar las condiciones. Pulsamos en <strong>+ Add condition</strong></p>
+   <img src="/images/post_04/img_05.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Pulsamos en <strong>+ Add action</strong></p>
+<img src="/images/post_04/img_06.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Seleccionamos la opción <strong>Delete a blob</strong>. Luego pulsamos en <strong>Select</strong>.</p>
+</li>
+</ol>
+<img src="/images/post_04/img_07.png" style="zoom:80%;" />
+<img src="/images/post_04/img_08.png" style="zoom:80%;" />
+<ol start="9">
+<li>Pulsamos en <strong>+ Add expression</strong></li>
+</ol>
+<img src="/images/post_04/img_09.png" style="zoom:80%;" />
+<ol start="10">
+<li>
+<p>Ponemos los siguientes valores:</p>
+<img src="/images/post_04/img_10.png" style="zoom:80%;" />
+<p>Aquí estamos diciendo, permitimos borrar blobs, únicamente en los cuales la ruta hacia ese blob empiece (sin importarme si esta en mayúsculas o minúsculas) por <strong>PleaseDeleteMe</strong>.</p>
+</li>
+<li>
+<p>Pulsamos en <strong>Save</strong></p>
+<img src="/images/post_04/img_11.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Por último pulsamos en <strong>Review + assign</strong></p>
+<img src="/images/post_04/img_13.png" style="zoom:80%;" />
+</li>
+</ol>
+<p>Y ya sólo queda lo más importante, que es probar que funciona. Vamos en nuestro ejemplo, con el usuario al que le hemos asignado el permiso. Vamos a intentar borrar un blob en la carpeta <strong>PleaseDontDeleteMe</strong>, donde suponemos que no tenemos permisos para borrar:</p>
+<img src="/images/post_04/img_14.png" style="zoom:80%;" />
+<p>Le damos a borrar:</p>
+<img src="/images/post_04/img_15.png" style="zoom:80%;" />
+<p>Y efectivamente nos sale un bonito mensaje de error diciendo que no podemos borrar:</p>
+<img src="/images/post_04/img_16.png" style="zoom:80%;" />
+<p>En cambio, si vamos a la  ruta donde hemos dicho que podemos borrar:</p>
+<img src="/images/post_04/img_17.png" style="zoom:80%;" />
+<p>Le damos a borrar:</p>
+<img src="/images/post_04/img_18.png" style="zoom:80%;" />
+<p>Y un mensaje de borrado con éxito nos aparece:</p>
+<img src="/images/post_04/img_19.png" style="zoom: 80%;" />
+<p>Y hasta aquí la entrada del blog.</p>
+<p>¡Hasta la próxima!</p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Alejandro García avatar" src="/img/avatar.png" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Alejandro García</span>
+	</div>
+	<div class="authorbox__description">
+		Apasionado por la tecnología.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/post/databricks-limpiar-cluster-logs/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">Azure Databricks - Limpia los logs de los clusters y ahorra dinero</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://www.recetasdevops.dev/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/alertascostmanagement/">Cost Management - Controla el gasto en Azure con los presupuestos y alertas</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/renombrarresourcegroups/">¿Se pueden renombrar los grupos de recursos en Azure?</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/databricks-limpiar-cluster-logs/">Azure Databricks - Limpia los logs de los clusters y ahorra dinero</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/limitaraccesostorageblob/">Limitar el borrados de blobs en Azure Storage con permisos muy específicos usando RBAC y conditions</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 Recetas Devops.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

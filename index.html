@@ -101,6 +101,22 @@ Pero antes de entrar en detalles, vamos a contar la historia que hay detrás de 
 Hace algún tiempo revisando los costes que teníamos en Azure Databricks, nos encontramos qué el coste de los Storage Accounts que usamos en Databricks era bastante alto.
 Siempre achacábamos este alto coste al precio de las operaciones en los storage accounts.
 	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/limitaraccesostorageblob/" rel="bookmark">
+			Limitar el borrados de blobs en Azure Storage con permisos muy específicos usando RBAC y conditions
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2023-01-04T00:00:00&#43;02:00">January 04, 2023</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Hace no mucho tiempo, necesitábamos crear un proceso que borrara ciertos blobs de unas rutas determinadas de unos storage accounts. Para ello creamos un rbac custom role que sólo permitiera listar los blobs y borrarlos.
+Pero como a mí, y supongo que a más de uno como yo, cuando oye la palabra borrar pues le da un poco de &ldquo;miedito&rdquo; (jajaja). Y claro el permiso de borrar los blobs es para todo el storage account no sólo las carpeta que queremos borrar.
+	</div>
 </article>
 </main>
 
@@ -122,6 +138,7 @@ Siempre achacábamos este alto coste al precio de las operaciones en los storage
 			<li class="widget__item"><a class="widget__link" href="/post/alertascostmanagement/">Cost Management - Controla el gasto en Azure con los presupuestos y alertas</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/renombrarresourcegroups/">¿Se pueden renombrar los grupos de recursos en Azure?</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/databricks-limpiar-cluster-logs/">Azure Databricks - Limpia los logs de los clusters y ahorra dinero</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/limitaraccesostorageblob/">Limitar el borrados de blobs en Azure Storage con permisos muy específicos usando RBAC y conditions</a></li>
 		</ul>
 	</div>
 </div>
