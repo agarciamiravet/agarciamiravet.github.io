@@ -13,7 +13,7 @@
       <link>https://www.recetasdevops.dev/post/identitynotfoundroleassignment/</link>
       <pubDate>Tue, 09 Jan 2024 00:00:00 +0100</pubDate>
       <guid>https://www.recetasdevops.dev/post/identitynotfoundroleassignment/</guid>
-      <description>Espero no ser el único, en el que alguna vez le ha aparecido en el listado de control de Acceso (Access Control IAM), donde asignamos los roles, entradas de este tipo:&#xA;![](/images/post_05/meme.jpg) Este &#34;fenómeno&#34; ocurre por dos posibles causas tal y como dice la documentación de Microsoft (https://learn.microsoft.com/en-us/azure/role-based-access-control/troubleshooting): Recientemente se ha invitado a un usuario, y al al crear una asignación de roles esta entidad de seguridad todavía está en el proceso de replicación entre regiones.</description>
+      <description>Espero no ser el único, en el que alguna vez le ha aparecido en el listado de control de Acceso (Access Control IAM), donde asignamos los roles, entradas de este tipo:&#xA;Este &amp;ldquo;fenómeno&amp;rdquo; ocurre por dos posibles causas tal y como dice la documentación de Microsoft (https://learn.microsoft.com/en-us/azure/role-based-access-control/troubleshooting):&#xA;Recientemente se ha invitado a un usuario, y al al crear una asignación de roles esta entidad de seguridad todavía está en el proceso de replicación entre regiones.</description>
     </item>
     <item>
       <title>Limitar el borrado de blobs en Azure Storage con permisos muy específicos usando RBAC y conditions</title>
