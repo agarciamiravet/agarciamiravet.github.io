@@ -93,7 +93,7 @@ Recientemente se ha invitado a un usuario, y al al crear una asignación de role
 <p>En las líneas 1 y 2 ponemos nuestro <strong>TenantId</strong> y nuestro <strong>SuscriptionId</strong></p>
 <p>En las líneas 5 y 6 nos conectamos a Azure y configuramos el contexto a la suscripción donde vamos a borrar esas asignaciones.</p>
 <p>En la línea 9, obtenemos todas las asignaciones de rol con <strong>&ldquo;Identity not found&rdquo;</strong></p>
-<p>En caso de existir asignaciones de este tipo, a partir de línea 15 recorremos estas.</p>
+<p>En caso de existir asignaciones de este tipo, a partir de la línea 15 recorremos estas.</p>
 <p>Desde la línea 18 a la 29, comprobamos que existan bloqueos (<strong>RECORDAD ,tener bloqueos siempre es BIEN, y si es producción OBLIGADO</strong>) en los recursos donde están las asignaciones a eliminar. En caso que existan estos bloqueos, los borramos ya que sino nos será imposible borrar estas asignaciones.</p>
 <p>En la líneas 32,33,34,35, haciendo uso del comando  <strong>Remove-AzRoleAssignment</strong>, eliminamos la asignación.</p>
 <p>Por último, desde la línea 37 a la 74 en el caso que existieran bloqueos, volvemos a recrearlos de nuevo. Recordad que para borrar las asignaciones, los borramos antes en el script (líneas desde la 18 a la 29).</p>
