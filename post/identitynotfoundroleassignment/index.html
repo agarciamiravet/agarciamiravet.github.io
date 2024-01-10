@@ -4,10 +4,10 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>¿Por qué me aparecen en las listas de control de acceso (IAM), Identity not Found? - Recetas Devops</title>
+	<title>¿Por qué me aparece Identity not Found en las asignaciones de roles? - Recetas Devops</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-		<meta property="og:title" content="¿Por qué me aparecen en las listas de control de acceso (IAM), Identity not Found?" />
+		<meta property="og:title" content="¿Por qué me aparece Identity not Found en las asignaciones de roles?" />
 <meta property="og:description" content="Espero no ser el único, en el que alguna vez le ha aparecido en el listado de control de Acceso (Access Control IAM), donde asignamos los roles, entradas de este tipo:
 Este &ldquo;fenómeno&rdquo; ocurre por dos posibles causas tal y como dice la documentación de Microsoft (https://learn.microsoft.com/en-us/azure/role-based-access-control/troubleshooting):
 Recientemente se ha invitado a un usuario, y al al crear una asignación de roles esta entidad de seguridad todavía está en el proceso de replicación entre regiones." />
@@ -52,7 +52,7 @@ Recientemente se ha invitado a un usuario, y al al crear una asignación de role
 <main class="main" role="main">
 	<article class="post">
 		<header class="post__header">
-			<h1 class="post__title">¿Por qué me aparecen en las listas de control de acceso (IAM), Identity not Found?</h1>
+			<h1 class="post__title">¿Por qué me aparece Identity not Found en las asignaciones de roles?</h1>
 			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2024-01-09T00:00:00&#43;01:00">January 09, 2024</time></div></div>
@@ -79,7 +79,7 @@ Recientemente se ha invitado a un usuario, y al al crear una asignación de role
 <p>Managed identities</p>
 </li>
 <li>
-<p>Service principals</p>
+<p>Service principal</p>
 </li>
 <li>
 <p>Usuarios</p>
@@ -87,17 +87,17 @@ Recientemente se ha invitado a un usuario, y al al crear una asignación de role
 </ul>
 </li>
 </ul>
-<p>En el caso que nos pase el problema de haber eliminado una enetidad de seguridad, sin antes haber borrado las asignaciones de rol, podemos usar el siguiente script de Powershell.</p>
+<p>En el caso que nos pase el problema de haber eliminado una entidad de seguridad sin antes haber borrado las asignaciones de rol, podemos usar el siguiente script de Powershell.</p>
 <script src="https://gist.github.com/agarciamiravet/62a36a4f2e29669455b01ce3b8e0b4c6.js"></script>
 <br/>
 <p>En las líneas 1 y 2 ponemos nuestro <strong>TenantId</strong> y nuestro <strong>SuscriptionId</strong></p>
 <p>En las líneas 5 y 6 nos conectamos a Azure y configuramos el contexto a la suscripción donde vamos a borrar esas asignaciones.</p>
 <p>En la línea 9, obtenemos todas las asignaciones de rol con <strong>&ldquo;Identity not found&rdquo;</strong></p>
 <p>En caso de existir asignaciones de este tipo, a partir de línea 15 recorremos estas.</p>
-<p>Desde la línea 18 a la 29, comprobamos que existan bloqueos (<strong>RECORDAD ,tener bloqueos siempre es BIEN, y si es producción OBLIGADO</strong>) en los recursos donde están las asignaciones a eliminar. En caso de que existan estos bloqueos, los borramos, ya que sino nos será imposible borrar estas asignaciones.</p>
+<p>Desde la línea 18 a la 29, comprobamos que existan bloqueos (<strong>RECORDAD ,tener bloqueos siempre es BIEN, y si es producción OBLIGADO</strong>) en los recursos donde están las asignaciones a eliminar. En caso que existan estos bloqueos, los borramos ya que sino nos será imposible borrar estas asignaciones.</p>
 <p>En la líneas 32,33,34,35, haciendo uso del comando  <strong>Remove-AzRoleAssignment</strong>, eliminamos la asignación.</p>
-<p>Por último desde la línea 37 a la 74, en el caso que existieran bloqueos, volvemos a recrearlos de nuevo. Recordad que para borrar las asignaciones, nos lo cargamos antes en el script.</p>
-<p>Por último, decir que no hay problema en dejar las asignaciones de tipo <strong>&ldquo;Identity not found&rdquo;</strong>. No hay ningún tipo de implicación de seguridad ni nada por el estilo. Pero creo que ver en la lista de asignaciones esas entradas, pues no queda bonito jejeje.</p>
+<p>Por último, desde la línea 37 a la 74 en el caso que existieran bloqueos, volvemos a recrearlos de nuevo. Recordad que para borrar las asignaciones, los borramos antes en el script (líneas desde la 18 a la 29).</p>
+<p>Por último, decir que no hay problema en dejar las asignaciones de tipo <strong>&ldquo;Identity not found&rdquo;</strong>. No hay ningún tipo de implicación de seguridad ni nada por el estilo. Pero creo que ver en la lista de asignaciones esas entradas, pues no queda bonito la verdad.</p>
 <p>¡Hasta la próxima!</p>
 
 		</div>
@@ -140,7 +140,7 @@ Recientemente se ha invitado a un usuario, y al al crear una asignación de role
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/post/identitynotfoundroleassignment/">¿Por qué me aparecen en las listas de control de acceso (IAM), Identity not Found?</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/identitynotfoundroleassignment/">¿Por qué me aparece Identity not Found en las asignaciones de roles?</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/limitaraccesostorageblob/">Limitar el borrado de blobs en Azure Storage con permisos muy específicos usando RBAC y conditions</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/alertascostmanagement/">Cost Management - Controla el gasto en Azure con los presupuestos y alertas</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/renombrarresourcegroups/">¿Se pueden renombrar los grupos de recursos en Azure?</a></li>
