@@ -13,7 +13,7 @@
       <link>https://www.recetasdevops.dev/post/comoenterarmecuandoretiranunserviciodeazure/</link>
       <pubDate>Fri, 12 Jan 2024 00:00:00 +0100</pubDate>
       <guid>https://www.recetasdevops.dev/post/comoenterarmecuandoretiranunserviciodeazure/</guid>
-      <description>Cuando se trabaja en Azure, una de las tareas más importantes es enterarte cuando un servicio o funcionalidad de los servicios de los que usamos en producción es retirado de la circulación.&#xA;Para poder enterarnos de cuando esto pase, Microsoft proporciona varios métodos:&#xA;Envío de notificaciones por correo a los propietarios y administraciones de las suscripciones.&#xA;Creo que no hace falta que cuente en detalle, que suele pasar con los mails, y sobretodo cuando recibes muchos .</description>
+      <description>Cuando se trabaja en Azure, una de las tareas más importantes es enterarte cuando un servicio o funcionalidad de los servicios de los que usamos en producción es retirado de la circulación.&#xA;Para poder enterarnos de cuando esto pase, Microsoft proporciona varios métodos:&#xA;Envío de notificaciones por correo a los propietarios y administraciones de las suscripciones:&#xA;Creo que no hace falta que cuente en detalle, que suele pasar con los mails, y sobretodo cuando recibes muchos .</description>
     </item>
     <item>
       <title>¿Por qué me aparece Identity not found en las asignaciones de roles?</title>

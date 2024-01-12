@@ -10,7 +10,7 @@
 		<meta property="og:title" content="¿Cómo enterarme cuando retiran (deprecated) un servicio o funcionalidad en Azure?" />
 <meta property="og:description" content="Cuando se trabaja en Azure, una de las tareas más importantes es enterarte cuando un servicio o funcionalidad de los servicios de los que usamos en producción es retirado de la circulación.
 Para poder enterarnos de cuando esto pase, Microsoft proporciona varios métodos:
-Envío de notificaciones por correo a los propietarios y administraciones de las suscripciones.
+Envío de notificaciones por correo a los propietarios y administraciones de las suscripciones:
 Creo que no hace falta que cuente en detalle, que suele pasar con los mails, y sobretodo cuando recibes muchos ." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.recetasdevops.dev/post/comoenterarmecuandoretiranunserviciodeazure/" /><meta property="article:section" content="post" />
@@ -60,28 +60,29 @@ Creo que no hace falta que cuente en detalle, que suele pasar con los mails, y s
 		</header>
 		<div class="content post__content clearfix">
 			<img src="/images/post_06/meme.jpg" style="zoom:100%;" />
+<br>
 <p>Cuando se trabaja en Azure, una de las tareas más importantes es <strong>enterarte</strong> cuando un servicio o funcionalidad de los servicios de los que usamos en producción es retirado de la circulación.</p>
 <p>Para poder enterarnos de cuando esto pase, Microsoft proporciona varios métodos:</p>
 <ol>
 <li>
-<p>Envío de notificaciones por correo a los propietarios y administraciones de las suscripciones.</p>
+<p><strong>Envío de notificaciones por correo a los propietarios y administraciones de las suscripciones:</strong></p>
 <p>Creo que no hace falta que cuente en detalle, que suele pasar con los mails, y sobretodo cuando recibes muchos . Pues que se da el muy probable caso que se ignore el mensaje.</p>
 </li>
 <li>
-<p>A través del servicio de Service Health, en el portal de Azure:</p>
+<p><strong>A través del servicio de Service Health, en el portal de Azure:</strong></p>
 <img src="/images/post_06/image_08.png" style="zoom:80%;" />
 <p>Esta forma, es mucho mejor que la de las notificaciones de correo. Pero a mí me deja un poco descolocado, porque la mayoría de las veces echo en falta servicios que se que van a quitarse, y yo no los veo aquí. Pongo un ejemplo claro, el 29 de febrero se retira los Application Insights clásicos, y aquí no veo ninguna notificación.</p>
 <p>También puede ocurrir que te avise por ejemplo en el momento en que se anuncié que se va a retirar un servicio, o cuando queda menos de 1 mes de retirarse el servicio, la verdad no lo se&hellip; Lo que sé, es que me lía mucho jajaja.</p>
 </li>
 <li>
-<p>A través de la página de Azure Updates:</p>
+<p><strong>A través de la página de Azure Updates:</strong></p>
 <p><a href="https://azure.microsoft.com/en-us/updates/?updateType=retirements">https://azure.microsoft.com/en-us/updates/?updateType=retirements</a></p>
 <img src="/images/post_06/image_09.png" style="zoom:80%;" />
 <p>Al igual que me pasa con <strong>Service Health</strong>, pues aquí no veo alguna notificación que sí veo en Service Health, por ejemplo está:</p>
 <p><img src="/images/post_06/image_10.png" alt=""></p>
-<ol start="4">
+</li>
 <li>
-<p>A través del workbook <strong>Services Retirement Workbook</strong> de <strong>Azure Advisor</strong>.</p>
+<p><strong>A través del workbook Services Retirement Workbook de Azure Advisor:</strong></p>
 <p>Esta funcionalidad, nace con la promesa de unificar en un sólo sitio las notificaciones de los servicios o funcionalidades retiradas.</p>
 <p>El tema es que actualmente está en Preview, y tal y como dice Microsoft da soporte a 35 servicios. Pero que están trabajando en ello para ir incorporando más servicios.</p>
 <p>Es por ello que no va a quedar de momento otra que:</p>
@@ -117,8 +118,6 @@ Creo que no hace falta que cuente en detalle, que suele pasar con los mails, y s
 <p><img src="/images/post_06/image_07.png" alt=""></p>
 </li>
 </ul>
-</li>
-</ol>
 </li>
 </ol>
 <p>​</p>
