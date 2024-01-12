@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>¿Cómo enterarme cuando retiran (deprecated) un servicio o funcionalidad en Azure? - Recetas Devops</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="¿Cómo enterarme cuando retiran (deprecated) un servicio o funcionalidad en Azure?" />
+<meta property="og:description" content="Cuando se trabaja en Azure, una de las tareas más importantes es enterarte cuando un servicio o funcionalidad de los servicios de los que usamos en producción es retirado de la circulación.
+Para poder enterarnos de cuando esto pase, Microsoft proporciona varios métodos:
+Envío de notificaciones por correo a los propietarios y administraciones de las suscripciones.
+Creo que no hace falta que cuente en detalle, que suele pasar con los mails, y sobretodo cuando recibes muchos ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.recetasdevops.dev/post/comoenterarmecuandoretiranunserviciodeazure/" /><meta property="article:section" content="post" />
+
+
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="Recetas Devops" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.png">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">Recetas Devops</div>
+					<div class="logo__tagline">Tus recetas para DevOps de confianza</div>
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">¿Cómo enterarme cuando retiran (deprecated) un servicio o funcionalidad en Azure?</h1>
+			
+		</header>
+		<div class="content post__content clearfix">
+			<img src="/images/post_06/meme.jpg" style="zoom:100%;" />
+<p>Cuando se trabaja en Azure, una de las tareas más importantes es <strong>enterarte</strong> cuando un servicio o funcionalidad de los servicios de los que usamos en producción es retirado de la circulación.</p>
+<p>Para poder enterarnos de cuando esto pase, Microsoft proporciona varios métodos:</p>
+<ol>
+<li>
+<p>Envío de notificaciones por correo a los propietarios y administraciones de las suscripciones.</p>
+<p>Creo que no hace falta que cuente en detalle, que suele pasar con los mails, y sobretodo cuando recibes muchos . Pues que se da el muy probable caso que se ignore el mensaje.</p>
+</li>
+<li>
+<p>A través del servicio de Service Health, en el portal de Azure:</p>
+<img src="/images/post_06/image_08.png" style="zoom:80%;" />
+<p>Esta forma, es mucho mejor que la de las notificaciones de correo. Pero a mí me deja un poco descolocado, porque la mayoría de las veces echo en falta servicios que se que van a quitarse, y yo no los veo aquí. Pongo un ejemplo claro, el 29 de febrero se retira los Application Insights clásicos, y aquí no veo ninguna notificación.</p>
+<p>También puede ocurrir que te avise por ejemplo en el momento en que se anuncié que se va a retirar un servicio, o cuando queda menos de 1 mes de retirarse el servicio, la verdad no lo se&hellip; Lo que sé, es que me lía mucho jajaja.</p>
+</li>
+<li>
+<p>A través de la página de Azure Updates:</p>
+<p><a href="https://azure.microsoft.com/en-us/updates/?updateType=retirements">https://azure.microsoft.com/en-us/updates/?updateType=retirements</a></p>
+<img src="/images/post_06/image_09.png" style="zoom:80%;" />
+<p>Al igual que me pasa con <strong>Service Health</strong>, pues aquí no veo alguna notificación que sí veo en Service Health, por ejemplo está:</p>
+<p><img src="/images/post_06/image_10.png" alt=""></p>
+<ol start="4">
+<li>
+<p>A través del workbook <strong>Services Retirement Workbook</strong> de <strong>Azure Advisor</strong>.</p>
+<p>Esta funcionalidad, nace con la promesa de unificar en un sólo sitio las notificaciones de los servicios o funcionalidades retiradas.</p>
+<p>El tema es que actualmente está en Preview, y tal y como dice Microsoft da soporte a 35 servicios. Pero que están trabajando en ello para ir incorporando más servicios.</p>
+<p>Es por ello que no va a quedar de momento otra que:</p>
+<ul>
+<li>Revisar Azure Health</li>
+<li>Revisar la página de Azure Updates</li>
+<li>Ver el workbook de Services Retirement</li>
+</ul>
+<p>Para poder acceder a este workbook, los pasos a seguir son:</p>
+<ul>
+<li>
+<p>Acceder al servicio de <strong>Advisor</strong> desde el portal de Azure:</p>
+<img src="/images/post_06/image_01.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Una vez dentro, vamos a <strong>Workbooks</strong>:</p>
+<p><img src="/images/post_06/image_02.png" alt=""></p>
+</li>
+<li>
+<p>Pulsamos en  <strong>Service Retirement (preview)</strong></p>
+<p><img src="/images/post_06/image_03.png" alt=""></p>
+</li>
+<li>
+<p>Y ya estamos dentro, en este caso vemos en la imagen todos los servicios con notificaciones, los estemos usando o no. Esto pasa porque tenemos puesta en la opción <strong>Choose view</strong>,  <strong>All Services</strong></p>
+<img src="/images/post_06/image_04.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Ahora ya sí, si en la opción <strong>Choose view</strong>, seleccionamos solo <strong>Services with affected resources</strong>, solo vemos  aquellos servicios que nos afectan a nosotros porque los tenemos desplegados.</p>
+<p><img src="/images/post_06/image_06.png" alt=""></p>
+</li>
+<li>
+<p>Si hacemos scroll hacía abajo, vemos los servicios directamente afectados.</p>
+<p><img src="/images/post_06/image_07.png" alt=""></p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<p>​</p>
+<p>Espero os hay gustado el artículo y hasta la próxima.</p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Alejandro García avatar" src="/images/foto.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Alejandro García</span>
+	</div>
+	<div class="authorbox__description">
+		Apasionado por la tecnología.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/post/databricks-limpiar-cluster-logs/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">Azure Databricks - Limpia los logs de los clusters y ahorra dinero</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://www.recetasdevops.dev/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/identitynotfoundroleassignment/">¿Por qué me aparece Identity not found en las asignaciones de roles?</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/limitaraccesostorageblob/">Limitar el borrado de blobs en Azure Storage con permisos muy específicos usando RBAC y conditions</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/alertascostmanagement/">Cost Management - Controla el gasto en Azure con los presupuestos y alertas</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/renombrarresourcegroups/">¿Se pueden renombrar los grupos de recursos en Azure?</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/databricks-limpiar-cluster-logs/">Azure Databricks - Limpia los logs de los clusters y ahorra dinero</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 Recetas Devops.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>
