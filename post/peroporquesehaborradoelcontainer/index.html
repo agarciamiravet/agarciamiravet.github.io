@@ -4,12 +4,12 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>¿Por qué se ha borrado el container del Storage, si tenía bloqueo?. Hablemos de Control Plane y Data Plane - Recetas Devops</title>
+	<title>¿Por qué se ha borrado el container del Storage Account, si tenía bloqueo?. Hablemos de Control Plane y Data Plane - Recetas Devops</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-		<meta property="og:title" content="¿Por qué se ha borrado el container del Storage, si tenía bloqueo?. Hablemos de Control Plane y Data Plane" />
-<meta property="og:description" content="Hace unas semanas, hablando con un amigo, este me comentaba como en el trabajo se había realizado un cambio en un script que manipulaba storage accounts. La cuestión es que (no me pregunteís como ni porque jajaja) en ese script se metió una línea que borraba un container usando el comando Remove-AzStorageContainer.
-¿ Y sabéis que paso? Pues sí, que el container se borró. Gracias a que estaba habilitado el soft delete del container, pues se recupero el container, se cambió el script seguidamente y se busco una forma mejor de revisar los scripts antes de darlos por válidos y hasta aquí llego el susto." />
+		<meta property="og:title" content="¿Por qué se ha borrado el container del Storage Account, si tenía bloqueo?. Hablemos de Control Plane y Data Plane" />
+<meta property="og:description" content="Hace unas semanas, hablando con un amigo, este me comentaba como en el trabajo se había realizado un cambio en un script que manipulaba storage accounts. La cuestión es que (no me preguntéis como ni porque jajaja), en ese script se metió una línea que borraba un container usando el comando de Powershell Remove-AzStorageContainer.
+¿Y sabéis que paso? Pues sí, que el container se borró. Gracias a que estaba habilitado el soft delete del container, pues se recupero el container y el problema se resolvió." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.recetasdevops.dev/post/peroporquesehaborradoelcontainer/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2024-01-14T00:00:00+02:00" />
@@ -51,23 +51,25 @@
 <main class="main" role="main">
 	<article class="post">
 		<header class="post__header">
-			<h1 class="post__title">¿Por qué se ha borrado el container del Storage, si tenía bloqueo?. Hablemos de Control Plane y Data Plane</h1>
+			<h1 class="post__title">¿Por qué se ha borrado el container del Storage Account, si tenía bloqueo?. Hablemos de Control Plane y Data Plane</h1>
 			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2024-01-14T00:00:00&#43;02:00">January 14, 2024</time></div></div>
 		</header>
 		<div class="content post__content clearfix">
 			<img src="/images/post_07/meme.jpg" style="zoom:70%;" />
-<p><br><br></p>
-<p>Hace unas semanas, hablando con un amigo, este me comentaba como en el trabajo se había realizado un cambio en un script que manipulaba storage accounts. La cuestión es que (no me pregunteís como ni porque jajaja) en ese script se metió una línea que borraba un container usando el comando <strong>Remove-AzStorageContainer</strong>.</p>
-<p>¿ Y sabéis que paso? Pues sí, que el container se borró. Gracias a que estaba habilitado el soft delete del container, pues se recupero el container, se cambió el script seguidamente y se busco una forma mejor de revisar los scripts antes de darlos por válidos y hasta aquí llego el susto.</p>
-<p>Pero después , alguna gente se hacía la <strong>PREGUNTA</strong> , y esa era ¿Cómo se ha borrado el container, sí el Storage Account tenía un <strong>bloqueo</strong>?</p>
+<br>
+<p>Hace unas semanas, hablando con un amigo, este me comentaba como en el trabajo se había realizado un cambio en un script que manipulaba storage accounts. La cuestión es que (no me preguntéis como ni porque jajaja), en ese script se metió una línea que borraba un container usando el comando de Powershell <strong>Remove-AzStorageContainer</strong>.</p>
+<p>¿Y sabéis que paso? Pues sí, que el container se borró. Gracias a que estaba habilitado el soft delete del container, pues se recupero el container y el problema se resolvió. A continuación, se cambió el script y se busco una forma mejor de revisar los scripts antes de darlos por válidos.</p>
+<p>Pero después , alguna gente se hacía la  siguiente <strong>PREGUNTA</strong> :</p>
+<p><strong>¿Cómo se ha borrado el container, sí el storage account tenía un bloqueo?</strong></p>
 <img src="/images/post_07/image01.png" style="zoom:80%;" />
-<p><br><br></p>
-<p>Antes de resolver la pregunta , es necesario revisar dos conceptos muy importantes cuando se trabaja con Azure. Esos dos conceptos son <strong>Control Plane</strong> y <strong>Data Plane</strong>.</p>
+<br>
+<p>Antes de resolver la pregunta, es necesario revisar dos conceptos muy importantes cuando se trabaja con Azure. Esos dos conceptos son <strong>Control Plane</strong> y <strong>Data Plane</strong>.</p>
 <p>Tal y como viene en la documentación de Azure:</p>
 <p><em>&ldquo;Las operaciones de Azure se pueden dividir en dos categorías: Control Plane  y Data Plane.</em></p>
-<p><em>Control Plane se utiliza para administrar los recursos de su suscripción. Data Plane se usa para utilizar las funcionalidades expuestas por la instancia de un tipo de recurso.&rdquo;</em></p>
+<p><em>Control Plane se utiliza para administrar los recursos de su suscripción.</em></p>
+<p><em>Data Plane se usa para utilizar las funcionalidades expuestas por la instancia de un tipo de recurso.&rdquo;</em></p>
 <h2 id="control-plane">Control Plane</h2>
 <p>Ejemplos de operaciones que se hacen usando <strong>Control Plane</strong> son:</p>
 <ul>
@@ -75,26 +77,29 @@
 <li>Crear un Storage Account.</li>
 <li>Crear un servidor y bases de datos de Azure SQL.</li>
 </ul>
-<p>Al final y al cabo, todo lo que sea crear, modificar y eliminar recursos se hace a través del Control Plane.</p>
-<p>Estas operaciones del Control Plane, se hacen a través de <strong>Azure Resource Manager</strong> API, cuyas urls son:</p>
+<p>Al final y al cabo, todo lo que sea crear, modificar o eliminar recursos se hace a través del Control Plane.</p>
+<p>Estas operaciones del Control Plane, se hacen a través del <strong>Azure Resource Manager</strong> API.</p>
+<p>Las url usadas son:</p>
 <ul>
-<li><a href="https://management.azure.com">https://management.azure.com</a> para Azure Global</li>
-<li><a href="https://management.usgovcloudapi.net">https://management.usgovcloudapi.net</a> para Azure Government</li>
-<li><a href="https://management.microsoftazure.de">https://management.microsoftazure.de</a> para Azure Germany</li>
-<li><a href="https://management.chinacloudapi.cn">https://management.chinacloudapi.cn</a> , operado por 21Vianet (China)</li>
+<li><a href="https://management.azure.com">https://management.azure.com</a> para Azure Global, es la más usada sin duda.</li>
+<li><a href="https://management.usgovcloudapi.net">https://management.usgovcloudapi.net</a> para Azure Government.</li>
+<li><a href="https://management.microsoftazure.de">https://management.microsoftazure.de</a> para Azure Germany.</li>
+<li><a href="https://management.chinacloudapi.cn">https://management.chinacloudapi.cn</a> , operado por 21Vianet (China).</li>
 </ul>
-<p>El siguiente diagrama ofrecido por Microsoft, ofrece ayuda mucho a entender el concepto de Control Plane:</p>
-<p><br><br></p>
+<p>El siguiente diagrama ofrecido por Microsoft, es de mucha ayuda para entender el concepto de Control Plane:</p>
+<br>
 <p><img src="/images/post_07/image02.png" alt=""></p>
-<p><br><br></p>
-<p>Para ver de forma rápida operaciones que se realizan a través del Control Plane, basta con abrir un navegador con el portal de Azure , y abrir pestaña de Network con la tecla F12:</p>
-<p><br><br></p>
+<br>
+<p>Para ver de forma rápida, operaciones que se realizan a través del Control Plane, basta con abrir el portal de Azure en un navagedor web y abrir la pestaña de Network con la tecla F12:</p>
+<br>
 <img src="/images/post_07/image03.png" style="zoom:80%;" />
-<p><br><br></p>
-<p><strong>NOTA IMPORTANTE:</strong> Por último un detalle muy <strong>importante</strong>, los <strong>bloqueos</strong> a los recursos solo afectan a operaciones que se hacen a través del Control Plane y no a través del Data Plane.</p>
+<br>
+<span style="color:red">
+**NOTA MUY IMPORTANTE:** Por último un detalle muy **importante**, los **bloqueos** a los recursos solo afectan a operaciones que se hacen a través del Control Plane y no a través del Data Plane.
+</span>
 <h2 id="data-plane">Data Plane</h2>
-<p>Por otro lado, y tal y como dice Microsoft, cuando hablamos de Data Plane, nos referimos a operaciones que hacemos a las  funcionalidades expuestas por la instancia de un tipo de recurso</p>
-<p>Para verlo de una forma más clara, supongamos tenemos un storage llamado <strong>strecetasdevopslocked</strong>. Pues este servicio expondrá la siguiente url <a href="https://strecetasdevopslocked.blob.core.windows.net/">https://strecetasdevopslocked.blob.core.windows.net/</a>.</p>
+<p>Por otro lado, tal y como dice Microsoft, cuando hablamos de Data Plane nos referimos a operaciones que hacemos a las  funcionalidades expuestas por la instancia de un tipo de recurso</p>
+<p>Para verlo de una forma más clara, supongamos que tenemos un storage llamado <strong>strecetasdevopslocked</strong>. Pues este servicio expondrá la siguiente url <a href="https://strecetasdevopslocked.blob.core.windows.net/">https://strecetasdevopslocked.blob.core.windows.net/</a>.</p>
 <p>A través de esta url podremos hacer operaciones sobre los blobs de ese storage account como:</p>
 <ul>
 <li>
@@ -107,20 +112,20 @@
 <p>Modificar blobs</p>
 </li>
 </ul>
-<p>De la misma manera que con Control Plane. Si accedéis al portal de Azure, luego vaís a un storage account y accedéis un blob, veréis que si le dais a F12 para ir a la pestaña de Network, las peticiones para ver el blob  se hacen a través de Data Plane y no a través de Control Plane (<a href="https://management.azure.com">https://management.azure.com</a> ).</p>
-<p><br><br></p>
+<p>De la misma manera que con Control Plane. Si accedéis al portal de Azure, luego vaís a un storage account y accedéis un blob, veréis que si le dais a F12 en el navrgador web para ir a la pestaña de Network, las peticiones para ver el blob  se hacen a través de Data Plane y no a través de Control Plane (<a href="https://management.azure.com">https://management.azure.com</a> ).</p>
+<br>
 <img src="/images/post_07/image04.png" style="zoom:80%;" />
-<p><br><br></p>
-<p>Al contrario que con Control Plane, las operaciones de Data Plane no estan restringuidas a usar los servicios REST expuestos por las ins tancias de los servicios. Por ejemplo logarte en bases de datos de Azure SQL, o acceder a una máquina virtual por escritorio remoto son también operaciones que entran dentro del paraguas de Data Plane,</p>
+<br>
+<p>Al contrario que con Control Plane, las operaciones de Data Plane no están restringidas a usar los servicios REST expuestos por las instancias de los servicios. Por ejemplo logarte en bases de datos de Azure SQL, o acceder a una máquina virtual por escritorio remoto son también operaciones que entran dentro del paraguas de Data Plane,</p>
 <p>Una vez explicado estos dos conceptos (espero haberlo explicado medianamente bien jeje), vamos al asunto de este artículo que es responder la siguiente pregunta:</p>
 <p><strong>¿Cómo se ha borrado el container, sí el Storage Account tenía un bloqueo?</strong></p>
 <p>Para resolver esta duda lo mejor es hacer un ejemplo:</p>
 <p>Tenemos el siguiente storage account, llamado <strong>strecetasdevopslocked</strong>, el cuál tiene un bloqueo de tipo <strong>Delete</strong>.  Viendo esto nuestra cabeza puede pensar lo siguiente:</p>
 <p><strong>&ldquo;Si intento borrar el storage account o borrar un container dentro de este storage account, como tengo un bloqueo eso no va a ocurrir&rdquo;</strong></p>
-<p><br><br></p>
+<br>
 <img src="/images/post_07/image01.png" style="zoom:80%;" />
-<p><br><br></p>
-<p>Ahora vamos a ejecutar un script  de Powershell donde vamos a querer eliminar este storage account, usando el :</p>
+<br>
+<p>Vamos a la primera afirmación, vamos a intentar borrar un storage account. Para ello vamos a ejecutar un script  de Powershell donde vamos a querer eliminar este storage account, usando el comando <strong>Remove-AzStorageAccount</strong>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#75715e">#Login to Azure</span>
 </span></span><span style="display:flex;"><span>Connect-AzAccount
 </span></span><span style="display:flex;"><span>
@@ -137,14 +142,14 @@
 </span></span><span style="display:flex;"><span>       -Debug
 </span></span></code></pre></div><p><br><br></p>
 <p>Cuando lanzamos el script, vemos como el comando <strong>Remove-AzStorageAccount</strong> llama a <a href="https://management.azure.com">https://management.azure.com</a>, es decir al Control Plane.</p>
-<p><br><br></p>
-<p><img src="/images/post_07/image05.png" alt=""></p>
-<p><br><br></p>
+<p><br><img src="/images/post_07/image05.png" alt=""></p>
+<br>
 <p>Como la operación que realiza es en el Control Plane y tenemos un bloqueo, al eliminar nos salta un error diciendo que no se puede borrar porque hay un bloqueo.</p>
 <p><img src="/images/post_07/image06.png" alt=""></p>
-<p><br><br></p>
-<p>Ahora ya sí, vamos a intentar eliminar el container llamando <strong>container</strong> dentro del storage usando el comando <strong>Remove-AzStorageContainer</strong>, que fue lo que se lanzo el día de autos (jajaja):</p>
+<br>
+<p>Ahora ya sí, vamos a intentar eliminar el container llamado <strong>container</strong> dentro del storage account, usando el comando <strong>Remove-AzStorageContainer</strong>, que fue lo que se lanzo la noche de autos (jajaja):</p>
 <img src="/images/post_07/image08.png" style="zoom:80%;" />
+<br>
 <p>El script que lanzamos el siguiente:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#75715e">#Login to Azure</span>
 </span></span><span style="display:flex;"><span>Connect-AzAccount
@@ -163,10 +168,10 @@
 </span></span><span style="display:flex;"><span>     -Force `
 </span></span><span style="display:flex;"><span>     -Verbose `
 </span></span><span style="display:flex;"><span>     -Debug
-</span></span></code></pre></div><p>Y lo que ocurre cuando lo lanzamos, es que efectivamente el container se borra. Pero fijaros en la imagen, en el recuadro rojo. Podéis ver que esta llamando al Data Plane, y es que como comentamos antes: <strong>En las operaciones al Data Plane los bloqueos no valen, los bloqueos solo afectan a operaciones en el Control Plane</strong></p>
-<p><br><br></p>
+</span></span></code></pre></div><p>Y lo que ocurre cuando lo lanzamos, es que efectivamente el container se borra. Pero fijaros en la imagen, en el recuadro rojo. Podéis ver que esta llamando al Data Plane.  Y como comentamos antes: <strong>En las operaciones al Data Plane los bloqueos no valen, los bloqueos solo afectan a operaciones en el Control Plane</strong></p>
+<br>
 <p><img src="/images/post_07/image09.png" alt=""></p>
-<p><br><br></p>
+<br>
 <p>He aquí la respuesta a la pregunta, es que el comando <strong>Remove-AzStorageContainer</strong> no va a través del Control Plane sino a través del Data Plane donde los bloqueos no tienen ningún efecto.</p>
 <p>Si usamos azcli, usando el comando <strong>az storage container delete</strong>, pues pasa lo mismo, va a través del Data Plane y el container se borra:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>az login --tenant <span style="color:#e6db74">&#34;[put_your_tenant_id_here]&#34;</span>
@@ -174,9 +179,9 @@
 </span></span><span style="display:flex;"><span>az account set --subscription <span style="color:#e6db74">&#34;[put_your_subscription_id_here]&#34;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>az storage container delete --name container --account-name strecetasdevopslocked --debug
-</span></span></code></pre></div><p><br><br></p>
+</span></span></code></pre></div><br>
 <p><img src="/images/post_07/image10.png" alt=""></p>
-<p><br><br></p>
+<br>
 <p>Lo mismo pasa con Terraform, si usas el resource <strong>azurerm_storage_container</strong> y en algún momento se elimina, terraform usa el Data Plane y no hay bloqueo que lo salve.</p>
 <p>Dicho esto, no es que en realidad las operaciones sobre containers este sólo en el Data Plane, es que <strong>TAMBIÉN EXISTEN LAS OPERACIONES DE CREAR O MODIFICAR CONTAINERS EN EL CONTROL PLANE¡¡¡</strong>, pero no se porque están menos publicitadas por así decirlo jaja.</p>
 <p>En las siguientes urls podéis ver las operaciones tanto en Control Plane como Data Plane:</p>
@@ -204,15 +209,15 @@
 </span></span><span style="display:flex;"><span>    -Verbose `
 </span></span><span style="display:flex;"><span>    -Debug
 </span></span></code></pre></div><p>Lanzamos el script y efectivamente falla porque existe un bloqueo:</p>
-<p><br><br></p>
+<br>
 <p><img src="/images/post_07/image11.png" alt=""></p>
 <p><img src="/images/post_07/image12.png" alt=""></p>
-<p><br><br></p>
+<br>
 <p>Ahora si vamos a azcli, y cambiamos el comando <strong>az storage container delete</strong> por <strong>az storage container-rm</strong>, haríamos uso de Control Plane, y por tanto tendría cuenta el bloqueo:</p>
-<p><br><br></p>
+<br>
 <p><img src="/images/post_07/image13.png" alt=""></p>
 <p><img src="/images/post_07/image14.png" alt=""></p>
-<p><br><br></p>
+<br>
 <p>Sé que quizás el artículo ha quedado un poco denso, pero creo que es un tema muy interesante y que os puede servir de gran ayuda.</p>
 <p>Saludos y hasta la próxima.</p>
 
@@ -256,7 +261,7 @@
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/post/peroporquesehaborradoelcontainer/">¿Por qué se ha borrado el container del Storage, si tenía bloqueo?. Hablemos de Control Plane y Data Plane</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/peroporquesehaborradoelcontainer/">¿Por qué se ha borrado el container del Storage Account, si tenía bloqueo?. Hablemos de Control Plane y Data Plane</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/comoenterarmecuandoretiranunserviciodeazure/">¿Cómo enterarme cuando retiran (deprecated) un servicio o funcionalidad en Azure?</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/identitynotfoundroleassignment/">¿Por qué me aparece Identity not found en las asignaciones de roles?</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/limitaraccesostorageblob/">Limitar el borrado de blobs en Azure Storage con permisos muy específicos usando RBAC y conditions</a></li>

@@ -9,11 +9,11 @@
     <lastBuildDate>Sun, 14 Jan 2024 00:00:00 +0200</lastBuildDate>
     <atom:link href="https://www.recetasdevops.dev/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>¿Por qué se ha borrado el container del Storage, si tenía bloqueo?. Hablemos de Control Plane y Data Plane</title>
+      <title>¿Por qué se ha borrado el container del Storage Account, si tenía bloqueo?. Hablemos de Control Plane y Data Plane</title>
       <link>https://www.recetasdevops.dev/post/peroporquesehaborradoelcontainer/</link>
       <pubDate>Sun, 14 Jan 2024 00:00:00 +0200</pubDate>
       <guid>https://www.recetasdevops.dev/post/peroporquesehaborradoelcontainer/</guid>
-      <description>Hace unas semanas, hablando con un amigo, este me comentaba como en el trabajo se había realizado un cambio en un script que manipulaba storage accounts. La cuestión es que (no me pregunteís como ni porque jajaja) en ese script se metió una línea que borraba un container usando el comando Remove-AzStorageContainer.&#xA;¿ Y sabéis que paso? Pues sí, que el container se borró. Gracias a que estaba habilitado el soft delete del container, pues se recupero el container, se cambió el script seguidamente y se busco una forma mejor de revisar los scripts antes de darlos por válidos y hasta aquí llego el susto.</description>
+      <description>Hace unas semanas, hablando con un amigo, este me comentaba como en el trabajo se había realizado un cambio en un script que manipulaba storage accounts. La cuestión es que (no me preguntéis como ni porque jajaja), en ese script se metió una línea que borraba un container usando el comando de Powershell Remove-AzStorageContainer.&#xA;¿Y sabéis que paso? Pues sí, que el container se borró. Gracias a que estaba habilitado el soft delete del container, pues se recupero el container y el problema se resolvió.</description>
     </item>
     <item>
       <title>¿Cómo enterarme cuando retiran (deprecated) un servicio o funcionalidad en Azure?</title>
