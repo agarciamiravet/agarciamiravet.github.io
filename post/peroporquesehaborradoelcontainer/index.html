@@ -64,7 +64,7 @@
 <p>Pero después , alguna gente se hacía la  siguiente <strong>PREGUNTA</strong> :</p>
 <p><strong>¿Cómo se ha borrado el container, sí el storage account tenía un bloqueo?</strong></p>
 <img src="/images/post_07/image01.png" style="zoom:80%;" />
-<br>
+<p><br><br></p>
 <p>Antes de resolver la pregunta, es necesario revisar dos conceptos muy importantes cuando se trabaja con Azure. Esos dos conceptos son <strong>Control Plane</strong> y <strong>Data Plane</strong>.</p>
 <p>Tal y como viene en la documentación de Azure:</p>
 <p><em>&ldquo;Las operaciones de Azure se pueden dividir en dos categorías: Control Plane  y Data Plane.</em></p>
@@ -95,8 +95,7 @@
 <img src="/images/post_07/image03.png" style="zoom:80%;" />
 <p><br><br></p>
 <span style="color:red">
-**NOTA MUY IMPORTANTE:** Por último un detalle muy **importante**, los **bloqueos** a los recursos solo afectan a operaciones que se hacen a través del Control Plane y no a través del Data Plane.
-</span>
+**NOTA MUY IMPORTANTE: Por último un detalle muy importante, los bloqueosa los recursos solo afectan a operaciones que se hacen a través del Control Plane y no a través del Data Plane. **</span>
 <p><br><br></p>
 <h2 id="data-plane">Data Plane</h2>
 <p>Por otro lado, tal y como dice Microsoft, cuando hablamos de Data Plane nos referimos a operaciones que hacemos a las  funcionalidades expuestas por la instancia de un tipo de recurso</p>
@@ -117,7 +116,7 @@
 <br>
 <img src="/images/post_07/image04.png" style="zoom:80%;" />
 <p><br><br></p>
-<p>Al contrario que con Control Plane, las operaciones de Data Plane no están restringidas a usar los servicios REST expuestos por las instancias de los servicios. Por ejemplo logarte en bases de datos de Azure SQL, o acceder a una máquina virtual por escritorio remoto son también operaciones que entran dentro del paraguas de Data Plane,</p>
+<p>Al contrario que con Control Plane, las operaciones de Data Plane no están restringidas a usar los servicios REST expuestos por las instancias de los servicios. Por ejemplo logarte en bases de datos de Azure SQL, o acceder a una máquina virtual por escritorio remoto son también operaciones que entran dentro del paraguas de Data Plane.</p>
 <p>Una vez explicado estos dos conceptos (espero haberlo explicado medianamente bien jeje), vamos al asunto de este artículo que es responder la siguiente pregunta:</p>
 <p><strong>¿Cómo se ha borrado el container, sí el Storage Account tenía un bloqueo?</strong></p>
 <p>Para resolver esta duda lo mejor es hacer un ejemplo:</p>
@@ -125,7 +124,7 @@
 <p><strong>&ldquo;Si intento borrar el storage account o únicamente borro un container dentro de este storage account, como tengo un bloqueo eso no va a ocurrir&rdquo;</strong></p>
 <br>
 <img src="/images/post_07/image01.png" style="zoom:80%;" />
-<br>
+<p><br><br></p>
 <p>Vamos a la primera afirmación, vamos a intentar borrar un storage account. Para ello vamos a ejecutar un script  de Powershell donde vamos a querer eliminar este storage account, usando el comando <strong>Remove-AzStorageAccount</strong>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#75715e">#Login to Azure</span>
 </span></span><span style="display:flex;"><span>Connect-AzAccount
@@ -169,11 +168,11 @@
 </span></span><span style="display:flex;"><span>     -Force `
 </span></span><span style="display:flex;"><span>     -Verbose `
 </span></span><span style="display:flex;"><span>     -Debug
-</span></span></code></pre></div><p>Y lo que ocurre cuando lo lanzamos, es que efectivamente el container se borra. Pero fijaros en la imagen, en el recuadro rojo. Podéis ver que esta llamando al Data Plane.  Y como comentamos antes: <strong>En las operaciones al Data Plane los bloqueos no valen, los bloqueos solo afectan a operaciones en el Control Plane</strong></p>
+</span></span></code></pre></div><p>Y lo que ocurre cuando lo lanzamos, es que efectivamente el container se borra. Pero fijaros en la imagen, en el recuadro rojo. Podéis ver que esta llamando al Data Plane.  Y como comentamos antes: <strong>En las operaciones al Data Plane los bloqueos no valen, los bloqueos solo afectan a operaciones en el Control Plane</strong>.</p>
 <br>
 <p><img src="/images/post_07/image09.png" alt=""></p>
 <br>
-<p>He aquí la respuesta a la pregunta, es que el comando <strong>Remove-AzStorageContainer</strong> no va a través del Control Plane, sino a través del Data Plane donde los bloqueos no tienen ningún efecto.</p>
+<p>He aquí la respuesta a la pregunta, y es que el comando <strong>Remove-AzStorageContainer</strong> no va a través del Control Plane, sino a través del Data Plane donde los bloqueos no tienen ningún efecto.</p>
 <p>Si usamos azcli, usando el comando <strong>az storage container delete</strong>, pues pasa lo mismo, va a través del Data Plane y el container se borra:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>az login --tenant <span style="color:#e6db74">&#34;[put_your_tenant_id_here]&#34;</span>
 </span></span><span style="display:flex;"><span>
@@ -183,8 +182,8 @@
 </span></span></code></pre></div><br>
 <p><img src="/images/post_07/image10.png" alt=""></p>
 <br>
-<p>Lo mismo pasa con Terraform, si usas el resource <strong>azurerm_storage_container</strong> y en algún momento se elimina, terraform usa el Data Plane y no hay bloqueo que lo salve.</p>
-<p>Dicho esto, no es que en realidad las operaciones sobre containers este sólo en el Data Plane, es que <strong>TAMBIÉN EXISTEN LAS OPERACIONES DE CREAR O MODIFICAR CONTAINERS EN EL CONTROL PLANE¡¡¡</strong>, pero no se porque están menos publicitadas por así decirlo jaja.</p>
+<p>Lo mismo pasa con Terraform, si usas el tipo de resource <strong>azurerm_storage_container</strong> , y en algún momento se elimina, Terraform usa el Data Plane y no hay bloqueo que lo salve.</p>
+<p>Dicho esto, no es que en realidad las operaciones sobre containers estén sólo en el Data Plane, es que <strong>TAMBIÉN EXISTEN LAS OPERACIONES DE CREAR O MODIFICAR CONTAINERS EN EL CONTROL PLANE¡¡¡</strong>, pero no se porque están menos publicitadas por así decirlo jaja.</p>
 <p>En las siguientes urls podéis ver las operaciones tanto en Control Plane como Data Plane:</p>
 <ul>
 <li>
