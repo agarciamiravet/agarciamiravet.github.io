@@ -121,8 +121,8 @@
 <p>Una vez explicado estos dos conceptos (espero haberlo explicado medianamente bien jeje), vamos al asunto de este artículo que es responder la siguiente pregunta:</p>
 <p><strong>¿Cómo se ha borrado el container, sí el Storage Account tenía un bloqueo?</strong></p>
 <p>Para resolver esta duda lo mejor es hacer un ejemplo:</p>
-<p>Tenemos el siguiente storage account, llamado <strong>strecetasdevopslocked</strong>, el cuál tiene un bloqueo de tipo <strong>Delete</strong>.  Viendo esto nuestra cabeza puede pensar lo siguiente:</p>
-<p><strong>&ldquo;Si intento borrar el storage account o borrar un container dentro de este storage account, como tengo un bloqueo eso no va a ocurrir&rdquo;</strong></p>
+<p>Tenemos el siguiente storage account, llamado <strong>strecetasdevopslocked</strong>, el cuál tiene un bloqueo de tipo <strong>Delete</strong>.  Viendo esto nuestra cabeza piensa lo siguiente:</p>
+<p><strong>&ldquo;Si intento borrar el storage account o únicamente borro un container dentro de este storage account, como tengo un bloqueo eso no va a ocurrir&rdquo;</strong></p>
 <br>
 <img src="/images/post_07/image01.png" style="zoom:80%;" />
 <br>
@@ -223,7 +223,7 @@
 <p><img src="/images/post_07/image13.png" alt=""></p>
 <p><img src="/images/post_07/image14.png" alt=""></p>
 <br>
-<p>Como conclusión, si queremos que no se borren los containers accidentalmente en nuestros scripts, debemos hacer uso de los comandos que usen las operaciones del Control Plane y no del Data Plane.</p>
+<p>Como conclusión, si queremos que no se borren los containers accidentalmente,  protegidos en storage account por un bloqueo en nuestros scripts, debemos hacer uso de los comandos que usen las operaciones del Control Plane y no del Data Plane.</p>
 <p>Sé que quizás el artículo ha quedado un poco denso, pero creo que es un tema muy interesante y que os puede servir de gran ayuda.</p>
 <p>Saludos y hasta la próxima.</p>
 
