@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Sigue las mejores prácticas y recomendaciones en Azure con Azure Quick Review - Recetas Devops</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Sigue las mejores prácticas y recomendaciones en Azure con Azure Quick Review" />
+<meta property="og:description" content="Azure Quick Review (a partir de ahora azqr), es una herramienta en línea de comandos muy útil.
+Esta herramienta, te permite de manera muy sencilla comprobar si tu infraestructura en Azure, cumple con las mejores prácticas y recomendaciones.
+Lo primero que vamos a hacer es instalarlo, en el caso de de Windows 10/11 deberíamos lanzar la siguiente línea en el terminal:
+winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.recetasdevops.dev/post/auditaazureconazqr/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-01-18T00:00:00+01:00" />
+<meta property="article:modified_time" content="2024-01-18T00:00:00+01:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="Recetas Devops" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.png">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">Recetas Devops</div>
+					<div class="logo__tagline">Tus recetas para DevOps de confianza</div>
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Sigue las mejores prácticas y recomendaciones en Azure con Azure Quick Review</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2024-01-18T00:00:00&#43;01:00">January 18, 2024</time></div></div>
+		</header>
+		<div class="content post__content clearfix">
+			<img src="/images/post_08/meme.jpg" style="zoom:100%;" />
+<p><br><br></p>
+<p><strong>Azure Quick Review</strong> (a partir de ahora <strong>azqr</strong>), es una herramienta en línea de comandos muy útil.</p>
+<p>Esta herramienta, te permite de manera muy sencilla comprobar si tu infraestructura en Azure, cumple con las mejores prácticas y recomendaciones.</p>
+<p>Lo primero que vamos a hacer es instalarlo, en el caso de de Windows 10/11 deberíamos lanzar la siguiente línea en el terminal:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>winget install azqr
+</span></span></code></pre></div><p>Una vez instalado, debemos autenticarnos. Tenemos 2 formas:</p>
+<ul>
+<li>A través de Azure CLI</li>
+<li>A través de un service principal, configurando las siguientes variables de entorno:
+<ul>
+<li>AZURE_CLIENT_ID</li>
+<li>AZURE_CLIENT_SECRET</li>
+<li>AZURE_TENANT_ID</li>
+</ul>
+</li>
+</ul>
+<p>En nuestro caso , vamos a usar Azure CLI. Sea cual sea el tipo de autenticación que eligamos necesitamos el permiso de <strong>Reader</strong> a nivel de suscripción:</p>
+<img src="/images/post_08/image02.png" style="zoom:80%;" />
+<p>Como hemos dicho, vamos a usar Azure CLI como autenticación, así que lanzamos el siguiente comando:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>az login
+</span></span></code></pre></div><p>Una vez autenticados lanzamos lo siguiente para escanear todos los recursos a nivel de suscripción (<strong>donde [subscription_id] es el id de tu suscripción</strong>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>azqr scan -s <span style="color:#f92672">[</span>subscription_id<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p><img src="/images/post_08/image03.png" alt=""></p>
+<p>Y como es obvio, dependiendo del numero de recursos desplegados pues tardará más o tardará menos.</p>
+<p>Una vez finalizado el escaneo, se nos generará un fichero Excel con el resultado en el directorio donde hemos lanzado el escaneo, así como un dashboard de PowerBI. En nuestro ejemplo <strong>C:\azqrResults</strong>.</p>
+<p><img src="/images/post_08/image04.png" alt=""></p>
+<p>Ahora vamos a abrir el fichero Excel generado, y nos encontramos las siguientes hojas:</p>
+<ul>
+<li>
+<p><strong>Overview:</strong>  En esta hoja nos muestra un resumen de los servicios escaneados, donde cabe destacar las siguientes columnas:</p>
+<ul>
+<li>
+<p><strong>SLA</strong>: El % de SLA que tiene la configuración del servicio con la configuración actual.</p>
+</li>
+<li>
+<p><strong>AZ:</strong> Si el servicio (aquel que tenga soporte, porque no todos lo tienen), tiene habilitado <strong>Availability zone</strong> (<a href="https://learn.microsoft.com/en-us/azure/reliability/availability-zones-service-support">https://learn.microsoft.com/en-us/azure/reliability/availability-zones-service-support</a>)</p>
+</li>
+<li>
+<p><strong>PVT:</strong> Si el servicio  (aquel que tenga soporte, porque no todos lo tienen), tiene IP privada.</p>
+</li>
+<li>
+<p><strong>DS:</strong> Si el servicio tiene habilitado Diagnostic Settings.</p>
+</li>
+<li>
+<p><strong>CAF:</strong>  Si el nombre del servicio o resource group cumple con las recomendaciones del <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations">Cloud Adoption Framework</a> , en lo que a nombrado se refiere.</p>
+<img src="/images/post_08/image05.png" style="zoom:80%;" />
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Recommendations:</strong> Se nos muestra una serie de recomendaciones que no cumplimos en nuestros recursos, con una clasificación de criticidad de <strong>Low</strong>, <strong>Medium</strong> and <strong>High</strong>.</p>
+<p><img src="/images/post_08/image06.png" alt=""></p>
+</li>
+<li>
+<p><strong>Services:</strong>  Vemos de forma pormenorizada, que recomendaciones no cumplimos servicio por servicio.</p>
+<p><img src="/images/post_08/image07.png" alt=""></p>
+</li>
+<li>
+<p><strong>Defender</strong>: En esta hoja vemos que tier del plan estamos usando para cada tipo de servicio, y si este plan esta deprecado.</p>
+<img src="/images/post_08/image08.png" style="zoom:80%;" />
+</li>
+<li>
+<p><strong>Advisor:</strong> Aquí veríamos las recomendaciones de Azure Advisor, obteniendo la misma información como si lo hicieramos desde el portal de Azure.</p>
+</li>
+</ul>
+<img src="/images/post_08/image10.png" style="zoom:67%;" />
+<img src="/images/post_08/image09.png" style="zoom:67%;" />
+<p>Si se quisiera que en el excel, se generará una hoja extra llamada <strong>Costs</strong> on los gastos desde el primer día del mes hasta el día que se lanzó el escaneo, debemos ejecutar lo siguiente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>azqr scan --costs -s <span style="color:#f92672">[</span>subscription_id<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>El excel generado, ahora sí incorporará esta pestaña con los costes:</p>
+<img src="/images/post_08/image11.png" style="zoom: 67%;" />
+<p>Luego tenemos otros parámetros para lanzar el comando <strong>scan</strong>. Algunos ejemplos son:</p>
+<ul>
+<li>
+<p>Escanear un resource group determinado:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>    azqr scan -s <span style="color:#f92672">[</span>subscription_id<span style="color:#f92672">]</span> -g <span style="color:#f92672">[</span>resource_group_name<span style="color:#f92672">]</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Escanear sólo los storage accounts a nivel de suscripción:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>azqr scan st -s <span style="color:#f92672">[</span>subscription_id<span style="color:#f92672">]</span>
+</span></span></code></pre></div></li>
+</ul>
+<p>Para ver todas las posibilidades que te ofrece el comando scan, usar el siguiente comando:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>azqr scan -h
+</span></span></code></pre></div><p>Luego respecto al PowerBI que se genera, pues esta muy bien porque puedes ver y filtrar de forma más fácil y rápida la información del excel.</p>
+<img src="/images/post_08/image12.png" style="zoom:67%;" />
+<p>Usar esta herramienta en local esta muy bien, pero también el que podemos integrarla fácilmente en tus pipelines de CI/CD.  Es por eso, que os dejo la siguiente pipeline de <strong>Azure DevOps</strong> por si os interesa. La pipeline es muy sencilla, instala <strong>azqr</strong>, lanza el comando <strong>scan</strong> y publica el excel en un artefacto para que pueda ser descargado. Una vez con esos datos, se me ocurre por ejemplo revisar esos datos y si hay recomendaciones críticas pues denegar el paso a producción con una aprobación manual.</p>
+<p>La pipeline es la siguiente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">trigger</span>:
+</span></span><span style="display:flex;"><span>- <span style="color:#ae81ff">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">pool</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">vmImage</span>: <span style="color:#ae81ff">ubuntu-latest</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">steps</span>:
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">task</span>: <span style="color:#ae81ff">Bash@3</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">displayName</span>: <span style="color:#e6db74">&#39;Install Azure Quick Review (azqr)&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">inputs</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">targetType</span>: <span style="color:#e6db74">&#39;inline&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">script</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      latest_azqr=$(curl -sL https://api.github.com/repos/Azure/azqr/releases/latest | jq -r &#34;.tag_name&#34; | cut -c1-)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      wget https://github.com/Azure/azqr/releases/download/$latest_azqr/azqr-ubuntu-latest-amd64 -O azqr
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      chmod +x azqr            </span>      
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">task</span>: <span style="color:#ae81ff">Bash@3</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">displayName</span>:  <span style="color:#e6db74">&#39;Launch help&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">inputs</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">targetType</span>: <span style="color:#e6db74">&#39;inline&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">script</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     ./azqr help</span>     
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">task</span>: <span style="color:#ae81ff">Bash@3</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">displayName</span>:  <span style="color:#e6db74">&#39;Launch scan&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">inputs</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">targetType</span>: <span style="color:#e6db74">&#39;inline&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">script</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      ./azqr scan -s $(AZURE_SUBSCRIPTION_ID)</span>      
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">AZURE_CLIENT_ID</span>: <span style="color:#ae81ff">$(AZURE_CLIENT_ID)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">AZURE_CLIENT_SECRET</span>: <span style="color:#ae81ff">$(AZURE_CLIENT_SECRET)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">AZURE_TENANT_ID</span>: <span style="color:#ae81ff">$(AZURE_TENANT_ID)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">task</span>: <span style="color:#ae81ff">PublishPipelineArtifact@1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">inputs</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">targetPath</span>: <span style="color:#e6db74">&#39;$(Build.SourcesDirectory)&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">artifact</span>: <span style="color:#e6db74">&#39;azqrResult&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">publishLocation</span>: <span style="color:#e6db74">&#39;pipeline&#39;</span>
+</span></span></code></pre></div><p>Para que solo se publique el excel en el artefacto, debeis crear el siguiente fichero <strong>.artifactignore</strong> en el repo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e">**/*</span>
+</span></span><span style="display:flex;"><span>!<span style="color:#75715e">*.xlsx</span>
+</span></span></code></pre></div><p>Para más información sobre esta herramienta, os paso los siguientes enlaces:</p>
+<ul>
+<li>Sitio oficial de GitHub: <a href="https://github.com/Azure/azqr">https://github.com/Azure/azqr</a></li>
+<li>Documentación oficial: <a href="https://azure.github.io/azqr/docs/">https://azure.github.io/azqr/docs/</a></li>
+</ul>
+<p>Espero os haya gustado y hasta la próxima¡¡¡</p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Alejandro García avatar" src="/images/foto.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Alejandro García</span>
+	</div>
+	<div class="authorbox__description">
+		Apasionado por la tecnología.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/peroporquesehaborradoelcontainer/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">¿Por qué se ha borrado el container del Storage Account, si tenía bloqueo?. Hablemos de Control Plane y Data Plane</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://www.recetasdevops.dev/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/auditaazureconazqr/">Sigue las mejores prácticas y recomendaciones en Azure con Azure Quick Review</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/peroporquesehaborradoelcontainer/">¿Por qué se ha borrado el container del Storage Account, si tenía bloqueo?. Hablemos de Control Plane y Data Plane</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/comoenterarmecuandoretiranunserviciodeazure/">¿Cómo enterarme cuando retiran (deprecated) un servicio o funcionalidad en Azure?</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/identitynotfoundroleassignment/">¿Por qué me aparece Identity not found en las asignaciones de roles?</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/limitaraccesostorageblob/">Limitar el borrado de blobs en Azure Storage con permisos muy específicos usando RBAC y conditions</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 Recetas Devops.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

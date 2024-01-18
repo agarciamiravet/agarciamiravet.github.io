@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Recetas Devops</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jan 2024 00:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jan 2024 00:00:00 +0100</lastBuildDate>
     <atom:link href="https://www.recetasdevops.dev/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sigue las mejores prácticas y recomendaciones en Azure con Azure Quick Review</title>
+      <link>https://www.recetasdevops.dev/post/auditaazureconazqr/</link>
+      <pubDate>Thu, 18 Jan 2024 00:00:00 +0100</pubDate>
+      <guid>https://www.recetasdevops.dev/post/auditaazureconazqr/</guid>
+      <description>Azure Quick Review (a partir de ahora azqr), es una herramienta en línea de comandos muy útil.&#xA;Esta herramienta, te permite de manera muy sencilla comprobar si tu infraestructura en Azure, cumple con las mejores prácticas y recomendaciones.&#xA;Lo primero que vamos a hacer es instalarlo, en el caso de de Windows 10/11 deberíamos lanzar la siguiente línea en el terminal:&#xA;winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas:</description>
+    </item>
     <item>
       <title>¿Por qué se ha borrado el container del Storage Account, si tenía bloqueo?. Hablemos de Control Plane y Data Plane</title>
       <link>https://www.recetasdevops.dev/post/peroporquesehaborradoelcontainer/</link>
