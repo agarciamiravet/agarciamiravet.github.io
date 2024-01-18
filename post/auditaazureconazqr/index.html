@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 		<meta property="og:title" content="Sigue las mejores prácticas y recomendaciones en Azure con Azure Quick Review" />
 <meta property="og:description" content="Azure Quick Review (a partir de ahora azqr), es una herramienta en línea de comandos muy útil.
-Esta herramienta, te permite de manera muy sencilla comprobar si tu infraestructura en Azure, cumple con las mejores prácticas y recomendaciones.
+Esta herramienta, te permite de manera muy sencilla comprobar si tu infraestructura en Azure cumple con las mejores prácticas y recomendaciones.
 Lo primero que vamos a hacer es instalarlo, en el caso de de Windows 10/11 deberíamos lanzar la siguiente línea en el terminal:
 winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas:" />
 <meta property="og:type" content="article" />
@@ -62,7 +62,7 @@ winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas:"
 			<img src="/images/post_08/meme.jpg" style="zoom:100%;" />
 <p><br><br></p>
 <p><strong>Azure Quick Review</strong> (a partir de ahora <strong>azqr</strong>), es una herramienta en línea de comandos muy útil.</p>
-<p>Esta herramienta, te permite de manera muy sencilla comprobar si tu infraestructura en Azure, cumple con las mejores prácticas y recomendaciones.</p>
+<p>Esta herramienta, te permite de manera muy sencilla comprobar si tu infraestructura en Azure cumple con las mejores prácticas y recomendaciones.</p>
 <p>Lo primero que vamos a hacer es instalarlo, en el caso de de Windows 10/11 deberíamos lanzar la siguiente línea en el terminal:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>winget install azqr
 </span></span></code></pre></div><p>Una vez instalado, debemos autenticarnos. Tenemos 2 formas:</p>
@@ -78,15 +78,15 @@ winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas:"
 </ul>
 <p>En nuestro caso , vamos a usar Azure CLI. Sea cual sea el tipo de autenticación que eligamos necesitamos el permiso de <strong>Reader</strong> a nivel de suscripción:</p>
 <img src="/images/post_08/image02.png" style="zoom:80%;" />
+<br>
 <p>Como hemos dicho, vamos a usar Azure CLI como autenticación, así que lanzamos el siguiente comando:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>az login
 </span></span></code></pre></div><p>Una vez autenticados lanzamos lo siguiente para escanear todos los recursos a nivel de suscripción (<strong>donde [subscription_id] es el id de tu suscripción</strong>):</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>azqr scan -s <span style="color:#f92672">[</span>subscription_id<span style="color:#f92672">]</span>
 </span></span></code></pre></div><p><img src="/images/post_08/image03.png" alt=""></p>
-<p>Y como es obvio, dependiendo del numero de recursos desplegados pues tardará más o tardará menos.</p>
-<p>Una vez finalizado el escaneo, se nos generará un fichero Excel con el resultado en el directorio donde hemos lanzado el escaneo, así como un dashboard de PowerBI. En nuestro ejemplo <strong>C:\azqrResults</strong>.</p>
+<p>Y como es obvio, dependiendo del numero de recursos desplegados pues tardará más o tardará menos. Una vez finalizado el escaneo, se nos generará un fichero excel con el resultado en el directorio donde hemos lanzado el escaneo, así como un dashboard de PowerBI. En nuestro ejemplo  este directorio es <strong>C:\azqrResults</strong>.</p>
 <p><img src="/images/post_08/image04.png" alt=""></p>
-<p>Ahora vamos a abrir el fichero Excel generado, y nos encontramos las siguientes hojas:</p>
+<p>Ahora vamos a abrir el fichero excel generado, y nos encontramos las siguientes hojas:</p>
 <ul>
 <li>
 <p><strong>Overview:</strong>  En esta hoja nos muestra un resumen de los servicios escaneados, donde cabe destacar las siguientes columnas:</p>
@@ -109,6 +109,9 @@ winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas:"
 </li>
 </ul>
 </li>
+</ul>
+<br>
+<ul>
 <li>
 <p><strong>Recommendations:</strong> Se nos muestra una serie de recomendaciones que no cumplimos en nuestros recursos, con una clasificación de criticidad de <strong>Low</strong>, <strong>Medium</strong> and <strong>High</strong>.</p>
 <p><img src="/images/post_08/image06.png" alt=""></p>
@@ -120,17 +123,20 @@ winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas:"
 <li>
 <p><strong>Defender</strong>: En esta hoja vemos que tier del plan estamos usando para cada tipo de servicio, y si este plan esta deprecado.</p>
 <img src="/images/post_08/image08.png" style="zoom:80%;" />
+<br>
 </li>
 <li>
 <p><strong>Advisor:</strong> Aquí veríamos las recomendaciones de Azure Advisor, obteniendo la misma información como si lo hicieramos desde el portal de Azure.</p>
+  <img src="/images/post_08/image10.png" style="zoom:67%;" />
+  <img src="/images/post_08/image09.png" style="zoom:67%;" />
 </li>
 </ul>
-<img src="/images/post_08/image10.png" style="zoom:67%;" />
-<img src="/images/post_08/image09.png" style="zoom:67%;" />
+<br>
 <p>Si se quisiera que en el excel, se generará una hoja extra llamada <strong>Costs</strong> on los gastos desde el primer día del mes hasta el día que se lanzó el escaneo, debemos ejecutar lo siguiente:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>azqr scan --costs -s <span style="color:#f92672">[</span>subscription_id<span style="color:#f92672">]</span>
 </span></span></code></pre></div><p>El excel generado, ahora sí incorporará esta pestaña con los costes:</p>
 <img src="/images/post_08/image11.png" style="zoom: 67%;" />
+<br>
 <p>Luego tenemos otros parámetros para lanzar el comando <strong>scan</strong>. Algunos ejemplos son:</p>
 <ul>
 <li>
@@ -146,7 +152,9 @@ winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas:"
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>azqr scan -h
 </span></span></code></pre></div><p>Luego respecto al PowerBI que se genera, pues esta muy bien porque puedes ver y filtrar de forma más fácil y rápida la información del excel.</p>
 <img src="/images/post_08/image12.png" style="zoom:67%;" />
-<p>Usar esta herramienta en local esta muy bien, pero también el que podemos integrarla fácilmente en tus pipelines de CI/CD.  Es por eso, que os dejo la siguiente pipeline de <strong>Azure DevOps</strong> por si os interesa. La pipeline es muy sencilla, instala <strong>azqr</strong>, lanza el comando <strong>scan</strong> y publica el excel en un artefacto para que pueda ser descargado. Una vez con esos datos, se me ocurre por ejemplo revisar esos datos y si hay recomendaciones críticas pues denegar el paso a producción con una aprobación manual.</p>
+<p><br><br></p>
+<p>Usar esta herramienta en local esta muy bien, pero también el que podemos integrarla fácilmente en tus pipelines de CI/CD.  Es por eso, que os dejo la siguiente pipeline de <strong>Azure DevOps</strong> por si os interesa.</p>
+<p>La pipeline es muy sencilla, instala <strong>azqr</strong>, lanza el comando <strong>scan</strong> y publica el excel en un artefacto para que pueda ser descargado. Una vez con esos datos, se me ocurre por ejemplo revisar esos datos y si hay recomendaciones críticas pues denegar el paso a producción con una aprobación manual.</p>
 <p>La pipeline es la siguiente:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">trigger</span>:
 </span></span><span style="display:flex;"><span>- <span style="color:#ae81ff">main</span>
@@ -187,7 +195,7 @@ winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas:"
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">targetPath</span>: <span style="color:#e6db74">&#39;$(Build.SourcesDirectory)&#39;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">artifact</span>: <span style="color:#e6db74">&#39;azqrResult&#39;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">publishLocation</span>: <span style="color:#e6db74">&#39;pipeline&#39;</span>
-</span></span></code></pre></div><p>Para que solo se publique el excel en el artefacto, debeis crear el siguiente fichero <strong>.artifactignore</strong> en el repo:</p>
+</span></span></code></pre></div><p>Para que solo se publique el excel en el artefacto, debeis crear el siguiente fichero <strong>.artifactignore</strong> en el repositorio:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e">**/*</span>
 </span></span><span style="display:flex;"><span>!<span style="color:#75715e">*.xlsx</span>
 </span></span></code></pre></div><p>Para más información sobre esta herramienta, os paso los siguientes enlaces:</p>
