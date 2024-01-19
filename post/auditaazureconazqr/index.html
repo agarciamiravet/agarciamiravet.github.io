@@ -60,7 +60,7 @@ winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas d
 		</header>
 		<div class="content post__content clearfix">
 			<img src="/images/post_08/meme.jpg" style="zoom:100%;" />
-<p><br><br></p>
+<br>
 <p><strong>Azure Quick Review</strong> (a partir de ahora <strong>azqr</strong>), es una herramienta en línea de comandos muy útil.</p>
 <p>Esta herramienta, te permite de manera muy sencilla comprobar si tu infraestructura en Azure cumple con las mejores prácticas y recomendaciones.</p>
 <p>Lo primero que vamos a hacer es instalarlo, en el caso de de Windows 10/11 deberíamos lanzar la siguiente línea en el terminal:</p>
@@ -123,7 +123,7 @@ winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas d
 <li>
 <p><strong>Defender</strong>: En esta hoja vemos que tier de Defender estamos usando para cada tipo de servicio, y si este plan esta deprecado.</p>
 <img src="/images/post_08/image08.png" style="zoom:80%;" />
-<br>
+<p><br><br></p>
 </li>
 <li>
 <p><strong>Advisor:</strong> Aquí vemos las recomendaciones de Azure Advisor, obteniendo la misma información como si lo hiciéramos desde el portal de Azure.</p>
@@ -136,7 +136,7 @@ winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas d
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>azqr scan --costs -s <span style="color:#f92672">[</span>subscription_id<span style="color:#f92672">]</span>
 </span></span></code></pre></div><p>El excel generado, ahora sí incorporará esta pestaña con los costes:</p>
 <img src="/images/post_08/image11.png" style="zoom: 67%;" />
-<br>
+<p><br><br></p>
 <p>Luego tenemos otros parámetros para lanzar junto el comando <strong>scan</strong>. Algunos ejemplos son:</p>
 <ul>
 <li>
@@ -152,7 +152,7 @@ winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas d
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>azqr scan -h
 </span></span></code></pre></div><p>Luego respecto al PowerBI que se genera, pues esta muy bien porque puedes ver y filtrar de forma más fácil y rápida la información del excel.</p>
 <img src="/images/post_08/image12.png" style="zoom:67%;" />
-<p><br><br></p>
+<br>
 <p>Usar esta herramienta en local esta muy bien, pero también el que podemos integrarla fácilmente en tus pipelines de CI/CD.  Es por eso, que os dejo la siguiente pipeline de <strong>Azure DevOps</strong> por si os interesa.</p>
 <p>La pipeline es muy sencilla:</p>
 <ol>
