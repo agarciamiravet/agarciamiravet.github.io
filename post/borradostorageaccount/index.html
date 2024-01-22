@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>He borrado por error un Storage Account de Azure en producción. ¿Y ahora que hago? - Recetas Devops</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="He borrado por error un Storage Account de Azure en producción. ¿Y ahora que hago?" />
+<meta property="og:description" content="Los errores ocurren, y de los creadores de los clásicos &ldquo;He borrado una base de datos en producción&rdquo; o &ldquo;No te olvides de poner el where en el delete from&rdquo;, ahora viene una nueva super producción llamada &ldquo;He borrado un storage account de Azure en producción&rdquo;.
+En este artículo vamos a ver como podemos intentar recuperar ese storage account borrado. Recalco lo de INTENTAR, porque tal y como dicen en la documentación de Azure, Microsoft hará su best effort pero que la recuperación en ningún momento esta garantizada:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.recetasdevops.dev/post/borradostorageaccount/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-01-22T00:00:00+01:00" />
+<meta property="article:modified_time" content="2024-01-22T00:00:00+01:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="Recetas Devops" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.png">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">Recetas Devops</div>
+					<div class="logo__tagline">Tus recetas para DevOps de confianza</div>
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">He borrado por error un Storage Account de Azure en producción. ¿Y ahora que hago?</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2024-01-22T00:00:00&#43;01:00">January 22, 2024</time></div></div>
+		</header>
+		<div class="content post__content clearfix">
+			<img src="/images/post_09/meme.png" style="zoom:70%;" />
+<p>Los errores ocurren, y de los creadores de los clásicos <strong>&ldquo;He borrado una base de datos en producción&rdquo;</strong> o  <strong>&ldquo;No te olvides de poner el where en el delete from&rdquo;</strong>, ahora viene una nueva super producción llamada <strong>&ldquo;He borrado un storage account de Azure en producción&rdquo;</strong>.</p>
+<p>En este artículo vamos a ver como podemos <strong>intentar</strong> recuperar ese storage account borrado. Recalco lo de <strong>INTENTAR</strong>, porque tal y como dicen en la documentación de Azure, Microsoft hará su  <strong>best effort</strong> pero que la recuperación en ningún momento esta garantizada:</p>
+<p><img src="/images/post_09/image_09.png" alt=""></p>
+<p>Dicho este disclaimer, imaginemos en nuestro ejemplo, que tenemos un storage account llamado <strong>stnomeborresesprod</strong> y lo hemos <strong>borrado</strong>.</p>
+<img src="/images/post_09/image_01.png" style="zoom:80%;" />
+<p><img src="/images/post_09/image_02.png" alt=""></p>
+<p>Una vez lo has borrado y te has dado cuenta (esperemos que pronto jeje),  el primer paso es <strong>MANTENER LA CALMA.</strong></p>
+<p>Para poder recuperar este storage account a través del portal de Azure, debemos de hacer lo siguiente:</p>
+<ol>
+<li>
+<p>Ir al portal de azure usando la url <a href="https://portal.azure.com">https://portal.azure.com</a></p>
+</li>
+<li>
+<p>Una vez en el portal, en la búsqueda ponemos <strong>Storage accounts</strong>.</p>
+</li>
+</ol>
+<img src="/images/post_09/image_03.png" style="zoom:80%;" />
+<ol start="3">
+<li>
+<p>Una vez dentro, pulsamos en la opción <strong>Restore.</strong></p>
+<img src="/images/post_09/image_04.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Seleccionamos la suscripción de donde hemos borrado el storage account, y buscamos nuestro storage account. Hemos tenido suerte y aparece en el listado. Seleccionamos el storage account.</p>
+<img src="/images/post_09/image_05.png" style="zoom: 67%;" />
+</li>
+<li>
+<p>Pulsamos al botón <strong>Restore</strong>.</p>
+<img src="/images/post_09/image_06.png" style="zoom:80%;" />
+</li>
+<li>
+<p>El proceso de restauración se pone en marcha, advirtiéndonos que puede demorarse el proceso unos  minutos.</p>
+<img src="/images/post_09/image_07.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Al final un mensaje de que el storage account se ha restaurado, y ya volvemos a respirar  tranquilos (jajaja).</p>
+<img src="/images/post_09/image_08.png" style="zoom:80%;" />
+</li>
+</ol>
+<p><strong>NOTA IMPORTANTE:</strong></p>
+<p><em>Para poder usar el método explicado arriba, se deben de dar varias condiciones que son:</em></p>
+<ul>
+<li>
+<p><em>El storage account se ha borrado en un período menor o igual a 14 días.</em></p>
+</li>
+<li>
+<p><em>No se ha creado un storage account con el mismo nombre.</em></p>
+</li>
+<li>
+<p><em>Existe el resource group donde estaba alojado el storage account. En caso de no existir crearlo de nuevo con el mismo nombre y podríamos recuperar el storage account.</em></p>
+</li>
+</ul>
+<p>En caso de que tuviéramos algún problema con la opción que os explique arriba, la siguiente mejor opción es abrir un ticket de soporte al equipo de Azure de la siguiente forma:</p>
+<ol>
+<li>En el portal de Azure, buscamos <strong>support</strong> y damos en <strong>Help + Support</strong></li>
+</ol>
+<img src="/images/post_09/image_10.png" style="zoom:80%;" />
+<ol start="2">
+<li>
+<p>Pulsamos en <strong>Create a support request:</strong></p>
+<img src="/images/post_09/image_11.png" style="zoom:80%;" />
+</li>
+<li>
+<p>En <strong>Problem description</strong>, seleccionamos <strong>Technical</strong>:</p>
+<img src="/images/post_09/image_12.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Buscamos y seleccionamos la suscripción en la cuál se borro el storage account.</p>
+<img src="/images/post_09/image_13.png" style="zoom:80%;" />
+</li>
+<li>
+<p>En <strong>Service type</strong>, buscamos <strong>storage account</strong> y seleccionamos <strong>Storage Account Management</strong>:</p>
+<p><img src="/images/post_09/image_15.png" alt=""></p>
+</li>
+<li>
+<p>En <strong>Problem type</strong> , seleccionamos la opción <strong>Deletion and Recovery</strong></p>
+</li>
+</ol>
+<img src="/images/post_09/image_16.png" style="zoom:80%;" />
+<ol start="7">
+<li>
+<p>En <strong>Problem subtype</strong>, seleccionamos la opción <strong>Recover deleted storage account</strong>:</p>
+<img src="/images/post_09/image_17.png" style="zoom:80%;" />
+</li>
+<li>
+<p>En <strong>Summary</strong>, ponemos una breve descripción de lo ocurrido. Pulsamos en <strong>Next</strong>:</p>
+   <img src="/images/post_09/image_18.png" style="zoom:80%;" />
+</li>
+<li>
+<p>En la pestaña de <strong>Recommended Solution</strong>, nos da la primera opción que hemos descrito al principio del artículo. Pulsamos en <strong>Next</strong>, ya que nosotros queremos abrir el ticket porque la solución proporcionada no nos &ldquo;funciona&rdquo;:</p>
+<img src="/images/post_09/image_19.png" style="zoom: 67%;" />
+</li>
+<li>
+<p>En la pestaña <strong>Additional details</strong>, escribimos de manera pormenorizada el problema. Como se llama el storage account borrado, el resource group donde estaba, en que día y  hora aproximada se borró &hellip; Pulsamos en <strong>Next</strong></p>
+</li>
+<li>
+<p>Por último en la última pestaña, <strong>Review + create</strong>, revisamos el ticket que vamos a crear. Por último pulsamos en <strong>Create</strong>.</p>
+</li>
+</ol>
+<p>En resumen, como hemos dicho que Microsoft pueda recuperar un storage account es un best effort y <strong>no esta garantizado el poder recuperarlo</strong>. Es por ello que como todo en la vida, es mejor prevenir que curar, por lo que para poder prevenir el borrado de los storage accounts podemos hacer lo siguiente:</p>
+<ul>
+<li>Habilitar bloqueos, esta debe hacerse siempre en cualquier recurso, pero si es en producción debe ser <strong>OBLIGATORIO</strong></li>
+<li>Limitar los permisos de borrado del storage account, a muy pocos usuarios, service principal o manege identities.</li>
+</ul>
+<p>Por último, para poder enterarnos cuando se borra un storage account, podemos crear una alerta en Azure usando el Activity Log Event <strong>Delete Storage Account (Storage Accounts)</strong>:</p>
+<img src="/images/post_09/image_22.png" style="zoom:67%;" />
+<p>De cualquier manera, en uno de mis siguientes posts voy a hablar de como podemos enterarnos a través de las alertas cuando borran o modifican recursos en Azure.</p>
+<p>Espero que este post os haya gustado, y hasta la próxima.</p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Alejandro García avatar" src="/images/foto.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Alejandro García</span>
+	</div>
+	<div class="authorbox__description">
+		Apasionado por la tecnología.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/auditaazureconazqr/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Sigue las mejores prácticas y recomendaciones en Azure con Azure Quick Review</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://www.recetasdevops.dev/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/borradostorageaccount/">He borrado por error un Storage Account de Azure en producción. ¿Y ahora que hago?</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/auditaazureconazqr/">Sigue las mejores prácticas y recomendaciones en Azure con Azure Quick Review</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/peroporquesehaborradoelcontainer/">¿Por qué se ha borrado el container del Storage Account, si tenía bloqueo?. Hablemos de Control Plane y Data Plane</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/comoenterarmecuandoretiranunserviciodeazure/">¿Cómo enterarme cuando retiran (deprecated) un servicio o funcionalidad en Azure?</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/identitynotfoundroleassignment/">¿Por qué me aparece Identity not found en las asignaciones de roles?</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 Recetas Devops.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

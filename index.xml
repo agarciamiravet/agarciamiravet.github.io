@@ -6,8 +6,15 @@
     <description>Recent content on Recetas Devops</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jan 2024 00:00:00 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jan 2024 00:00:00 +0100</lastBuildDate>
     <atom:link href="https://www.recetasdevops.dev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>He borrado por error un Storage Account de Azure en producción. ¿Y ahora que hago?</title>
+      <link>https://www.recetasdevops.dev/post/borradostorageaccount/</link>
+      <pubDate>Mon, 22 Jan 2024 00:00:00 +0100</pubDate>
+      <guid>https://www.recetasdevops.dev/post/borradostorageaccount/</guid>
+      <description>Los errores ocurren, y de los creadores de los clásicos &amp;ldquo;He borrado una base de datos en producción&amp;rdquo; o &amp;ldquo;No te olvides de poner el where en el delete from&amp;rdquo;, ahora viene una nueva super producción llamada &amp;ldquo;He borrado un storage account de Azure en producción&amp;rdquo;.&#xA;En este artículo vamos a ver como podemos intentar recuperar ese storage account borrado. Recalco lo de INTENTAR, porque tal y como dicen en la documentación de Azure, Microsoft hará su best effort pero que la recuperación en ningún momento esta garantizada:</description>
+    </item>
     <item>
       <title>Sigue las mejores prácticas y recomendaciones en Azure con Azure Quick Review</title>
       <link>https://www.recetasdevops.dev/post/auditaazureconazqr/</link>
