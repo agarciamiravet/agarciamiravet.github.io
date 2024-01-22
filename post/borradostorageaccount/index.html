@@ -58,6 +58,7 @@ En este artículo vamos a ver como podemos intentar recuperar ese storage accoun
 		</header>
 		<div class="content post__content clearfix">
 			<img src="/images/post_09/meme.png" style="zoom:70%;" />
+<p><br><br></p>
 <p>Los errores ocurren, y de los creadores de los clásicos <strong>&ldquo;He borrado una base de datos en producción&rdquo;</strong> o  <strong>&ldquo;No te olvides de poner el where en el delete from&rdquo;</strong>, ahora viene una nueva super producción llamada <strong>&ldquo;He borrado un storage account de Azure en producción&rdquo;</strong>.</p>
 <p>En este artículo vamos a ver como podemos <strong>intentar</strong> recuperar ese storage account borrado. Recalco lo de <strong>INTENTAR</strong>, porque tal y como dicen en la documentación de Azure, Microsoft hará su  <strong>best effort</strong> pero que la recuperación en ningún momento esta garantizada:</p>
 <p><img src="/images/post_09/image_09.png" alt=""></p>
@@ -75,22 +76,27 @@ En este artículo vamos a ver como podemos intentar recuperar ese storage accoun
 </li>
 </ol>
 <img src="/images/post_09/image_03.png" style="zoom:80%;" />
+<br>
 <ol start="3">
 <li>
 <p>Una vez dentro, pulsamos en la opción <strong>Restore.</strong></p>
 <img src="/images/post_09/image_04.png" style="zoom:80%;" />
+<br>
 </li>
 <li>
 <p>Seleccionamos la suscripción de donde hemos borrado el storage account, y buscamos nuestro storage account. Hemos tenido suerte y aparece en el listado. Seleccionamos el storage account.</p>
 <img src="/images/post_09/image_05.png" style="zoom: 67%;" />
+<br>
 </li>
 <li>
 <p>Pulsamos al botón <strong>Restore</strong>.</p>
 <img src="/images/post_09/image_06.png" style="zoom:80%;" />
+<br>
 </li>
 <li>
 <p>El proceso de restauración se pone en marcha, advirtiéndonos que puede demorarse el proceso unos  minutos.</p>
 <img src="/images/post_09/image_07.png" style="zoom:80%;" />
+<br>
 </li>
 <li>
 <p>Al final un mensaje de que el storage account se ha restaurado, y ya volvemos a respirar  tranquilos (jajaja).</p>
@@ -115,43 +121,53 @@ En este artículo vamos a ver como podemos intentar recuperar ese storage accoun
 <li>En el portal de Azure, buscamos <strong>support</strong> y damos en <strong>Help + Support</strong></li>
 </ol>
 <img src="/images/post_09/image_10.png" style="zoom:80%;" />
+<br>
 <ol start="2">
 <li>
 <p>Pulsamos en <strong>Create a support request:</strong></p>
 <img src="/images/post_09/image_11.png" style="zoom:80%;" />
+<br>
 </li>
 <li>
 <p>En <strong>Problem description</strong>, seleccionamos <strong>Technical</strong>:</p>
 <img src="/images/post_09/image_12.png" style="zoom:80%;" />
+<br>
 </li>
 <li>
 <p>Buscamos y seleccionamos la suscripción en la cuál se borro el storage account.</p>
 <img src="/images/post_09/image_13.png" style="zoom:80%;" />
+<br>
 </li>
 <li>
 <p>En <strong>Service type</strong>, buscamos <strong>storage account</strong> y seleccionamos <strong>Storage Account Management</strong>:</p>
 <p><img src="/images/post_09/image_15.png" alt=""></p>
+<br>
 </li>
 <li>
 <p>En <strong>Problem type</strong> , seleccionamos la opción <strong>Deletion and Recovery</strong></p>
 </li>
 </ol>
 <img src="/images/post_09/image_16.png" style="zoom:80%;" />
+<br>
 <ol start="7">
 <li>
 <p>En <strong>Problem subtype</strong>, seleccionamos la opción <strong>Recover deleted storage account</strong>:</p>
 <img src="/images/post_09/image_17.png" style="zoom:80%;" />
+<br>
 </li>
 <li>
 <p>En <strong>Summary</strong>, ponemos una breve descripción de lo ocurrido. Pulsamos en <strong>Next</strong>:</p>
    <img src="/images/post_09/image_18.png" style="zoom:80%;" />
+   <br>
 </li>
 <li>
 <p>En la pestaña de <strong>Recommended Solution</strong>, nos da la primera opción que hemos descrito al principio del artículo. Pulsamos en <strong>Next</strong>, ya que nosotros queremos abrir el ticket porque la solución proporcionada no nos &ldquo;funciona&rdquo;:</p>
 <img src="/images/post_09/image_19.png" style="zoom: 67%;" />
+<br>
 </li>
 <li>
-<p>En la pestaña <strong>Additional details</strong>, escribimos de manera pormenorizada el problema. Como se llama el storage account borrado, el resource group donde estaba, en que día y  hora aproximada se borró &hellip; Pulsamos en <strong>Next</strong></p>
+<p>En la pestaña <strong>Additional details</strong>, escribimos de manera pormenorizada el problema. Como se llama el storage account borrado, el resource group donde estaba, en que día y  hora aproximada se borró &hellip; Pulsamos en <strong>Next</strong>.</p>
+<br>
 </li>
 <li>
 <p>Por último en la última pestaña, <strong>Review + create</strong>, revisamos el ticket que vamos a crear. Por último pulsamos en <strong>Create</strong>.</p>
@@ -164,6 +180,7 @@ En este artículo vamos a ver como podemos intentar recuperar ese storage accoun
 </ul>
 <p>Por último, para poder enterarnos cuando se borra un storage account, podemos crear una alerta en Azure usando el Activity Log Event <strong>Delete Storage Account (Storage Accounts)</strong>:</p>
 <img src="/images/post_09/image_22.png" style="zoom:67%;" />
+<br>
 <p>De cualquier manera, en uno de mis siguientes posts voy a hablar de como podemos enterarnos a través de las alertas cuando borran o modifican recursos en Azure.</p>
 <p>Espero que este post os haya gustado, y hasta la próxima.</p>
 
