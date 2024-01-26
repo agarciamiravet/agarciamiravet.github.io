@@ -57,7 +57,7 @@ No es lo mismo crear una VM de tipo D2 v3 que vale 0,191€ la hora , que te equ
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2024-01-26T00:00:00&#43;02:00">January 26, 2024</time></div></div>
 		</header>
 		<div class="content post__content clearfix">
-			<p><img src="/../../static/images/post_11/meme.jpg" alt=""></p>
+			<p><img src="/images/post_11/meme.jpg" alt=""></p>
 <p>En el artículo de hoy, vamos a hablar de como restringir a través de Azure Policy que solo se creen ciertos tipos de máquinas virtuales. Esto es muy importante para el control de los costes, porque por ejemplo:</p>
 <p>No es lo mismo crear una VM de tipo <strong>D2 v3</strong> que vale 0,191€ la hora , que te equivoques y crees una de tipo <strong>EC96ads</strong> que vale 10,30 € la hora (jajaja).</p>
 <p>Además, por poner otro ejemplo que suele pasar mucho, en el caso de que te roben unas credenciales  de un service principal con permisos de creación de recursos. Pues te pueden hacer un roto importante, como por ejemplo levantar máquinas con un alto coste para hacer minería de BitCoin.</p>
@@ -79,79 +79,79 @@ No es lo mismo crear una VM de tipo D2 v3 que vale 0,191€ la hora , que te equ
 <ol>
 <li>
 <p>Vamos al portal de Azure y buscamos <strong>Policy.</strong></p>
-<img src="/../../static/images/post_11/01.png" style="zoom:80%;" />
+<img src="/images/post_11/01.png" style="zoom:80%;" />
 </li>
 <li>
 <p>Una vez dentro, pulsar en <strong>Assignments</strong>.</p>
-<img src="/../../static/images/post_11/02.png" style="zoom:80%;" />
+<img src="/images/post_11/02.png" style="zoom:80%;" />
 </li>
 <li>
 <p>Luego pulsar en <strong>Assign policy</strong>.</p>
-<img src="/../../static/images/post_11/03.png" style="zoom:80%;" />
+<img src="/images/post_11/03.png" style="zoom:80%;" />
 </li>
 <li>
 <p>Ahora vamos a seleccionar el ámbito donde va a aplicar esta política, en nuestro caso a nivel de una suscripción.</p>
-<img src="/../../static/images/post_11/04.png" style="zoom:80%;" />
+<img src="/images/post_11/04.png" style="zoom:80%;" />
 </li>
 <li>
 <p>Seleccionamos la suscripción y luego pulsamos <strong>Select</strong>.</p>
-<img src="/../../static/images/post_11/05.png" style="zoom: 67%;" />
+<img src="/images/post_11/05.png" style="zoom: 67%;" />
 </li>
 <li>
 <p>Ahora vamos a buscar nuestra <strong>Policy definition</strong>.</p>
-<img src="/../../static/images/post_11/06.png" style="zoom:80%;" />
+<img src="/images/post_11/06.png" style="zoom:80%;" />
 </li>
 <li>
 <p>Buscar <strong>Allowed virtual machine size SKUs</strong> y la seleccionamos.</p>
-<img src="/../../static/images/post_11/07.png" style="zoom:80%;" />
+<img src="/images/post_11/07.png" style="zoom:80%;" />
 </li>
 <li>
 <p>Pulsar en <strong>Add</strong>.</p>
-<p><img src="/../../static/images/post_11/08.png" alt=""></p>
+<p><img src="/images/post_11/08.png" alt=""></p>
 </li>
 <li>
 <p>Nos da un nombre por defecto para el <strong>Assignment name</strong> (pero vamos que podemos cambiarlo jajaja) y le damos una descripción.</p>
-<img src="/../../static/images/post_11/09.png" style="zoom:80%;" />
+<img src="/images/post_11/09.png" style="zoom:80%;" />
 </li>
 <li>
 <p>Dejamos <strong>Policy enforcement</strong> en <strong>Enabled</strong>, porque queremos que aplique de inmediato nuestra asignación de política.</p>
-<img src="/../../static/images/post_11/10.png" style="zoom:80%;" />
+<img src="/images/post_11/10.png" style="zoom:80%;" />
 </li>
 <li>
 <p>Pulsamos en la pestaña <strong>Parameters</strong>.</p>
-<img src="/../../static/images/post_11/11.png" style="zoom:80%;" />
+<img src="/images/post_11/11.png" style="zoom:80%;" />
 </li>
 <li>
 <p>Buscamos y seleccionamos los tipos de máquinas virtuales que vamos a permitir, en nuestro caso <strong>Standard_B2s</strong> y <strong>Standard_D3_v2</strong></p>
-<img src="/../../static/images/post_11/12.png" style="zoom:80%;" />
-<img src="/../../static/images/post_11/13.png" style="zoom:80%;" />
+<img src="/images/post_11/12.png" style="zoom:80%;" />
+<img src="/images/post_11/13.png" style="zoom:80%;" />
 </li>
 <li>
 <p>Pulsamos en <strong>Review + create</strong></p>
-<p><img src="/../../static/images/post_11/14.png" alt=""></p>
+<p><img src="/images/post_11/14.png" alt=""></p>
 </li>
 <li>
 <p>Revisamos que hemos definido bien la asignación&hellip;.</p>
-<p><img src="/../../static/images/post_11/15.png" alt=""></p>
+<p><img src="/images/post_11/15.png" alt=""></p>
 </li>
 <li>
 <p>Pulsamos en <strong>Create</strong></p>
-<p><img src="/../../static/images/post_11/16.png" alt=""></p>
+<p><img src="/images/post_11/16.png" alt=""></p>
 </li>
 <li>
 <p>Un mensaje nos aparecerá diciendo que se esta creando. Y al poco tiempo, aparecerá otro mensaje diciendo que la deficición se ha creado y que puede tardar la definición en aplicarse entre 5 y 15 minutos.</p>
-<img src="/../../static/images/post_11/17.png" style="zoom:80%;" />
-<p><img src="/../../static/images/post_11/20.png" alt=""></p>
+<img src="/images/post_11/17.png" style="zoom:80%;" />
+<p><img src="/images/post_11/20.png" alt=""></p>
 </li>
 <li>
 <p>Y ahora, si vamos a crear una nueva máquina virtual, al seleccionar un tipo de máquina virtual que no permitimos, aparecerá esto:</p>
-<img src="/../../static/images/post_11/18.png" style="zoom:80%;" />
+<img src="/images/post_11/18.png" style="zoom:80%;" />
 </li>
 <li>
 <p>En cambio, si elegimos un tipo de máquina virtual permitido:</p>
 </li>
 </ol>
-<img src="/../../static/images/post_11/19.png" style="zoom:80%;" />
+<img src="/images/post_11/19.png" style="zoom:80%;" />
 <p>Espero os haya gustado el artículo.</p>
 
 		</div>
