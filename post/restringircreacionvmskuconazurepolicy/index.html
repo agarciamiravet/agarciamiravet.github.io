@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Restringir la creación de máquinas virtuales en Azure a ciertos tipos con Azure Policy - Recetas Devops</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Restringir la creación de máquinas virtuales en Azure a ciertos tipos con Azure Policy" />
+<meta property="og:description" content="En el artículo de hoy, vamos a hablar de como restringir a través de Azure Policy que solo se creen ciertos tipos de máquinas virtuales. Esto es muy importante para el control de los costes, porque por ejemplo:
+No es lo mismo crear una VM de tipo D2 v3 que vale 0,191€ la hora , que te equivoques y crees una de tipo EC96ads que vale 10,30 € la hora (jajaja)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.recetasdevops.dev/post/restringircreacionvmskuconazurepolicy/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-01-26T00:00:00+02:00" />
+<meta property="article:modified_time" content="2024-01-26T00:00:00+02:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="Recetas Devops" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.png">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">Recetas Devops</div>
+					<div class="logo__tagline">Tus recetas para DevOps de confianza</div>
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Restringir la creación de máquinas virtuales en Azure a ciertos tipos con Azure Policy</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2024-01-26T00:00:00&#43;02:00">January 26, 2024</time></div></div>
+		</header>
+		<div class="content post__content clearfix">
+			<p><img src="/../../static/images/post_11/meme.jpg" alt=""></p>
+<p>En el artículo de hoy, vamos a hablar de como restringir a través de Azure Policy que solo se creen ciertos tipos de máquinas virtuales. Esto es muy importante para el control de los costes, porque por ejemplo:</p>
+<p>No es lo mismo crear una VM de tipo <strong>D2 v3</strong> que vale 0,191€ la hora , que te equivoques y crees una de tipo <strong>EC96ads</strong> que vale 10,30 € la hora (jajaja).</p>
+<p>Además, por poner otro ejemplo que suele pasar mucho, en el caso de que te roben unas credenciales  de un service principal con permisos de creación de recursos. Pues te pueden hacer un roto importante, como por ejemplo levantar máquinas con un alto coste para hacer minería de BitCoin.</p>
+<p>Pero antes de ver como podemos restringir la creación a ciertos de tipos de máquinas virtuales, vamos a hablar brevemente de que es Azure Policy.</p>
+<p>Azure Policy es un servicio de Azure que te ayuda a la gobernanza de tus recursos en Azure. Diciendolo en palabras más simples , nos ayuda a crear, aplicar una serie de políticas que nuestros recursos en Azure deben de cumplir.</p>
+<p>Ejemplos de políticas que podemos aplicar (aparte de la que vamos a aplicar en este post) son:</p>
+<ul>
+<li>Crear solo los recursos en ciertas regiones de Azure, por ejemplo solo permitir crear recursos en West Europe.</li>
+<li>Los  Azure KeyVault deben tener habilitada la protección contra eliminación</li>
+<li>Los grupos de recursos deben cumplir un nombrado específico</li>
+</ul>
+<p>Decir también, que Azure Policy ya tiene muchas definiciones de políticas que podemos usar desde el primer momento. Pero además nosotros mismos podemos crear nuevas para que se ajuste a nuestras necesidades.</p>
+<p>Si queréis profundizar más en el tema de Azure Policy, podéis ver la documentación oficial en este enlace:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/governance/policy/">https://learn.microsoft.com/en-us/azure/governance/policy/</a></p>
+<p>Bueno y ahora ya sí, vamos a ver como podemos asignar una política para solo permitir ciertos tipos de máquinas virtuales.</p>
+<p>Pongamos el siguiente ejemplo:</p>
+<p><strong>&ldquo;Yo solo quiero crear máquinas virtuales de tipo B2s y D3v2&rdquo;</strong></p>
+<p>Los pasos que deberíamos seguir es:</p>
+<ol>
+<li>
+<p>Vamos al portal de Azure y buscamos <strong>Policy.</strong></p>
+<img src="/../../static/images/post_11/01.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Una vez dentro, pulsar en <strong>Assignments</strong>.</p>
+<img src="/../../static/images/post_11/02.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Luego pulsar en <strong>Assign policy</strong>.</p>
+<img src="/../../static/images/post_11/03.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Ahora vamos a seleccionar el ámbito donde va a aplicar esta política, en nuestro caso a nivel de una suscripción.</p>
+<img src="/../../static/images/post_11/04.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Seleccionamos la suscripción y luego pulsamos <strong>Select</strong>.</p>
+<img src="/../../static/images/post_11/05.png" style="zoom: 67%;" />
+</li>
+<li>
+<p>Ahora vamos a buscar nuestra <strong>Policy definition</strong>.</p>
+<img src="/../../static/images/post_11/06.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Buscar <strong>Allowed virtual machine size SKUs</strong> y la seleccionamos.</p>
+<img src="/../../static/images/post_11/07.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Pulsar en <strong>Add</strong>.</p>
+<p><img src="/../../static/images/post_11/08.png" alt=""></p>
+</li>
+<li>
+<p>Nos da un nombre por defecto para el <strong>Assignment name</strong> (pero vamos que podemos cambiarlo jajaja) y le damos una descripción.</p>
+<img src="/../../static/images/post_11/09.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Dejamos <strong>Policy enforcement</strong> en <strong>Enabled</strong>, porque queremos que aplique de inmediato nuestra asignación de política.</p>
+<img src="/../../static/images/post_11/10.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Pulsamos en la pestaña <strong>Parameters</strong>.</p>
+<img src="/../../static/images/post_11/11.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Buscamos y seleccionamos los tipos de máquinas virtuales que vamos a permitir, en nuestro caso <strong>Standard_B2s</strong> y <strong>Standard_D3_v2</strong></p>
+<img src="/../../static/images/post_11/12.png" style="zoom:80%;" />
+<img src="/../../static/images/post_11/13.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Pulsamos en <strong>Review + create</strong></p>
+<p><img src="/../../static/images/post_11/14.png" alt=""></p>
+</li>
+<li>
+<p>Revisamos que hemos definido bien la asignación&hellip;.</p>
+<p><img src="/../../static/images/post_11/15.png" alt=""></p>
+</li>
+<li>
+<p>Pulsamos en <strong>Create</strong></p>
+<p><img src="/../../static/images/post_11/16.png" alt=""></p>
+</li>
+<li>
+<p>Un mensaje nos aparecerá diciendo que se esta creando. Y al poco tiempo, aparecerá otro mensaje diciendo que la deficición se ha creado y que puede tardar la definición en aplicarse entre 5 y 15 minutos.</p>
+<img src="/../../static/images/post_11/17.png" style="zoom:80%;" />
+<p><img src="/../../static/images/post_11/20.png" alt=""></p>
+</li>
+<li>
+<p>Y ahora, si vamos a crear una nueva máquina virtual, al seleccionar un tipo de máquina virtual que no permitimos, aparecerá esto:</p>
+<img src="/../../static/images/post_11/18.png" style="zoom:80%;" />
+</li>
+<li>
+<p>En cambio, si elegimos un tipo de máquina virtual permitido:</p>
+</li>
+</ol>
+<img src="/../../static/images/post_11/19.png" style="zoom:80%;" />
+<p>Espero os haya gustado el artículo.</p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Alejandro García avatar" src="/images/foto.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Alejandro García</span>
+	</div>
+	<div class="authorbox__description">
+		Apasionado por la tecnología.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/borradostorageaccount/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">He borrado por error un Storage Account de Azure en producción. ¿Y ahora que hago?</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://www.recetasdevops.dev/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/restringircreacionvmskuconazurepolicy/">Restringir la creación de máquinas virtuales en Azure a ciertos tipos con Azure Policy</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/borradostorageaccount/">He borrado por error un Storage Account de Azure en producción. ¿Y ahora que hago?</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/auditaazureconazqr/">Sigue las mejores prácticas y recomendaciones en Azure con Azure Quick Review</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/peroporquesehaborradoelcontainer/">¿Por qué se ha borrado el container del Storage Account, si tenía bloqueo?. Hablemos de Control Plane y Data Plane</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/comoenterarmecuandoretiranunserviciodeazure/">¿Cómo enterarme cuando retiran (deprecated) un servicio o funcionalidad en Azure?</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 Recetas Devops.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

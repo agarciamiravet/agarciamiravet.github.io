@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Recetas Devops</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jan 2024 00:00:00 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jan 2024 00:00:00 +0200</lastBuildDate>
     <atom:link href="https://www.recetasdevops.dev/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Restringir la creación de máquinas virtuales en Azure a ciertos tipos con Azure Policy</title>
+      <link>https://www.recetasdevops.dev/post/restringircreacionvmskuconazurepolicy/</link>
+      <pubDate>Fri, 26 Jan 2024 00:00:00 +0200</pubDate>
+      <guid>https://www.recetasdevops.dev/post/restringircreacionvmskuconazurepolicy/</guid>
+      <description>En el artículo de hoy, vamos a hablar de como restringir a través de Azure Policy que solo se creen ciertos tipos de máquinas virtuales. Esto es muy importante para el control de los costes, porque por ejemplo:&#xA;No es lo mismo crear una VM de tipo D2 v3 que vale 0,191€ la hora , que te equivoques y crees una de tipo EC96ads que vale 10,30 € la hora (jajaja).</description>
+    </item>
     <item>
       <title>He borrado por error un Storage Account de Azure en producción. ¿Y ahora que hago?</title>
       <link>https://www.recetasdevops.dev/post/borradostorageaccount/</link>
