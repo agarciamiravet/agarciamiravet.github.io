@@ -80,72 +80,89 @@ No es lo mismo crear una VM de tipo D2 v3 que vale 0,191€ la hora , que te equ
 <li>
 <p>Vamos al portal de Azure y buscamos <strong>Policy.</strong></p>
 <img src="/images/post_11/01.png" style="zoom:80%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Una vez dentro, pulsar en <strong>Assignments</strong>.</p>
 <img src="/images/post_11/02.png" style="zoom:80%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Luego pulsar en <strong>Assign policy</strong>.</p>
 <img src="/images/post_11/03.png" style="zoom:80%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Ahora vamos a seleccionar el ámbito donde va a aplicar esta política, en nuestro caso a nivel de una suscripción.</p>
 <img src="/images/post_11/04.png" style="zoom:80%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Seleccionamos la suscripción y luego pulsamos <strong>Select</strong>.</p>
 <img src="/images/post_11/05.png" style="zoom: 67%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Ahora vamos a buscar nuestra <strong>Policy definition</strong>.</p>
 <img src="/images/post_11/06.png" style="zoom:80%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Buscar <strong>Allowed virtual machine size SKUs</strong> y la seleccionamos.</p>
 <img src="/images/post_11/07.png" style="zoom:80%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Pulsar en <strong>Add</strong>.</p>
 <p><img src="/images/post_11/08.png" alt=""></p>
+<p><br><br></p>
 </li>
 <li>
 <p>Nos da un nombre por defecto para el <strong>Assignment name</strong> (pero vamos que podemos cambiarlo jajaja) y le damos una descripción.</p>
 <img src="/images/post_11/09.png" style="zoom:80%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Dejamos <strong>Policy enforcement</strong> en <strong>Enabled</strong>, porque queremos que aplique de inmediato nuestra asignación de política.</p>
 <img src="/images/post_11/10.png" style="zoom:80%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Pulsamos en la pestaña <strong>Parameters</strong>.</p>
 <img src="/images/post_11/11.png" style="zoom:80%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Buscamos y seleccionamos los tipos de máquinas virtuales que vamos a permitir, en nuestro caso <strong>Standard_B2s</strong> y <strong>Standard_D3_v2</strong></p>
 <img src="/images/post_11/12.png" style="zoom:80%;" />
 <img src="/images/post_11/13.png" style="zoom:80%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Pulsamos en <strong>Review + create</strong></p>
 <p><img src="/images/post_11/14.png" alt=""></p>
+<p><br><br></p>
 </li>
 <li>
 <p>Revisamos que hemos definido bien la asignación&hellip;.</p>
 <p><img src="/images/post_11/15.png" alt=""></p>
+<p><br><br></p>
 </li>
 <li>
 <p>Pulsamos en <strong>Create</strong></p>
 <p><img src="/images/post_11/16.png" alt=""></p>
+<p><br><br></p>
 </li>
 <li>
 <p>Un mensaje nos aparecerá diciendo que se esta creando. Y al poco tiempo, aparecerá otro mensaje diciendo que la deficición se ha creado y que puede tardar la definición en aplicarse entre 5 y 15 minutos.</p>
 <img src="/images/post_11/17.png" style="zoom:80%;" />
 <p><img src="/images/post_11/20.png" alt=""></p>
+<p><br><br></p>
 </li>
 <li>
 <p>Y ahora, si vamos a crear una nueva máquina virtual, al seleccionar un tipo de máquina virtual que no permitimos, aparecerá esto:</p>
 <img src="/images/post_11/18.png" style="zoom:80%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>En cambio, si elegimos un tipo de máquina virtual permitido:</p>
