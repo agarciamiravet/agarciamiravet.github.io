@@ -52,6 +52,26 @@
 	
 	<header class="list__header">
 		<h2 class="list__title post__title">
+			<a href="/post/alertascuandoseborranbloqueos/" rel="bookmark">
+			Crea alertas para enterarte cuando borran bloqueos en Azure
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2024-01-28T00:00:00&#43;01:00">January 28, 2024</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		En más de un artículo, os he comentado la importancia de tener bloqueos en Azure. Es por ello que en este artículo vamos a ver como podemos crear un alerta que nos avise cuando un bloqueo se ha eliminado.
+Pues pongámonos manos a la obra, los pasos a seguir serían:
+Vamos al portal de Azure https://portal.azure.com .
+Buscamos Alerts
+Pulsamos en Create, y luego Alert rule.
+En el siguiente paso, vamos a decir en que que nivel vamos a crear la alerta.
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
 			<a href="/post/restringircreacionvmskuconazurepolicy/" rel="bookmark">
 			Restringir la creación de máquinas virtuales en Azure a ciertos tipos con Azure Policy
 			</a>
@@ -200,27 +220,13 @@ Microsoft Cost Management es un conjunto de herramientas que ayudan a las organi
 Y la respuesta lamentablemente es NO, no se puede. Esta respuesta es extensible a cualquier recurso creado en Azure, desde el nombre de una máquina virtual, servidor de Azure SQL, nombre de una ip pública etc&hellip;
 Hay otras cosas en Azure que pueden ser renombradas, pero que en realidad no son recursos como tal.
 	</div>
-</article><article class="list__item post">
-	
-	<header class="list__header">
-		<h2 class="list__title post__title">
-			<a href="/post/databricks-limpiar-cluster-logs/" rel="bookmark">
-			Azure Databricks - Limpia los logs de los clusters y ahorra dinero
-			</a>
-		</h2>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2023-12-17T15:53:23&#43;01:00">December 17, 2023</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		En este artículo vamos a hablar de cómo podemos limpiar los logs de los clusters de Databricks.
-Pero antes de entrar en detalles, vamos a contar la historia que hay detrás de este artículo:
-Hace algún tiempo revisando los costes que teníamos en Azure Databricks, nos encontramos qué el coste de los Storage Accounts que usamos en Databricks era bastante alto.
-Siempre achacábamos este alto coste al precio de las operaciones en los storage accounts.
-	</div>
 </article>
 </main>
 
+<div class="pagination">
+	<span class="pagination__item pagination__item--current">1/2</span>
+	<a class="pagination__item pagination__item--next btn" href="/page/2/">»</a>
+</div>
 
 			</div>
 			<aside class="sidebar"><div class="widget-search widget">
@@ -236,11 +242,11 @@ Siempre achacábamos este alto coste al precio de las operaciones en los storage
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/alertascuandoseborranbloqueos/">Crea alertas para enterarte cuando borran bloqueos en Azure</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/restringircreacionvmskuconazurepolicy/">Restringir la creación de máquinas virtuales en Azure a ciertos tipos con Azure Policy</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/borradostorageaccount/">He borrado por error un Storage Account de Azure en producción. ¿Y ahora que hago?</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/auditaazureconazqr/">Sigue las mejores prácticas y recomendaciones en Azure con Azure Quick Review</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/peroporquesehaborradoelcontainer/">¿Por qué se ha borrado el container del Storage Account, si tenía bloqueo?. Hablemos de Control Plane y Data Plane</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/comoenterarmecuandoretiranunserviciodeazure/">¿Cómo enterarme cuando retiran (deprecated) un servicio o funcionalidad en Azure?</a></li>
 		</ul>
 	</div>
 </div>

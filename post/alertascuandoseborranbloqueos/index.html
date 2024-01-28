@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Crea alertas para enterarte cuando borran bloqueos en Azure - Recetas Devops</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Crea alertas para enterarte cuando borran bloqueos en Azure" />
+<meta property="og:description" content="En más de un artículo, os he comentado la importancia de tener bloqueos en Azure. Es por ello que en este artículo vamos a ver como podemos crear un alerta que nos avise cuando un bloqueo se ha eliminado.
+Pues pongámonos manos a la obra, los pasos a seguir serían:
+Vamos al portal de Azure https://portal.azure.com .
+Buscamos Alerts
+Pulsamos en Create, y luego Alert rule.
+En el siguiente paso, vamos a decir en que que nivel vamos a crear la alerta." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.recetasdevops.dev/post/alertascuandoseborranbloqueos/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-01-28T00:00:00+01:00" />
+<meta property="article:modified_time" content="2024-01-28T00:00:00+01:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="Recetas Devops" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.png">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">Recetas Devops</div>
+					<div class="logo__tagline">Tus recetas para DevOps de confianza</div>
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Crea alertas para enterarte cuando borran bloqueos en Azure</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2024-01-28T00:00:00&#43;01:00">January 28, 2024</time></div></div>
+		</header>
+		<div class="content post__content clearfix">
+			<img src="/images/post_10/meme.jpg" style="zoom:80%;" />
+<p>En más de un artículo, os he comentado la importancia de tener bloqueos en Azure. Es por ello que en este artículo vamos  a ver como podemos crear un alerta que nos avise cuando un bloqueo se ha eliminado.</p>
+<p>Pues pongámonos manos a la obra, los pasos a seguir serían:</p>
+<ol>
+<li>
+<p>Vamos al portal de Azure <a href="https://portal.azure.com">https://portal.azure.com</a> .</p>
+</li>
+<li>
+<p>Buscamos <strong>Alerts</strong></p>
+<img src="/images/post_10/image01.png" style="zoom:70%;" />
+</li>
+<li>
+<p>Pulsamos en <strong>Create</strong>, y luego <strong>Alert rule</strong>.</p>
+<img src="/images/post_10/image02.png" style="zoom:67%;" />
+</li>
+<li>
+<p>En el siguiente paso, vamos a decir en que que  <strong>nivel</strong> vamos a crear  la alerta. En nuestro va a ser a nivel de suscripción. Esto quiere decir en nuestro ejemplo,  que cuando se borre cualquier bloqueo de cualquier recurso de esa suscripción, se generará una alerta. Seleccionamos la suscripción y pulsamos en <strong>Apply</strong>.</p>
+<img src="/images/post_10/image03.png" style="zoom:67%;" />
+</li>
+<li>
+<p>Pulsamos en <strong>Next: Condition</strong>.</p>
+<p><img src="/images/post_10/image04.png" alt=""></p>
+</li>
+<li>
+<p>Ahora pulsamos en <strong>See all signals</strong>.</p>
+<p><img src="/images/post_10/image05.png" alt=""></p>
+</li>
+<li>
+<p>Buscamos <strong>Delete Management locks</strong> y seleccionamos <strong>Delete management locks (Management lock)</strong></p>
+<img src="/images/post_10/image05_02.png" style="zoom:70%;" />
+</li>
+<li>
+<p>Pulsamos en <strong>Apply</strong></p>
+<img src="/images/post_10/image05_03.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Ahora pulsamos en <strong>Next:Actions &gt;</strong></p>
+<img src="/images/post_10/image06.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Ahora pulsamos en <strong>+ Create action group</strong>. Comentar que tal y como dice la documentación de Azure , <em>&ldquo;Azure Monitor, Azure Service Health y Azure Advisor usan grupos de acciones para notificar a los usuarios de estas alertas y llevar a cabo una acción&rdquo;</em></p>
+</li>
+</ol>
+<img src="/images/post_10/image07.png" style="zoom:80%;" />
+<ol start="11">
+<li>Ahora le decimos en que grupo de recursos vamos a crear ese <strong>action group</strong>, como se va a llamar y que nombre se mostrará. Una vez rellenados estos datos, pulsamos en <strong>Next:Notifications.</strong></li>
+</ol>
+<img src="/images/post_10/image08.png" style="zoom:80%;" />
+<ol start="12">
+<li>
+<p>En este paso, lo que hacemos es definir como vamos a ser notificados cuando la alerta se lance. Es decir en nuestro caso, cuando se elimine un bloqueo. En nuestro caso, decimos que nos notifique a través de email.</p>
+<img src="/images/post_10/image09.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Le ponemos en que email vamos a ser notificados.</p>
+<img src="/images/post_10/image10.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Pulsamos en <strong>OK</strong></p>
+<p><img src="/images/post_10/image11.png" alt=""></p>
+</li>
+<li>
+<p>Ponemos un nombre a la notificación, en nuestro caso <strong>EmailNotification</strong></p>
+<p><img src="/images/post_10/image12.png" alt=""></p>
+</li>
+<li>
+<p>Ahora pulsamos en  <strong>Next Actions &gt;</strong></p>
+<p><img src="/images/post_10/image13.png" alt=""></p>
+</li>
+<li>
+<p>En <strong>Actions</strong>, podemos especificar una serie de acciones automatizadas. Estas acciones van desde lanzar un runbook, un azure function o llamar un webhook, &hellip;. Por ejemplo en nuestra alerta, <strong>una acción lógica sería volver a poner el bloqueo de nuevo</strong> , usando un automation runbook.</p>
+<img src="/images/post_10/image13_1.png" style="zoom:67%;" />
+</li>
+<li>
+<p>Ahora pulsamos en <strong>Review + create &gt;</strong></p>
+</li>
+</ol>
+<img src="/images/post_10/image14.png" style="zoom:80%;" />
+<ol start="19">
+<li>
+<p>Por último pulsamos en <strong>Create</strong>.</p>
+<img src="/images/post_10/image15.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Pulsamos <strong>Next: Details &gt;</strong></p>
+<img src="/images/post_10/image16.png" style="zoom:80%;" />
+<ol start="21">
+<li>
+<p>Ahora decimos en que grupo de recursos vamos a crear la alerta, y cuál va a ser el nombre de la alerta.</p>
+<img src="/images/post_10/image17.png" style="zoom:80%;" />
+</li>
+</ol>
+</li>
+<li>
+<p>Para finalizar la creación de la alerta pulsamos en <strong>Create</strong>.</p>
+<img src="/images/post_10/image18.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Entonces, cuando se borrará un  bloqueo recibiríamos un correo así:</p>
+</li>
+</ol>
+<img src="/images/post_10/image19.png" style="zoom:80%;" />
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Alejandro García avatar" src="/images/foto.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Alejandro García</span>
+	</div>
+	<div class="authorbox__description">
+		Apasionado por la tecnología.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/restringircreacionvmskuconazurepolicy/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Restringir la creación de máquinas virtuales en Azure a ciertos tipos con Azure Policy</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://www.recetasdevops.dev/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/alertascuandoseborranbloqueos/">Crea alertas para enterarte cuando borran bloqueos en Azure</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/restringircreacionvmskuconazurepolicy/">Restringir la creación de máquinas virtuales en Azure a ciertos tipos con Azure Policy</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/borradostorageaccount/">He borrado por error un Storage Account de Azure en producción. ¿Y ahora que hago?</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/auditaazureconazqr/">Sigue las mejores prácticas y recomendaciones en Azure con Azure Quick Review</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/peroporquesehaborradoelcontainer/">¿Por qué se ha borrado el container del Storage Account, si tenía bloqueo?. Hablemos de Control Plane y Data Plane</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 Recetas Devops.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>
