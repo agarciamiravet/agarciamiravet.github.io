@@ -62,6 +62,7 @@ En el siguiente paso, vamos a decir en que que nivel vamos a crear la alerta." /
 		</header>
 		<div class="content post__content clearfix">
 			<img src="/images/post_10/meme.jpg" style="zoom:80%;" />
+<p><br><br></p>
 <p>En más de un artículo, os he comentado la importancia de tener bloqueos en Azure. Es por ello que en este artículo vamos  a ver como podemos crear un alerta que nos avise cuando un bloqueo se ha eliminado.</p>
 <p>Pues pongámonos manos a la obra, los pasos a seguir serían:</p>
 <ol>
@@ -71,92 +72,116 @@ En el siguiente paso, vamos a decir en que que nivel vamos a crear la alerta." /
 <li>
 <p>Buscamos <strong>Alerts</strong></p>
 <img src="/images/post_10/image01.png" style="zoom:70%;" />
+<br>
+<br>
 </li>
 <li>
 <p>Pulsamos en <strong>Create</strong>, y luego <strong>Alert rule</strong>.</p>
 <img src="/images/post_10/image02.png" style="zoom:67%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>En el siguiente paso, vamos a decir en que que  <strong>nivel</strong> vamos a crear  la alerta. En nuestro va a ser a nivel de suscripción. Esto quiere decir en nuestro ejemplo,  que cuando se borre cualquier bloqueo de cualquier recurso de esa suscripción, se generará una alerta. Seleccionamos la suscripción y pulsamos en <strong>Apply</strong>.</p>
 <img src="/images/post_10/image03.png" style="zoom:67%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Pulsamos en <strong>Next: Condition</strong>.</p>
 <p><img src="/images/post_10/image04.png" alt=""></p>
+<p><br><br></p>
 </li>
 <li>
 <p>Ahora pulsamos en <strong>See all signals</strong>.</p>
 <p><img src="/images/post_10/image05.png" alt=""></p>
+<p><br><br></p>
 </li>
 <li>
 <p>Buscamos <strong>Delete Management locks</strong> y seleccionamos <strong>Delete management locks (Management lock)</strong></p>
 <img src="/images/post_10/image05_02.png" style="zoom:70%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Pulsamos en <strong>Apply</strong></p>
 <img src="/images/post_10/image05_03.png" style="zoom:80%;" />
+<br>
+<br>
 </li>
 <li>
 <p>Ahora pulsamos en <strong>Next:Actions &gt;</strong></p>
 <img src="/images/post_10/image06.png" style="zoom:80%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Ahora pulsamos en <strong>+ Create action group</strong>. Comentar que tal y como dice la documentación de Azure , <em>&ldquo;Azure Monitor, Azure Service Health y Azure Advisor usan grupos de acciones para notificar a los usuarios de estas alertas y llevar a cabo una acción&rdquo;</em></p>
 </li>
 </ol>
 <img src="/images/post_10/image07.png" style="zoom:80%;" />
+<p><br><br></p>
 <ol start="11">
 <li>Ahora le decimos en que grupo de recursos vamos a crear ese <strong>action group</strong>, como se va a llamar y que nombre se mostrará. Una vez rellenados estos datos, pulsamos en <strong>Next:Notifications.</strong></li>
 </ol>
 <img src="/images/post_10/image08.png" style="zoom:80%;" />
+<p><br><br></p>
 <ol start="12">
 <li>
 <p>En este paso, lo que hacemos es definir como vamos a ser notificados cuando la alerta se lance. Es decir en nuestro caso, cuando se elimine un bloqueo. En nuestro caso, decimos que nos notifique a través de email.</p>
 <img src="/images/post_10/image09.png" style="zoom:80%;" />
+<br>
+<br>
 </li>
 <li>
 <p>Le ponemos en que email vamos a ser notificados.</p>
 <img src="/images/post_10/image10.png" style="zoom:80%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Pulsamos en <strong>OK</strong></p>
 <p><img src="/images/post_10/image11.png" alt=""></p>
+<p><br><br></p>
 </li>
 <li>
 <p>Ponemos un nombre a la notificación, en nuestro caso <strong>EmailNotification</strong></p>
 <p><img src="/images/post_10/image12.png" alt=""></p>
+<p><br><br></p>
 </li>
 <li>
 <p>Ahora pulsamos en  <strong>Next Actions &gt;</strong></p>
 <p><img src="/images/post_10/image13.png" alt=""></p>
+<p><br><br></p>
 </li>
 <li>
 <p>En <strong>Actions</strong>, podemos especificar una serie de acciones automatizadas. Estas acciones van desde lanzar un runbook, un azure function o llamar un webhook, &hellip;. Por ejemplo en nuestra alerta, <strong>una acción lógica sería volver a poner el bloqueo de nuevo</strong> , usando un automation runbook.</p>
 <img src="/images/post_10/image13_1.png" style="zoom:67%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Ahora pulsamos en <strong>Review + create &gt;</strong></p>
 </li>
 </ol>
 <img src="/images/post_10/image14.png" style="zoom:80%;" />
+<p><br><br></p>
 <ol start="19">
 <li>
 <p>Por último pulsamos en <strong>Create</strong>.</p>
 <img src="/images/post_10/image15.png" style="zoom:80%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Pulsamos <strong>Next: Details &gt;</strong></p>
 <img src="/images/post_10/image16.png" style="zoom:80%;" />
+<p><br><br></p>
 <ol start="21">
 <li>
 <p>Ahora decimos en que grupo de recursos vamos a crear la alerta, y cuál va a ser el nombre de la alerta.</p>
 <img src="/images/post_10/image17.png" style="zoom:80%;" />
 </li>
 </ol>
+<p><br><br></p>
 </li>
 <li>
 <p>Para finalizar la creación de la alerta pulsamos en <strong>Create</strong>.</p>
 <img src="/images/post_10/image18.png" style="zoom:80%;" />
+<p><br><br></p>
 </li>
 <li>
 <p>Entonces, cuando se borrará un  bloqueo recibiríamos un correo así:</p>
