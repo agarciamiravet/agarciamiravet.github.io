@@ -13,7 +13,7 @@
       <link>https://www.recetasdevops.dev/post/alertascuandoseborranbloqueos/</link>
       <pubDate>Sun, 28 Jan 2024 00:00:00 +0100</pubDate>
       <guid>https://www.recetasdevops.dev/post/alertascuandoseborranbloqueos/</guid>
-      <description>En más de un artículo, os he comentado la importancia de tener bloqueos en Azure. Es por ello que en este artículo vamos a ver como podemos crear un alerta que nos avise cuando un bloqueo se ha eliminado.&#xA;Pues pongámonos manos a la obra, los pasos a seguir serían:&#xA;Vamos al portal de Azure https://portal.azure.com .&#xA;Buscamos Alerts&#xA;Pulsamos en Create, y luego Alert rule.&#xA;En el siguiente paso, vamos a decir en que que nivel vamos a crear la alerta.</description>
+      <description>En más de un artículo, os he comentado la importancia de tener bloqueos en Azure. Es por ello que en este artículo vamos a ver como podemos crear un alerta que nos avise cuando un bloqueo se ha eliminado.&#xA;Pues pongámonos manos a la obra, los pasos a seguir serían:&#xA;Vamos al portal de Azure https://portal.azure.com .&#xA;Buscamos Alerts&#xA;Pulsamos en Create, y luego Alert rule.&#xA;En el siguiente paso, vamos a decir en que nivel vamos a crear la alerta.</description>
     </item>
     <item>
       <title>Restringir la creación de máquinas virtuales en Azure a ciertos tipos con Azure Policy</title>
