@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Acabo de crear una suscripción y no puedo ni crear ni una VM. Hablemos de resource Provider - Recetas Devops</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Acabo de crear una suscripción y no puedo ni crear ni una VM. Hablemos de resource Provider" />
+<meta property="og:description" content="En el post de hoy vamos a hablar de los los resource providers, y más concretamente del registro de estos.
+Si vamos a la documentación oficial, nos encontramos la siguiente definición:
+Un proveedor de recursos (resource provider) es una colección de operaciones REST que permite la funcionalidad de un servicio de Azure. Cada proveedor de recursos tiene un espacio de nombres en el formato de company-name.service-label
+Sin estos resource providers, no podríamos crear ningún recurso en Azure, así de sencillo." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.recetasdevops.dev/post/registrarresourceprovider/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-02-27T00:00:00+02:00" />
+<meta property="article:modified_time" content="2024-02-27T00:00:00+02:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="Recetas Devops" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.png">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">Recetas Devops</div>
+					<div class="logo__tagline">Tus recetas para DevOps de confianza</div>
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Acabo de crear una suscripción y no puedo ni crear ni una VM. Hablemos de resource Provider</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2024-02-27T00:00:00&#43;02:00">February 27, 2024</time></div></div>
+		</header>
+		<div class="content post__content clearfix">
+			<p><img src="/images/post12/meme01.jpg" alt=""></p>
+<p>En el post de hoy vamos a hablar de los los resource providers, y más concretamente del registro de estos.</p>
+<p>Si vamos a la documentación oficial,  nos encontramos la siguiente definición:</p>
+<p><em><strong>Un proveedor de recursos (resource provider) es una colección de operaciones REST que permite la funcionalidad de un servicio de Azure. Cada proveedor de recursos tiene un espacio de nombres en el formato de <code>company-name.service-label</code></strong></em></p>
+<p>Sin estos resource providers, no podríamos crear ningún recurso en Azure, así de sencillo. Azure Resource Manager (ARM) no puede hacer nada sino tiene registrado el resource provider que necesita.</p>
+<p>El siguiente diagrama de Microsoft es muy esclarecedor:</p>
+<img src="/images/post12/azure_diagram.png" style="zoom:67%;" />
+<p>Por ejemplo el resource provider del storage es <strong>Microsoft.Storage</strong>. Pues sino tenemos registrado este resource provider no podemos crear ningún Storage Account.</p>
+<p><strong>¡¡¡NOTA IMPORTANTE!!!:</strong> <strong>Los resource providers se registran a nivel de suscripción.</strong></p>
+<p>Pongamos de ejemplo, lo que planteábamos en en título del post:</p>
+<p><strong>Acabo de crear una suscripción nueva.</strong></p>
+<p>Para ver los resource providers que tenemos registrados cuando acabamos de crear la suscripción, debemos seguir los siguientes pasos en el portal de Azure (<a href="https://portal.azure.com/)">https://portal.azure.com/)</a>:</p>
+<p>a) Vamos a la suscripción recién creada a través de la búsqueda del portal:</p>
+<p>​	<img src="/images/post12/image01.png" style="zoom:67%;" /></p>
+<p>b) Pulsamos en la suscripción nueva, en nuestro caso <strong>NewSubscription</strong>:</p>
+<img src="/images/post12/image02.png" style="zoom: 80%;" />
+<p>c) Una vez dentro de la suscripción, vamos a <strong>Resource Providers</strong>:</p>
+<img src="/images/post12/image03.png" style="zoom:67%;" />
+<p>d) Si buceamos un poco por el listado, os daréis cuenta que prácticamente ningún resource provider esta registrado. Por ejemplo en la imagen vemos que el resource provider <strong>Microsoft.Compute</strong> no esta registrado, por lo cual no podríamos crear máquinas virtuales, por ejemplo:</p>
+<p><img src="/images/post12/image04.png" alt=""></p>
+<p>Esto de que prácticamente no haya registrado ningún resource provider cuando creamos una suscripción, se debe a temas de seguridad y más en concreto al concepto de <strong>&ldquo;Least Privilege&rdquo;</strong>. Solo registramos los resource providers que vamos a necesitar, ni uno más ni ninguno menos. Imaginemos que hemos habilitado el resource provider para poder usar databricks, y en algún momento nos roban las credenciales y empiezan a crear clusters de Databricks como sino hubiera mañana.</p>
+<p>Ahora ya tenemos claro donde podemos ver los resource providers creados.  La cuestión ahora es <strong>¿Cómo registramos los resource providers?</strong></p>
+<p>Hay dos formas en que se registran los resource providers:</p>
+<p>a) De forma manual</p>
+<p>b) De forma automática &ldquo;sin enterarnos&rdquo;</p>
+<p>Antes de entrar en detalle de las dos formas en que podemos registrar los resource providers, comentaros que necesitamos el permiso de <strong>/register/action</strong>. Con los roles de <strong>Contributor</strong> y <strong>Owner</strong> a nivel de suscripción tenemos este permiso.</p>
+<p>Ahora ya sí vamos a ver la forma manual de registrar un resource provider.</p>
+<p>Los pasos a seguir a través del portal de Azure son:</p>
+<p>a) Vamos a la suscripción que queremos , buscándola a través de la búsqueda del portal:</p>
+<img src="/images/post12/image01.png" style="zoom:67%;" />
+<p>b) Pulsamos en la suscripción, en nuestro caso <strong>NewSubscription</strong>:</p>
+<img src="/images/post12/image02.png" style="zoom: 80%;" />
+<p>c) Una vez dentro, vamos a <strong>Resource providers</strong>:</p>
+<img src="/images/post12/image03.png" style="zoom:67%;" />
+<p>d) Buscamos el resource provider que queremos registrar, en nuestro ejemplo <strong>Microsoft.Compute</strong> y le pulsamos en <strong>Register</strong>.</p>
+<img src="/images/post12/image05.png" style="zoom:67%;" />
+<p>e) Nos aparecerá lo siguiente, avisándonos que esta registrando:</p>
+<img src="/images/post12/image06.png" style="zoom: 80%;" />
+<p>Esta forma de hacerlo en el portal, cuando tienes que registrar pocos resource providers puede valer. Pero si tienes que registrar muchos, la mejor forma es usar Powershell o Azure CLI. Por ejemplo usando Powershell, sería así:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Connect-AzAccount 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Set-AzContext -Subscription <span style="color:#e6db74">&#34;[Put_Your_SubscriptionId_Here]&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Register-AzResourceProvider -ProviderNamespace Microsoft.Compute
+</span></span></code></pre></div><p>Respecto a la segunda forma de <strong>registrar un resource provider  de forma automática &ldquo;sin enterarnos&rdquo;</strong>, dejar que os lo explique con un ejemplo:</p>
+<p>Tengo una nueva suscripción, y no tengo registrado el resource provider de <strong>Microsoft.Compute</strong>:</p>
+<p><img src="/images/post12/image07.png" alt=""></p>
+<p>Ahora voy al portal y yo que tengo permisos de <strong>Contributor o de Owner</strong> (los cuales tienen el permiso de /register/action) , voy a crear una máquina virtual. Pues cuando estoy en el  paso de que valida los parámetros para ver si se puede crear la máquina virtual&hellip;</p>
+<p><img src="/images/post12/image09.png" alt=""></p>
+<p>Por detrás Azure esta registrando el resource provider, sin nosotros hacer nada:</p>
+<p><img src="/images/post12/image08.png" alt=""></p>
+<p>Lo mismo pasa con Terraform, que por defecto registra automáticamente los resource providers que necesita, siempre y cuando el service principal que se use tenga permiso para registrar. En caso de que se deseé que Terraform no registre ningún resource provider debemos poner <strong>skip_provider_registration = true</strong> en el bloque del provider:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>  <span style="color:#960050;background-color:#1e0010">provider</span> <span style="color:#e6db74">&#34;azurerm&#34;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">features</span> <span style="color:#960050;background-color:#1e0010">{</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">skip_provider_registration</span> <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">}</span>
+</span></span></code></pre></div><p>Espero os haya gustado el post y hasta la próxima.</p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Alejandro García avatar" src="/images/foto.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Alejandro García</span>
+	</div>
+	<div class="authorbox__description">
+		Apasionado por la tecnología.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/alertascuandoseborranbloqueos/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Crea alertas para enterarte cuando borran bloqueos en Azure</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://www.recetasdevops.dev/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/registrarresourceprovider/">Acabo de crear una suscripción y no puedo ni crear ni una VM. Hablemos de resource Provider</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/alertascuandoseborranbloqueos/">Crea alertas para enterarte cuando borran bloqueos en Azure</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/restringircreacionvmskuconazurepolicy/">Restringir la creación de máquinas virtuales en Azure a ciertos tipos con Azure Policy</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/borradostorageaccount/">He borrado por error un Storage Account de Azure en producción. ¿Y ahora que hago?</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/auditaazureconazqr/">Sigue las mejores prácticas y recomendaciones en Azure con Azure Quick Review</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 Recetas Devops.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

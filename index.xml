@@ -6,8 +6,15 @@
     <description>Recent content on Recetas Devops</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jan 2024 00:00:00 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 27 Feb 2024 00:00:00 +0200</lastBuildDate>
     <atom:link href="https://www.recetasdevops.dev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Acabo de crear una suscripción y no puedo ni crear ni una VM. Hablemos de resource Provider</title>
+      <link>https://www.recetasdevops.dev/post/registrarresourceprovider/</link>
+      <pubDate>Tue, 27 Feb 2024 00:00:00 +0200</pubDate>
+      <guid>https://www.recetasdevops.dev/post/registrarresourceprovider/</guid>
+      <description>En el post de hoy vamos a hablar de los los resource providers, y más concretamente del registro de estos.&#xA;Si vamos a la documentación oficial, nos encontramos la siguiente definición:&#xA;Un proveedor de recursos (resource provider) es una colección de operaciones REST que permite la funcionalidad de un servicio de Azure. Cada proveedor de recursos tiene un espacio de nombres en el formato de company-name.service-label&#xA;Sin estos resource providers, no podríamos crear ningún recurso en Azure, así de sencillo.</description>
+    </item>
     <item>
       <title>Crea alertas para enterarte cuando borran bloqueos en Azure</title>
       <link>https://www.recetasdevops.dev/post/alertascuandoseborranbloqueos/</link>
