@@ -73,13 +73,13 @@ Sin estos resource providers, no podríamos crear ningún recurso en Azure, así
 <p>Para ver los resource providers que tenemos registrados cuando acabamos de crear la suscripción, debemos seguir los siguientes pasos en el portal de Azure (<a href="https://portal.azure.com/)">https://portal.azure.com/)</a>:</p>
 <p>a) Vamos a la suscripción recién creada a través de la búsqueda del portal:</p>
 <p>​	<img src="/images/post12/image01.png" style="zoom:67%;" /></p>
-<br>
+<p><br><br></p>
 <p>b) Pulsamos en la suscripción nueva, en nuestro caso <strong>NewSubscription</strong>:</p>
 <img src="/images/post12/image02.png" style="zoom: 80%;" />
-<br>
+<p><br><br></p>
 <p>c) Una vez dentro de la suscripción, vamos a <strong>Resource Providers</strong>:</p>
 <img src="/images/post12/image03.png" style="zoom:67%;" />
-<br>
+<p><br><br></p>
 <p>d) Si buceamos un poco por el listado, os daréis cuenta que prácticamente ningún resource provider esta registrado. Por ejemplo en la imagen vemos que el resource provider <strong>Microsoft.Compute</strong> no esta registrado, por lo cual no podríamos crear máquinas virtuales, por ejemplo:</p>
 <p><img src="/images/post12/image04.png" alt=""></p>
 <p>Esto de que prácticamente no haya registrado ningún resource provider cuando creamos una suscripción, se debe a temas de seguridad y más en concreto al concepto de <strong>&ldquo;Least Privilege&rdquo;</strong>. Solo registramos los resource providers que vamos a necesitar, ni uno más ni ninguno menos. Imaginemos que hemos habilitado el resource provider para poder usar databricks, y en algún momento nos roban las credenciales y empiezan a crear clusters de Databricks como sino hubiera mañana.</p>
@@ -92,16 +92,16 @@ Sin estos resource providers, no podríamos crear ningún recurso en Azure, así
 <p>Los pasos a seguir a través del portal de Azure son:</p>
 <p>a) Vamos a la suscripción que queremos , buscándola a través de la búsqueda del portal:</p>
 <img src="/images/post12/image01.png" style="zoom:67%;" />
-<br>
+<p><br><br></p>
 <p>b) Pulsamos en la suscripción, en nuestro caso <strong>NewSubscription</strong>:</p>
 <img src="/images/post12/image02.png" style="zoom: 80%;" />
-<br>
+<p><br><br></p>
 <p>c) Una vez dentro, vamos a <strong>Resource providers</strong>:</p>
 <img src="/images/post12/image03.png" style="zoom:67%;" />
-<br>
+<p><br><br></p>
 <p>d) Buscamos el resource provider que queremos registrar, en nuestro ejemplo <strong>Microsoft.Compute</strong> y le pulsamos en <strong>Register</strong>.</p>
 <img src="/images/post12/image05.png" style="zoom:67%;" />
-<br>
+<p><br><br></p>
 <p>e) Nos aparecerá lo siguiente, avisándonos que esta registrando:</p>
 <img src="/images/post12/image06.png" style="zoom: 80%;" />
 <p>Esta forma de hacerlo en el portal, cuando tienes que registrar pocos resource providers puede valer. Pero si tienes que registrar muchos, la mejor forma es usar Powershell o Azure CLI. Por ejemplo usando Powershell, sería así:</p>
