@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Recetas Devops</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Feb 2024 00:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Sun, 10 Mar 2024 00:00:00 +0200</lastBuildDate>
     <atom:link href="https://www.recetasdevops.dev/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mi infra no funciona, algo cambié pero no se que fue. Change Analysis al rescate</title>
+      <link>https://www.recetasdevops.dev/post/changeanalysisrescate/</link>
+      <pubDate>Sun, 10 Mar 2024 00:00:00 +0200</pubDate>
+      <guid>https://www.recetasdevops.dev/post/changeanalysisrescate/</guid>
+      <description>Creo no ser el único que a lo largo de su carrera profesional, en este mundo de IT le hayan realizado más de una vez la siguiente pregunta:&#xA;¿Oye no se habrá tocado algo en producción?&#xA;Entonces a ese pregunta, uno responde defendiéndose con otra pregunta de la que ya sabe la respuesta de antemano jajaja:&#xA;Yo no he tocado nada. ¿Es qué pasa algo?&#xA;Y te responden:&#xA;Es que no funciona, esto y tampoco esto&amp;hellip;</description>
+    </item>
     <item>
       <title>Acabo de crear una suscripción y no puedo ni crear ni una VM. Hablemos de resource Provider</title>
       <link>https://www.recetasdevops.dev/post/registrarresourceprovider/</link>

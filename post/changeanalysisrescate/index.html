@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Mi infra no funciona, algo cambié pero no se que fue. Change Analysis al rescate - Recetas Devops</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Mi infra no funciona, algo cambié pero no se que fue. Change Analysis al rescate" />
+<meta property="og:description" content="Creo no ser el único que a lo largo de su carrera profesional, en este mundo de IT le hayan realizado más de una vez la siguiente pregunta:
+¿Oye no se habrá tocado algo en producción?
+Entonces a ese pregunta, uno responde defendiéndose con otra pregunta de la que ya sabe la respuesta de antemano jajaja:
+Yo no he tocado nada. ¿Es qué pasa algo?
+Y te responden:
+Es que no funciona, esto y tampoco esto&hellip;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.recetasdevops.dev/post/changeanalysisrescate/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-03-10T00:00:00+02:00" />
+<meta property="article:modified_time" content="2024-03-10T00:00:00+02:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="Recetas Devops" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.png">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">Recetas Devops</div>
+					<div class="logo__tagline">Tus recetas para DevOps de confianza</div>
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Mi infra no funciona, algo cambié pero no se que fue. Change Analysis al rescate</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2024-03-10T00:00:00&#43;02:00">March 10, 2024</time></div></div>
+		</header>
+		<div class="content post__content clearfix">
+			<img src="/images/post13/meme.png" style="zoom:75%;" />
+<p>Creo no ser el único que a lo largo de su carrera profesional, en este mundo de IT le hayan realizado más de una vez la siguiente pregunta:</p>
+<p><strong>¿Oye no se habrá tocado algo en producción?</strong></p>
+<p>Entonces a ese pregunta, uno responde defendiéndose con otra pregunta de la que ya sabe la respuesta de antemano jajaja:</p>
+<p><strong>Yo no he tocado nada. ¿Es qué pasa algo?</strong></p>
+<p>Y te responden:</p>
+<p><strong>Es que no funciona, esto y tampoco esto&hellip;</strong></p>
+<p>Después de esta breve conversación, ya empezamos a ver como solucionar el problema, haciendo cosas como:</p>
+<ul>
+<li>Lo primero es intentar mitigar el problema.</li>
+<li>Revisar las configuraciones.</li>
+<li>Preguntar a otra gente si ellos han cambiado algo.</li>
+<li>Revisar si se ha desplegado código nuevo.</li>
+</ul>
+<p>Con suerte puede ser que encuentres el problema en 1 minuto, pero lo mismo tardas 1 hora, que 2 o que 6 horas. Después te &ldquo;acuerdas&rdquo; o &ldquo;descubres&rdquo;, que en realidad si cambiaste algo y eso provocó el problema <strong>(a mí me ha pasado más de una y de dos veces lo reconozco jajaja)</strong>.</p>
+<p>Pues para resolver de manera rápida que cambios hemos realizado en nuestra infraestructura de Azure, que hayan podido provocar un outage, errores, configuraciones erróneas de servicios tenemos a nuestra disposición <strong>Change Analysis.</strong></p>
+<p><strong>Change Analysis</strong> es un servicio de Azure, totalmente gratuito dentro de la plataforma de <strong>Observabilidad</strong> Azure Monitor.  Tal y como dice la documentación oficial:</p>
+<p><em><strong>Change Analysis detecta varios tipos de cambios, desde la capa de infraestructura hasta la implementación de aplicaciones. Estos cambios son :</strong></em></p>
+<ul>
+<li><em><strong>Comprueba los cambios de recursos a nivel de la suscripción.</strong></em></li>
+<li><em><strong>Proporciona datos para varias herramientas de diagnóstico para ayudar a los usuarios a comprender qué cambios causaron problemas.</strong></em></li>
+</ul>
+<p>Para entrar más en detalle sobre <strong>Change Analysis</strong>,  podéis visitar la página oficial del servicio:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/azure-monitor/change/change-analysis">https://learn.microsoft.com/en-us/azure/azure-monitor/change/change-analysis</a></p>
+<p>Una vez explicado brevemente que es <strong>Change Analysis</strong>, veamos un ejemplo de como nos puede ayudar este servicio:</p>
+<p>Supongamos que tenemos la siguiente infraestructura en Azure (muy simple pero útil para el ejemplo):</p>
+<p><img src="/images/post13/ChangeAnalysisDiagram.png" alt=""></p>
+<p>Tenemos 2 App Services, uno es la aplicación web y la otra una API. La API tiene configurada una VNet Integration para poder acceder a una máquina de SQL Server donde esta la BD que la API usa.  La API accede a través del puerto 1433 de la VM a la base de datos. Todo esta funcionando correctamente, cuando un día de repente la API falla.  Vamos a ver en <strong>Change Analysis</strong> si algo ha cambiado en nuestra infraestructura. Los pasos que hacemos son:</p>
+<ul>
+<li>
+<p>Accedemos al portal de Azure a través de <a href="https://portal.azure.com">https://portal.azure.com</a></p>
+</li>
+<li>
+<p>Buscamos Monitor, en la búsqueda. Pulsamos en <strong>Monitor</strong>:</p>
+<p><br><br></p>
+<img src="/images/post13/image01.png" alt="image01" style="zoom:67%;" />
+<p><br><br></p>
+</li>
+<li>
+<p>Una vez dentro, pulsamos en <strong>View</strong> en el apartado de <strong>Change Analysis</strong></p>
+<p><br><br></p>
+<p><img src="/images/post13/image02.png" alt="image02"></p>
+</li>
+</ul>
+<p><br><br></p>
+<ul>
+<li>
+<p>Y una vez entramos en <strong>Change Analysis</strong>, nos aparece la verdad sobre nuestros ojos:</p>
+<br>
+<br>
+<p><img src="/images/post13/image04.png" alt="image04"></p>
+</li>
+</ul>
+<p>Se nos dice que se ha cambiado una regla del network security group de Allow a Deny. Y además se nos dice que se ha modificado un rango de IPs.</p>
+<ul>
+<li>
+<p>Podemos entrar más en detalle. pulsando sobre la propiedad que cambió:</p>
+<p><br><br></p>
+</li>
+</ul>
+<p><img src="/images/post13/image05.png" alt=""></p>
+<ul>
+<li>
+<p>Podemos hasta quien hizo el cambio:</p>
+<p><br><br></p>
+<img src="/images/post13/image06.png" alt="image06" style="zoom:80%;" />
+</li>
+</ul>
+<p>Después de ver esta información, se determinó que el problema de la API fue sin duda  los cambios realizados en el network security group que provocaron que no se pudiera acceder a la base de datos desde la API.</p>
+<p>Como conclusión, deciros que de verdad le echéis un ojo a este servicio porque os va ayudar mucho. También recordaros la importancia de desplegar vuestra infraestructura siempre como infraestructura cómo código (IAC), ya sea Bicep, plantillas ARM, Pulumi, Terraform. Lo importante sin importar la tecnología a usar es que uséis siempre IAC.</p>
+<p>Saludos y !Hasta la próxima¡</p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Alejandro García avatar" src="/images/foto.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Alejandro García</span>
+	</div>
+	<div class="authorbox__description">
+		Apasionado por la tecnología.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/registrarresourceprovider/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Acabo de crear una suscripción y no puedo ni crear ni una VM. Hablemos de resource Provider</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://www.recetasdevops.dev/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/changeanalysisrescate/">Mi infra no funciona, algo cambié pero no se que fue. Change Analysis al rescate</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/registrarresourceprovider/">Acabo de crear una suscripción y no puedo ni crear ni una VM. Hablemos de resource Provider</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/alertascuandoseborranbloqueos/">Crea alertas para enterarte cuando borran bloqueos en Azure</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/restringircreacionvmskuconazurepolicy/">Restringir la creación de máquinas virtuales en Azure a ciertos tipos con Azure Policy</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/borradostorageaccount/">He borrado por error un Storage Account de Azure en producción. ¿Y ahora que hago?</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 Recetas Devops.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>
