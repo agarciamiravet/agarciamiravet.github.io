@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Primeros pasos con Pulumi en Azure usando C# - Recetas Devops</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Primeros pasos con Pulumi en Azure usando C#" />
+<meta property="og:description" content="En el artículo vamos a hablar de Pulumi. Vamos a ver como podemos usarlo para desplegar nuestra infraestructura de Azure usando C#.
+Tal y como dicen en la página oficial:
+&ldquo;Pulumi es una plataforma de infraestructura como código que le permite utilizar lenguajes y herramientas de programación familiares para construir, implementar y administrar infraestructura en la nube.&rdquo;
+Creo en mi opinión, que el mayor punto fuerte es que podemos usar un lenguaje que ya conocemos y usamos para programar, sin que tener que aprender otro lenguaje diferente." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.recetasdevops.dev/post/primerospasosconpulumi/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-02-27T00:00:00+02:00" />
+<meta property="article:modified_time" content="2024-02-27T00:00:00+02:00" />
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="Recetas Devops" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.png">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">Recetas Devops</div>
+					<div class="logo__tagline">Tus recetas para DevOps de confianza</div>
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Primeros pasos con Pulumi en Azure usando C#</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2024-02-27T00:00:00&#43;02:00">February 27, 2024</time></div></div>
+		</header>
+		<div class="content post__content clearfix">
+			<p>En el artículo vamos a hablar de Pulumi. Vamos a ver como podemos usarlo para desplegar nuestra infraestructura de Azure usando C#.</p>
+<p>Tal y como dicen en la página oficial:</p>
+<p><em>&ldquo;Pulumi es una plataforma de infraestructura como código que le permite utilizar lenguajes y herramientas de programación familiares para construir, implementar y administrar infraestructura en la nube.&rdquo;</em></p>
+<p>Creo en mi opinión, que el mayor punto fuerte es que podemos usar un lenguaje que ya conocemos y usamos para programar, sin que tener que aprender otro lenguaje diferente.</p>
+<p>Por ejemplo en el caso de Azure, usando otras herramientas como Terraform, plantillas ARM o Bicep para desplegar infraestructura como código, estamos &ldquo;obligados&rdquo; a aprender un nuevo lenguaje que usan cada una de estas herramientas.</p>
+<p>Ahora ya, nos metemos en harina y vamos a ver como podemos desplegar nuestra infraestructura con Pulumi. En nuestro ejemplo vamos a usar C# como nuestro lenguaje de programación.</p>
+<p><strong>NOTA:</strong> Como editor de código vamos a usar Visual Studio Code. Podéis descargarlo de <a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
+<p>Los pasos a seguir son:</p>
+<ol>
+<li>
+<p>Instalamos Pulumi, usando en nuestro caso <strong>winget</strong>. Abrimos Powershell y lanzamos lo siguiente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>winget install pulumi
+</span></span></code></pre></div><p><strong>Nota:</strong> En caso de no tener Windows 11, que por defecto tiene winget instalado. Podemos instalar Pulumi de otra manera. En la siguiente página, se dan instrucciones para poder instalarlo:</p>
+<p><a href="https://www.pulumi.com/docs/install/">https://www.pulumi.com/docs/install/</a></p>
+</li>
+<li>
+<p>Cerramos Powershell y lo abrimos de nuevo. Lanzamos el siguiente comando para comprobar que Pulumi se instaló correctamente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span>pulumi version
+</span></span></code></pre></div></li>
+<li>
+<p>Como hemos dicho, vamos a usar C#, y vamos a necesitar <strong>dotnet</strong>. En caso de no tenerlo instalado (cosa que dudo jajaja), podéis descargarlo de (version 6):</p>
+<p><a href="https://dotnet.microsoft.com/en-us/download">https://dotnet.microsoft.com/en-us/download</a></p>
+<p><a href="https://dotnet.microsoft.com/es-es/download/dotnet/thank-you/runtime-6.0.28-windows-x64-installer">https://dotnet.microsoft.com/es-es/download/dotnet/thank-you/runtime-6.0.28-windows-x64-installer</a></p>
+</li>
+<li>
+<p>Ahora vamos a hacer uso del <strong>CLI de Azure</strong>. En caso de no tenerlo instalado podemos descargarlo desde aquí:</p>
+<p><a href="https://learn.microsoft.com/es-es/cli/azure/install-azure-cli">https://learn.microsoft.com/es-es/cli/azure/install-azure-cli</a></p>
+</li>
+<li>
+<p>Ahora ya vamos a hacer <strong>login</strong> con el CLI de Azure. Desde Powershell lanzamos el siguiente comando:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>az login --tenant <span style="color:#e6db74">&#34;[PUT-YOUR-TENANT-ID-HERE]&#34;</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Ahora seleccionamos la suscripción donde vamos a desplegar nuestra infra:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>az account set --subscription <span style="color:#e6db74">&#34;[PUT-YOUR-SUBSCRIPTION-ID-HERE]&#34;</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Ahora ya si empezamos con Pulumi. Creamos un nuevo directorio y usamos el comando de pulumi para crear un nuevo proyecto:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>mkdir first-azure-iac 
+</span></span><span style="display:flex;"><span>cd first-azure-iac
+</span></span><span style="display:flex;"><span>pulumi login --local
+</span></span><span style="display:flex;"><span>pulumi new azure-csharp
+</span></span></code></pre></div></li>
+<li>
+<p>Se nos pide una serie de datos:</p>
+<p><img src="/images/post14/image01.png" alt=""></p>
+</li>
+<li>
+<p>Ahora lanzamos el comando para abrir Visual Studio Code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>code .
+</span></span></code></pre></div></li>
+<li>
+<p>Abrimos el fichero <strong>Program.cs</strong>, y vemos que Pulumi que Pulumi nos ha creado un código de ejemplo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Pulumi;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Pulumi.AzureNative.Resources;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Pulumi.AzureNative.Storage;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Pulumi.AzureNative.Storage.Inputs;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Collections.Generic;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> Pulumi.Deployment.RunAsync(() =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Create an Azure Resource Group</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> resourceGroup = <span style="color:#66d9ef">new</span> ResourceGroup(<span style="color:#e6db74">&#34;resourceGroup&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Create an Azure resource (Storage Account)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> storageAccount = <span style="color:#66d9ef">new</span> StorageAccount(<span style="color:#e6db74">&#34;sa&#34;</span>, <span style="color:#66d9ef">new</span> StorageAccountArgs
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        ResourceGroupName = resourceGroup.Name,
+</span></span><span style="display:flex;"><span>        Sku = <span style="color:#66d9ef">new</span> SkuArgs
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Name = SkuName.Standard_LRS
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        Kind = Kind.StorageV2
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> storageAccountKeys = ListStorageAccountKeys.Invoke(<span style="color:#66d9ef">new</span> ListStorageAccountKeysInvokeArgs
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        ResourceGroupName = resourceGroup.Name,
+</span></span><span style="display:flex;"><span>        AccountName = storageAccount.Name
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> primaryStorageKey = storageAccountKeys.Apply(accountKeys =&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> firstKey = accountKeys.Keys[<span style="color:#ae81ff">0</span>].Value;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Output.CreateSecret(firstKey);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Export the primary key of the Storage Account</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object?</span>&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">        [&#34;primaryStorageKey&#34;]</span> = primaryStorageKey
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div></li>
+<li>
+<p>En este código podéis ver como se va a crear un resource group (línea .. ) y un storage account.</p>
+</li>
+<li>
+<p>Ahora vamos a desplegar esta infra, para ello lanzamos lo siguiente en la terminal de Visual Studio Code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span>pulumi up
+</span></span></code></pre></div></li>
+<li></li>
+</ol>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Alejandro García avatar" src="/images/foto.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Alejandro García</span>
+	</div>
+	<div class="authorbox__description">
+		Apasionado por la tecnología.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/alertascuandoseborranbloqueos/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Crea alertas para enterarte cuando borran bloqueos en Azure</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/post/registrarresourceprovider/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">Acabo de crear una suscripción y no puedo ni crear ni una VM. Hablemos de resource Provider</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://www.recetasdevops.dev/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/charlabackupsglozalazure2024/">Backups en Azure: Manual de Supervivencia</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/changeanalysisrescate/">Mi infra en Azure no funciona, algo cambió pero no se que fue. Change Analysis al rescate</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/registrarresourceprovider/">Acabo de crear una suscripción y no puedo ni crear ni una VM. Hablemos de resource Provider</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/primerospasosconpulumi/">Primeros pasos con Pulumi en Azure usando C#</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/alertascuandoseborranbloqueos/">Crea alertas para enterarte cuando borran bloqueos en Azure</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 Recetas Devops.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

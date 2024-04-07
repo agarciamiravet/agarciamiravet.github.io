@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Recetas Devops</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 Mar 2024 00:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Sat, 06 Apr 2024 00:00:00 +0200</lastBuildDate>
     <atom:link href="https://www.recetasdevops.dev/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Backups en Azure: Manual de Supervivencia</title>
+      <link>https://www.recetasdevops.dev/post/charlabackupsglozalazure2024/</link>
+      <pubDate>Sat, 06 Apr 2024 00:00:00 +0200</pubDate>
+      <guid>https://www.recetasdevops.dev/post/charlabackupsglozalazure2024/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Mi infra en Azure no funciona, algo cambió pero no se que fue. Change Analysis al rescate</title>
       <link>https://www.recetasdevops.dev/post/changeanalysisrescate/</link>
@@ -21,6 +28,13 @@
       <pubDate>Tue, 27 Feb 2024 00:00:00 +0200</pubDate>
       <guid>https://www.recetasdevops.dev/post/registrarresourceprovider/</guid>
       <description>En el post de hoy vamos a hablar de los los resource providers, y más concretamente del registro de estos.&#xA;Si vamos a la documentación oficial, nos encontramos la siguiente definición:&#xA;Un proveedor de recursos (resource provider) es una colección de operaciones REST que permite la funcionalidad de un servicio de Azure. Cada proveedor de recursos tiene un espacio de nombres en el formato de company-name.service-label&#xA;Sin estos resource providers, no podríamos crear ningún recurso en Azure, así de sencillo.</description>
+    </item>
+    <item>
+      <title>Primeros pasos con Pulumi en Azure usando C#</title>
+      <link>https://www.recetasdevops.dev/post/primerospasosconpulumi/</link>
+      <pubDate>Tue, 27 Feb 2024 00:00:00 +0200</pubDate>
+      <guid>https://www.recetasdevops.dev/post/primerospasosconpulumi/</guid>
+      <description>En el artículo vamos a hablar de Pulumi. Vamos a ver como podemos usarlo para desplegar nuestra infraestructura de Azure usando C#.&#xA;Tal y como dicen en la página oficial:&#xA;&amp;ldquo;Pulumi es una plataforma de infraestructura como código que le permite utilizar lenguajes y herramientas de programación familiares para construir, implementar y administrar infraestructura en la nube.&amp;rdquo;&#xA;Creo en mi opinión, que el mayor punto fuerte es que podemos usar un lenguaje que ya conocemos y usamos para programar, sin que tener que aprender otro lenguaje diferente.</description>
     </item>
     <item>
       <title>Crea alertas para enterarte cuando borran bloqueos en Azure</title>
