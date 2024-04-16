@@ -4,16 +4,16 @@
     <title>Posts on Recetas Devops</title>
     <link>https://www.recetasdevops.dev/post/</link>
     <description>Recent content in Posts on Recetas Devops</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo 0.125.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Apr 2024 00:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Sun, 10 Mar 2024 00:00:00 +0200</lastBuildDate>
     <atom:link href="https://www.recetasdevops.dev/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Backups en Azure: Manual de Supervivencia</title>
+      <title>Charla Backups en Azure</title>
       <link>https://www.recetasdevops.dev/post/charlabackupsglozalazure2024/</link>
-      <pubDate>Sat, 06 Apr 2024 00:00:00 +0200</pubDate>
+      <pubDate>Sun, 10 Mar 2024 00:00:00 +0200</pubDate>
       <guid>https://www.recetasdevops.dev/post/charlabackupsglozalazure2024/</guid>
-      <description></description>
+      <description>App Services Azure Key Vault Azure SQL Server CosmosDB Storage Account Recuperar Storage Account Para recuperar un Storage Account, ver el siguiente post:&#xA;https://www.recetasdevops.dev/post/borradostorageaccount/</description>
     </item>
     <item>
       <title>Mi infra en Azure no funciona, algo cambió pero no se que fue. Change Analysis al rescate</title>
