@@ -9,9 +9,11 @@
 		<meta property="og:url" content="https://www.recetasdevops.dev/post/charlabackupsglozalazure2024/">
   <meta property="og:site_name" content="Recetas Devops">
   <meta property="og:title" content="Charla Backups en Azure">
-  <meta property="og:description" content="App Services test
-Azure Key Vault Azure SQL Server CosmosDB Storage Account Recuperar Storage Account Para recuperar un Storage Account, ver el siguiente post:
-https://www.recetasdevops.dev/post/borradostorageaccount/">
+  <meta property="og:description" content="Azure Databricks No se puede recuperar directamente un Azure Databricks workspace, pero sí se puede abrir un ticket de soporte tal y como se indica en el siguiente enlace:
+https://learn.microsoft.com/en-us/answers/questions/631201/recovery-of-databricks-in-azure
+App Services A través del portal de Azure, no podemos recuperar un App Service. En cambio a través de Powershell, como podemos ver en este enlace:
+https://learn.microsoft.com/en-us/azure/app-service/app-service-undelete
+Como limitaciones, no podemos recuperar Azure Functions de Consumption o Elastic Premium Plan. Tampoco podemos recuperar apps en App Service Environment.">
   <meta property="og:locale" content="en-us">
   <meta property="og:type" content="article">
   <meta property="article:section" content="post">
@@ -62,15 +64,36 @@ https://www.recetasdevops.dev/post/borradostorageaccount/">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-03-10T00:00:00&#43;02:00">March 10, 2024</time></div></div>
 		</header>
 		<div class="content post__content clearfix">
-			<h2 id="app-services">App Services</h2>
-<p>test</p>
+			<h2 id="azure-databricks">Azure Databricks</h2>
+<p>No se puede recuperar directamente un Azure Databricks workspace, pero sí se puede abrir un ticket de soporte tal y como se indica en el siguiente enlace:</p>
+<p><a href="https://learn.microsoft.com/en-us/answers/questions/631201/recovery-of-databricks-in-azure">https://learn.microsoft.com/en-us/answers/questions/631201/recovery-of-databricks-in-azure</a></p>
+<h2 id="app-services">App Services</h2>
+<p>A través del portal de Azure, no podemos recuperar un App Service. En cambio a través de Powershell, como podemos ver en este enlace:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/app-service/app-service-undelete">https://learn.microsoft.com/en-us/azure/app-service/app-service-undelete</a></p>
+<p>Como limitaciones, no podemos recuperar Azure Functions de Consumption o Elastic Premium Plan. Tampoco podemos recuperar apps en App Service Environment.</p>
+<p>Disponemos de 30 días desde el día que eliminamos la app, para poder recuperar una App Service.</p>
 <h2 id="azure-key-vault">Azure Key Vault</h2>
+<p>Para poder recuperar un Azure Key Vault, secretos, keys y certificados debemos de habilitar <strong>Soft Delete</strong>.</p>
+<p>En el siguiente enlace puedes encontrar toda la información:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/key-vault/general/key-vault-recovery?tabs=azure-portal">https://learn.microsoft.com/en-us/azure/key-vault/general/key-vault-recovery?tabs=azure-portal</a></p>
 <h2 id="azure-sql-server">Azure SQL Server</h2>
 <h2 id="cosmosdb">CosmosDB</h2>
 <h2 id="storage-account">Storage Account</h2>
-<h3 id="recuperar-storage-account">Recuperar Storage Account</h3>
-<p>Para recuperar un Storage Account, ver el siguiente post:</p>
+<h3 id="storage-account-1">Storage Account</h3>
+<p>Para recuperar un Storage Account borrado, ver el siguiente post:</p>
 <p><a href="https://www.recetasdevops.dev/post/borradostorageaccount/">https://www.recetasdevops.dev/post/borradostorageaccount/</a></p>
+<p>Para más información sobre como recuperar un storage account, ver la documentación oficial en el siguiente enlace:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/storage/common/storage-account-recover">https://learn.microsoft.com/en-us/azure/storage/common/storage-account-recover</a></p>
+<h3 id="containers">Containers</h3>
+<p>Para recuperar un container borrado, debemos previamente configurar Soft Delete. En el siguiente enlace podemos encontrar la información necesaria:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/storage/blobs/soft-delete-container-overview">https://learn.microsoft.com/en-us/azure/storage/blobs/soft-delete-container-overview</a></p>
+<p>Por lo visto, en caso de usar almacenamiento con redundancia geográfica podríamos recuperar un container abriendo un ticket de soporte. Usando redundacia local (LRS), no esta soportado. Para más información sobre este tipo de recuperación ver el siguiente enlace:</p>
+<p><a href="https://learn.microsoft.com/es-es/troubleshoot/azure/azure-storage/blobs/recovery/data-protection-backup-recovery#scenario-3-container-recovery">https://learn.microsoft.com/es-es/troubleshoot/azure/azure-storage/blobs/recovery/data-protection-backup-recovery#scenario-3-container-recovery</a></p>
+<h3 id="blobs">Blobs</h3>
+<p>Para poder recuperar blobs borrados podemos usar <strong>Soft Delete</strong>. En el siguiente enlace podeís ver como configurarlo:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/storage/blobs/soft-delete-blob-overview">https://learn.microsoft.com/en-us/azure/storage/blobs/soft-delete-blob-overview</a></p>
+<p>Para ver opciones de backup de los blobs, visitar el siguiente enlace:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/backup/blob-backup-overview?tabs=operational-backup">https://learn.microsoft.com/en-us/azure/backup/blob-backup-overview?tabs=operational-backup</a></p>
 
 		</div>
 	</article>

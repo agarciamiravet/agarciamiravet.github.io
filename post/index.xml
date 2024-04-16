@@ -13,7 +13,7 @@
       <link>https://www.recetasdevops.dev/post/charlabackupsglozalazure2024/</link>
       <pubDate>Sun, 10 Mar 2024 00:00:00 +0200</pubDate>
       <guid>https://www.recetasdevops.dev/post/charlabackupsglozalazure2024/</guid>
-      <description>App Services test&#xA;Azure Key Vault Azure SQL Server CosmosDB Storage Account Recuperar Storage Account Para recuperar un Storage Account, ver el siguiente post:&#xA;https://www.recetasdevops.dev/post/borradostorageaccount/</description>
+      <description>Azure Databricks No se puede recuperar directamente un Azure Databricks workspace, pero sí se puede abrir un ticket de soporte tal y como se indica en el siguiente enlace:&#xA;https://learn.microsoft.com/en-us/answers/questions/631201/recovery-of-databricks-in-azure&#xA;App Services A través del portal de Azure, no podemos recuperar un App Service. En cambio a través de Powershell, como podemos ver en este enlace:&#xA;https://learn.microsoft.com/en-us/azure/app-service/app-service-undelete&#xA;Como limitaciones, no podemos recuperar Azure Functions de Consumption o Elastic Premium Plan. Tampoco podemos recuperar apps en App Service Environment.</description>
     </item>
     <item>
       <title>Mi infra en Azure no funciona, algo cambió pero no se que fue. Change Analysis al rescate</title>
