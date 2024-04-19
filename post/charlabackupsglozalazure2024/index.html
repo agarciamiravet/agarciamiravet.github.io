@@ -77,7 +77,31 @@ Como limitaciones, no podemos recuperar Azure Functions de Consumption o Elastic
 <p>En el siguiente enlace puedes encontrar toda la información:</p>
 <p><a href="https://learn.microsoft.com/en-us/azure/key-vault/general/key-vault-recovery?tabs=azure-portal">https://learn.microsoft.com/en-us/azure/key-vault/general/key-vault-recovery?tabs=azure-portal</a></p>
 <h2 id="azure-sql-server">Azure SQL Server</h2>
+<h3 id="servidor-de-azure-sql">Servidor de Azure SQL</h3>
+<p>En el caso de eliminar toda la instancia de Azure SQL Server, eliminaríamos todas sus bases de datos.</p>
+<p>No podemos recuperar directamente una instancia entera, sino que debemos abrir ticket de soporte. Microsoft hará todo lo posible por recuperar el servidor entero, pero no promete que pueda hacerlo.</p>
+<p>En el siguiente enlace de Stackoverflow (<a href="https://www.recetasdevops.dev/post/charlabackupsglozalazure2024)">https://www.recetasdevops.dev/post/charlabackupsglozalazure2024)</a>, podemos ver como algunos usuarios comentan lo siguiente:</p>
+<p><strong>&ldquo;Microsoft podrá recuperar un servidor bajo las siguientes condiciones:</strong></p>
+<ol>
+<li><strong>No se creó otro SQL Server con el mismo nombre</strong>.</li>
+<li><strong>Han pasado menos de 7 días desde la eliminación.</strong></li>
+<li><strong>Se debe conocer la región, el servidor SQL y el nombre del grupo de recursos.&rdquo;</strong></li>
+</ol>
+<p>En el siguiente enlace también comentan lo mismo:</p>
+<p><a href="https://stackoverflow.com/questions/59452462/how-to-restore-azure-sql-server">https://stackoverflow.com/questions/59452462/how-to-restore-azure-sql-server</a></p>
+<p>De cualquier manera, lo mejor es contactar con Microsoft y que nos faciliten esa información.</p>
 <h2 id="cosmosdb">CosmosDB</h2>
+<p>CosmosDB tiene 2 tipos de backups que pueden ser configurados:</p>
+<ul>
+<li>Periódico: <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/periodic-backup-restore-introduction">https://learn.microsoft.com/en-us/azure/cosmos-db/periodic-backup-restore-introduction</a></li>
+<li>Continuo: <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/continuous-backup-restore-introduction">https://learn.microsoft.com/en-us/azure/cosmos-db/continuous-backup-restore-introduction</a></li>
+</ul>
+<p>En el modo periódico, por defecto se hace full backup cada 4 horas (aunque es ampliable), y almacena los dos últimos backups, es decir las últimas 8 horas. Necesitas abrir ticket de soporte para poder restaurar con este tipo de backup.</p>
+<p>En el caso del backup contínuo, este nos permite hacer restauración de tipo <strong>Point in time restore</strong>. Con Point in time restore podemos:</p>
+<p>-Recuperarse de una operación de escritura o eliminación accidental dentro de un contenedor.<br>
+-Restaurar una cuenta, base de datos o contenedor eliminados.<br>
+-Restaurar en cualquier región (donde existieran copias de seguridad) en el momento de restauración.</p>
+<p>Respecto a la duración de este tipo de backups, podemos configurarlo por 7 días o 30 días.</p>
 <h2 id="storage-account">Storage Account</h2>
 <h3 id="storage-account-1">Storage Account</h3>
 <p>Para recuperar un Storage Account borrado, ver el siguiente post:</p>
