@@ -4,10 +4,17 @@
     <title>Posts on Recetas Devops</title>
     <link>https://www.recetasdevops.dev/post/</link>
     <description>Recent content in Posts on Recetas Devops</description>
-    <generator>Hugo 0.125.1</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 Mar 2024 00:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 03 May 2024 00:00:00 +0200</lastBuildDate>
     <atom:link href="https://www.recetasdevops.dev/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>¿Puedo crear un recovery service vault o Backup Vault en la paired region en vez de en la misma región donde tengo mis recursos que voy a proteger?</title>
+      <link>https://www.recetasdevops.dev/post/recoveryservicevaultotraregion/</link>
+      <pubDate>Fri, 03 May 2024 00:00:00 +0200</pubDate>
+      <guid>https://www.recetasdevops.dev/post/recoveryservicevaultotraregion/</guid>
+      <description>Hace 2 semanas, después de la charla de la Global Azure 2024 donde hablaba sobre backups, una persona me comentaba lo siguiente:&#xA;&amp;ldquo;No sé si se puede tener un Recovery Services Vault o Backup Vault en la paired region en vez de tenerlo en la misma región donde se crearon mis recursos. Por ejemplo tengo mis VMs en West Europe, pero quiero que mi Recovery Services Vault (y por tanto mi backups) estén en North Europe.</description>
+    </item>
     <item>
       <title>Global Azure 2024 Spain - Charla Backups en Azure - Manual de superviviencia</title>
       <link>https://www.recetasdevops.dev/post/charlabackupsglozalazure2024/</link>

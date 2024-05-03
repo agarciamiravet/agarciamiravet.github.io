@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-	<meta name="generator" content="Hugo 0.125.1">
+	<meta name="generator" content="Hugo 0.125.5">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Recetas Devops</title>
@@ -52,6 +52,22 @@
 			
 <main class="main list" role="main">
 	<article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/recoveryservicevaultotraregion/" rel="bookmark">
+			¿Puedo crear un recovery service vault o Backup Vault en la paired region en vez de en la misma región donde tengo mis recursos que voy a proteger?
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-05-03T00:00:00&#43;02:00">May 03, 2024</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Hace 2 semanas, después de la charla de la Global Azure 2024 donde hablaba sobre backups, una persona me comentaba lo siguiente:
+&ldquo;No sé si se puede tener un Recovery Services Vault o Backup Vault en la paired region en vez de tenerlo en la misma región donde se crearon mis recursos. Por ejemplo tengo mis VMs en West Europe, pero quiero que mi Recovery Services Vault (y por tanto mi backups) estén en North Europe.
+	</div>
+</article><article class="list__item post">
 	
 	<header class="list__header">
 		<h2 class="list__title post__title">
@@ -211,24 +227,6 @@ winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas d
 		Hace unas semanas, hablando con un amigo, este me comentaba como en el trabajo se había realizado un cambio en un script que manipulaba storage accounts. La cuestión es que (no me preguntéis como ni porque jajaja), en ese script se metió una línea que borraba un container usando el comando de Powershell Remove-AzStorageContainer.
 ¿Y sabéis que paso? Pues sí, que el container se borró. Gracias a que estaba habilitado el soft delete del container, pues se recupero el container y el problema se resolvió.
 	</div>
-</article><article class="list__item post">
-	
-	<header class="list__header">
-		<h2 class="list__title post__title">
-			<a href="/post/comoenterarmecuandoretiranunserviciodeazure/" rel="bookmark">
-			¿Cómo enterarme cuando retiran (deprecated) un servicio o funcionalidad en Azure?
-			</a>
-		</h2>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-01-12T00:00:00&#43;01:00">January 12, 2024</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Cuando se trabaja en Azure, una de las tareas más importantes es enterarte cuando un servicio o funcionalidad de los servicios de los que usamos en producción es retirado de la circulación.
-Para poder enterarnos de cuando esto pase, Microsoft proporciona varios métodos:
-Envío de notificaciones por correo a los propietarios y administraciones de las suscripciones:
-Creo que no hace falta que cuente en detalle, que suele pasar con los mails, y sobretodo cuando recibes muchos .
-	</div>
 </article>
 </main>
 
@@ -249,11 +247,11 @@ Creo que no hace falta que cuente en detalle, que suele pasar con los mails, y s
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/recoveryservicevaultotraregion/">¿Puedo crear un recovery service vault o Backup Vault en la paired region en vez de en la misma región donde tengo mis recursos que voy a proteger?</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/charlabackupsglozalazure2024/">Global Azure 2024 Spain - Charla Backups en Azure - Manual de superviviencia</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/changeanalysisrescate/">Mi infra en Azure no funciona, algo cambió pero no se que fue. Change Analysis al rescate</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/registrarresourceprovider/">Acabo de crear una suscripción y no puedo ni crear ni una VM. Hablemos de resource Provider</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/primerospasosconpulumi/">Primeros pasos con Pulumi en Azure usando C#</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/alertascuandoseborranbloqueos/">Crea alertas para enterarte cuando borran bloqueos en Azure</a></li>
 		</ul>
 	</div>
 </div>
