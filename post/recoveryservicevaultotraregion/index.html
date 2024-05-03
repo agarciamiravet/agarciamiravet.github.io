@@ -70,13 +70,11 @@
 <ol>
 <li>
 <p>Un <strong>Recovery Services Vault</strong> creado en la región de West Europe, llamado <strong>rsv-west-europe</strong>.</p>
-<br>
 <img src="/images/post15/image01.png" style="zoom:67%;" />
 <br>
 </li>
 <li>
 <p>Tengo una VM creada en la región de North Europe, llamada <strong>vm-in-north-europe</strong>.</p>
-<br>
 </li>
 </ol>
 <img src="/images/post15/image02.png" style="zoom: 67%;" />
@@ -86,25 +84,21 @@
 <ol>
 <li>
 <p>Vamos a nuestro <strong>Recovery Services Vault</strong>, y pulsamos en <strong>Backup</strong>.</p>
-<br>
 <img src="/images/post15/image03.png" style="zoom:67%;" />
 <br>
 </li>
 <li>
 <p>Dejamos las opciones por defecto y pulsamos en <strong>Backup</strong>.</p>
-<br>
 <img src="/images/post15/image04.png" style="zoom:67%;" />
 <br>
 </li>
 <li>
 <p>En la siguiente pantalla, elegimos como Policy sub type <strong>Standard</strong>   y Backup policy <strong>Default policy</strong>.</p>
-<br>
 <p><img src="/images/post15/image05.png" alt=""></p>
 <br>
 </li>
 <li>
 <p>Bajamos un poco y en <strong>Virtual machines</strong>, elegimos <strong>Add</strong>:</p>
-<br>
 </li>
 </ol>
 <p><img src="/images/post15/image06.png" alt=""></p>
@@ -112,7 +106,6 @@
 <ol start="5">
 <li>
 <p>Si vemos el listado de VMs, podemos ver como no aparece la VM que tenemos en <strong>North Europe</strong>, únicamente una VM que tenemos en <strong>West Europe.</strong></p>
-<br>
 <p><img src="/images/post15/image07.png" alt=""></p>
 </li>
 </ol>
@@ -135,17 +128,17 @@
 </span></span><span style="display:flex;"><span>-Name $vm.Name `
 </span></span><span style="display:flex;"><span>-Policy $policy
 </span></span></code></pre></div><p>Cuando lanzamos el script, nos encontramos el siguiente error:</p>
-<br>
 <img src="/images/post15/image09.png" style="zoom:190%;" />
 <p>Con esto podemos concluir:</p>
 <p><strong>&ldquo;Podemos hacer backups de nuestras VMs únicamente en Site Recovery Vaults de la misma región donde fueron creadas esas VMS&rdquo;</strong>.</p>
 <p>Lo mismo ocurre con <strong>Vault Backup</strong>,solo puedo proteger recursos en <strong>Vault Backups</strong> de la misma región donde los recursos fueron creados.</p>
 <br>
 <p><img src="/images/post15/image11.png" alt=""></p>
+<br>
 <p>Pero que esto no significa que no hayan <strong>&ldquo;otras opciones&rdquo;</strong>.  Si creamos nuestro Recovery Services Vaults  o Backup Vaults en West Europe, con la opción de Geo-redundancia tendremos nuestros backups tanto en en West Europe, como en la región paired, en este caso North Europe.</p>
 <p>Además teniendo la opción de geo-redundancia habilitada junto con  la opción de <strong>Cross Region Restore</strong>, en caso de que por cualquier desastre no sea accesible la región primaria (en nuestro caso West Europe), podríamos restaurar nuestro backup en la región secundaria (en nuestro ejemplo North Europe).</p>
-<br>
 <img src="/images/post15/image10.png" style="zoom:67%;" />
+<br>
 <br>
 <p>Luego, fuera ya de Recovery services Vault y de Backup Vault tenemos otras opciones. Por ejemplo, con los discos Managed Disks en el siguiente enlace podéis ver las opciones disponibles:</p>
 <p><a href="https://learn.microsoft.com/en-us/azure/virtual-machines/disks-copy-incremental-snapshot-across-regions?tabs=azure-cli">https://learn.microsoft.com/en-us/azure/virtual-machines/disks-copy-incremental-snapshot-across-regions?tabs=azure-cli</a></p>
