@@ -10,7 +10,7 @@
   <meta property="og:site_name" content="Recetas Devops">
   <meta property="og:title" content="¿Puedo crear un recovery service vault o Backup Vault en la paired region en vez de en la misma región donde tengo mis recursos que voy a proteger?">
   <meta property="og:description" content="Hace 2 semanas, después de la charla de la Global Azure 2024 donde hablaba sobre backups, una persona me comentaba lo siguiente:
-“No sé si se puede tener un Recovery Services Vault o Backup Vault en la paired region en vez de tenerlo en la misma región donde se crearon mis recursos. Por ejemplo tengo mis VMs en West Europe, pero quiero que mi Recovery Services Vault (y por tanto mi backups) estén en North Europe.">
+“No sé si se puede tener un Recovery Services Vault o Backup Vault en la paired region en vez de tenerlo en la misma región donde se crearon mis recursos. Por ejemplo tengo mis VMs en West Europe, pero quiero que mi Recovery Services Vault (y por tanto mis backups) estén en North Europe.">
   <meta property="og:locale" content="en-us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="post">
@@ -63,7 +63,7 @@
 		<div class="content post__content clearfix">
 			<p>Hace 2 semanas, después de la charla de la Global Azure 2024  donde hablaba sobre backups, una persona me comentaba lo siguiente:</p>
 <blockquote>
-<p><strong>&ldquo;No sé si se puede tener un Recovery Services Vault o Backup Vault en la paired region en vez de tenerlo en la misma región donde se crearon mis recursos. Por ejemplo tengo mis VMs en West Europe, pero quiero que mi Recovery Services Vault (y por tanto mi backups) estén en North Europe.&rdquo;.</strong></p>
+<p><strong>&ldquo;No sé si se puede tener un Recovery Services Vault o Backup Vault en la paired region en vez de tenerlo en la misma región donde se crearon mis recursos. Por ejemplo tengo mis VMs en West Europe, pero quiero que mi Recovery Services Vault (y por tanto mis backups) estén en North Europe.&rdquo;.</strong></p>
 </blockquote>
 <p>Mi primera respuesta fue que &ldquo;creía que no&rdquo;, pero la verdad no estaba muy convencido. Es por ello que en este post vamos a ver si es posible o no tener la configuración que me preguntaban.</p>
 <p>He creado en mi suscripción lo siguiente:</p>
@@ -135,7 +135,7 @@
 <br>
 <p><img src="/images/post15/image11.png" alt=""></p>
 <br>
-<p>Pero que esto no significa que no hayan <strong>&ldquo;otras opciones&rdquo;</strong>.  Si creamos nuestro Recovery Services Vaults  o Backup Vaults en West Europe, con la opción de Geo-redundancia tendremos nuestros backups tanto en en West Europe, como en la región paired, en este caso North Europe.</p>
+<p>Pero que esto no significa que no hayan <strong>&ldquo;otras opciones&rdquo;</strong>.  Si creamos nuestro Recovery Services Vaults  o Backup Vaults en West Europe, con la opción de Geo-redundancia tendremos nuestros backups tanto en West Europe, como en la región paired, en este caso North Europe.</p>
 <p>Además teniendo la opción de geo-redundancia habilitada junto con  la opción de <strong>Cross Region Restore</strong>, en caso de que por cualquier desastre no sea accesible la región primaria (en nuestro caso West Europe), podríamos restaurar nuestro backup en la región secundaria (en nuestro ejemplo North Europe).</p>
 <img src="/images/post15/image10.png" style="zoom:67%;" />
 <br>
