@@ -16,8 +16,8 @@ Creo en mi opinión, que el mayor punto fuerte es que podemos usar un lenguaje q
   <meta property="og:locale" content="en-us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="post">
-    <meta property="article:published_time" content="2024-02-27T00:00:00+02:00">
-    <meta property="article:modified_time" content="2024-02-27T00:00:00+02:00">
+    <meta property="article:published_time" content="2024-03-22T00:00:00+02:00">
+    <meta property="article:modified_time" content="2024-03-22T00:00:00+02:00">
 
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -60,7 +60,7 @@ Creo en mi opinión, que el mayor punto fuerte es que podemos usar un lenguaje q
 			<h1 class="post__title">Primeros pasos con Pulumi en Azure usando C#</h1>
 			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-02-27T00:00:00&#43;02:00">February 27, 2024</time></div></div>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-03-22T00:00:00&#43;02:00">March 22, 2024</time></div></div>
 		</header>
 		<div class="content post__content clearfix">
 			<p>En el artículo vamos a hablar de Pulumi. Vamos a ver como podemos usarlo para desplegar nuestra infraestructura de Azure usando C#.</p>
@@ -115,7 +115,7 @@ Creo en mi opinión, que el mayor punto fuerte es que podemos usar un lenguaje q
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>code .
 </span></span></code></pre></div></li>
 <li>
-<p>Abrimos el fichero <strong>Program.cs</strong>, y vemos que Pulumi que Pulumi nos ha creado un código de ejemplo:</p>
+<p>Abrimos el fichero <strong>Program.cs</strong>, y vemos que Pulumi nos ha creado un código de ejemplo:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Pulumi;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Pulumi.AzureNative.Resources;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Pulumi.AzureNative.Storage;
@@ -158,14 +158,31 @@ Creo en mi opinión, que el mayor punto fuerte es que podemos usar un lenguaje q
 </span></span><span style="display:flex;"><span>});
 </span></span></code></pre></div></li>
 <li>
-<p>En este código podéis ver como se va a crear un resource group (línea .. ) y un storage account.</p>
+<p>En este código podéis ver como se va a crear un resource group (línea 10 ) y un storage account (línea 13) .</p>
 </li>
 <li>
 <p>Ahora vamos a desplegar esta infra, para ello lanzamos lo siguiente en la terminal de Visual Studio Code:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span>pulumi up
 </span></span></code></pre></div></li>
-<li></li>
+<li>
+<p>Nos pedirá confirmación. Ponemos lleves y pulsamos la tecla <strong>Enter</strong>.</p>
+</li>
 </ol>
+<img src="/images/post14/image02.png" style="zoom:67%;" />
+<ol start="14">
+<li>Una vez finalizado, si vamos al portal de Azure veremos nuestra infraestructura desplegada:</li>
+</ol>
+<img src="/images/post14/image03.png" style="zoom:67%;" />
+<p>Si os fijáis en el nombre de los recursos, podéis ver como al final de los nombres de los recursos se ha añadido unos valores random (por ejemplo el storage name se llama <strong>sarecetasdevops8bf02e54</strong>). Esta es una configuración por defecto de Pulimi llamada <strong>auto-names</strong>. En la documentación de Pulumi (mas info aquí: <a href="https://www.pulumi.com/docs/concepts/resources/names)">https://www.pulumi.com/docs/concepts/resources/names)</a>, se dice lo siguiente:</p>
+<blockquote>
+<p>Pulumi <a href="https://www.pulumi.com/docs/concepts/resources/names/#autonaming">auto-names</a> most resources by default, using the logical name and a random suffix to construct a unique physical name for a resource. Users can provide explicit names to override this default.</p>
+</blockquote>
+<p>Nosotros queremos poner unos nombres &ldquo;fijos&rdquo; a nuestros recursos, y no que Pulumi use auto-names. Es por ello que en nuestro código de C# lo ponemos de la siguiente manera:</p>
+<img src="/images/post14/image04.png" style="zoom:67%;" />
+<img src="/images/post14/image05.png" style="zoom:67%;" />
+<p>Ya por último y para finalizar, para eliminar nuestra infraestructura lanzariamos el siguiente comando:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span>pulumi down
+</span></span></code></pre></div><p>Espero que este pequeño artículo os anime a investigar sobre Pulumi ;)</p>
 
 		</div>
 	</article>
@@ -185,15 +202,15 @@ Creo en mi opinión, que el mayor punto fuerte es que podemos usar un lenguaje q
 
 <nav class="pager flex">
 	<div class="pager__item pager__item--prev">
-		<a class="pager__link" href="/post/alertascuandoseborranbloqueos/" rel="prev">
+		<a class="pager__link" href="/post/changeanalysisrescate/" rel="prev">
 			<span class="pager__subtitle">«&thinsp;Previous</span>
-			<p class="pager__title">Crea alertas para enterarte cuando borran bloqueos en Azure</p>
+			<p class="pager__title">Mi infra en Azure no funciona, algo cambió pero no se que fue. Change Analysis al rescate</p>
 		</a>
 	</div>
 	<div class="pager__item pager__item--next">
-		<a class="pager__link" href="/post/registrarresourceprovider/" rel="next">
+		<a class="pager__link" href="/post/charlabackupsglozalazure2024/" rel="next">
 			<span class="pager__subtitle">Next&thinsp;»</span>
-			<p class="pager__title">Acabo de crear una suscripción y no puedo ni crear ni una VM. Hablemos de resource Provider</p>
+			<p class="pager__title">Global Azure 2024 Spain - Charla Backups en Azure - Manual de superviviencia</p>
 		</a>
 	</div>
 </nav>
@@ -213,9 +230,9 @@ Creo en mi opinión, que el mayor punto fuerte es que podemos usar un lenguaje q
 		<ul class="widget__list">
 			<li class="widget__item"><a class="widget__link" href="/post/recoveryservicevaultotraregion/">¿Puedo crear un recovery service vault o Backup Vault en la paired region en vez de en la misma región donde tengo mis recursos que voy a proteger?</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/charlabackupsglozalazure2024/">Global Azure 2024 Spain - Charla Backups en Azure - Manual de superviviencia</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/primerospasosconpulumi/">Primeros pasos con Pulumi en Azure usando C#</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/changeanalysisrescate/">Mi infra en Azure no funciona, algo cambió pero no se que fue. Change Analysis al rescate</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/registrarresourceprovider/">Acabo de crear una suscripción y no puedo ni crear ni una VM. Hablemos de resource Provider</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/primerospasosconpulumi/">Primeros pasos con Pulumi en Azure usando C#</a></li>
 		</ul>
 	</div>
 </div>

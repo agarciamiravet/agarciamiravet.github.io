@@ -77,7 +77,7 @@
 		</h2>
 		<div class="list__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-03-10T00:00:00&#43;02:00">March 10, 2024</time></div></div>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-04-13T00:00:00&#43;02:00">April 13, 2024</time></div></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
 		Azure Databricks No se puede recuperar directamente un Azure Databricks workspace, pero sí se puede abrir un ticket de soporte tal y como se indica en el siguiente enlace:
@@ -85,6 +85,24 @@ https://learn.microsoft.com/en-us/answers/questions/631201/recovery-of-databrick
 App Services A través del portal de Azure, no podemos recuperar un App Service. En cambio a través de Powershell, como podemos ver en este enlace:
 https://learn.microsoft.com/en-us/azure/app-service/app-service-undelete
 Como limitaciones, no podemos recuperar Azure Functions de Consumption o Elastic Premium Plan. Tampoco podemos recuperar apps en App Service Environment.
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/primerospasosconpulumi/" rel="bookmark">
+			Primeros pasos con Pulumi en Azure usando C#
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-03-22T00:00:00&#43;02:00">March 22, 2024</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		En el artículo vamos a hablar de Pulumi. Vamos a ver como podemos usarlo para desplegar nuestra infraestructura de Azure usando C#.
+Tal y como dicen en la página oficial:
+&ldquo;Pulumi es una plataforma de infraestructura como código que le permite utilizar lenguajes y herramientas de programación familiares para construir, implementar y administrar infraestructura en la nube.&rdquo;
+Creo en mi opinión, que el mayor punto fuerte es que podemos usar un lenguaje que ya conocemos y usamos para programar, sin que tener que aprender otro lenguaje diferente.
 	</div>
 </article><article class="list__item post">
 	
@@ -122,24 +140,6 @@ Y te responden:
 Si vamos a la documentación oficial, nos encontramos la siguiente definición:
 Un proveedor de recursos (resource provider) es una colección de operaciones REST que permite la funcionalidad de un servicio de Azure. Cada proveedor de recursos tiene un espacio de nombres en el formato de company-name.service-label
 Sin estos resource providers, no podríamos crear ningún recurso en Azure, así de sencillo.
-	</div>
-</article><article class="list__item post">
-	
-	<header class="list__header">
-		<h2 class="list__title post__title">
-			<a href="/post/primerospasosconpulumi/" rel="bookmark">
-			Primeros pasos con Pulumi en Azure usando C#
-			</a>
-		</h2>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-02-27T00:00:00&#43;02:00">February 27, 2024</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		En el artículo vamos a hablar de Pulumi. Vamos a ver como podemos usarlo para desplegar nuestra infraestructura de Azure usando C#.
-Tal y como dicen en la página oficial:
-&ldquo;Pulumi es una plataforma de infraestructura como código que le permite utilizar lenguajes y herramientas de programación familiares para construir, implementar y administrar infraestructura en la nube.&rdquo;
-Creo en mi opinión, que el mayor punto fuerte es que podemos usar un lenguaje que ya conocemos y usamos para programar, sin que tener que aprender otro lenguaje diferente.
 	</div>
 </article><article class="list__item post">
 	
@@ -249,9 +249,9 @@ winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas d
 		<ul class="widget__list">
 			<li class="widget__item"><a class="widget__link" href="/post/recoveryservicevaultotraregion/">¿Puedo crear un recovery service vault o Backup Vault en la paired region en vez de en la misma región donde tengo mis recursos que voy a proteger?</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/charlabackupsglozalazure2024/">Global Azure 2024 Spain - Charla Backups en Azure - Manual de superviviencia</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/primerospasosconpulumi/">Primeros pasos con Pulumi en Azure usando C#</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/changeanalysisrescate/">Mi infra en Azure no funciona, algo cambió pero no se que fue. Change Analysis al rescate</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/registrarresourceprovider/">Acabo de crear una suscripción y no puedo ni crear ni una VM. Hablemos de resource Provider</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/primerospasosconpulumi/">Primeros pasos con Pulumi en Azure usando C#</a></li>
 		</ul>
 	</div>
 </div>
