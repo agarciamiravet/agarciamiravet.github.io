@@ -3,15 +3,17 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Recuperar App Service borrado por error - Recetas Devops</title>
+	<title>Cómo recuperar App Service borrado - Recetas Devops</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 		<meta property="og:url" content="https://www.recetasdevops.dev/post/appservicerecover/">
   <meta property="og:site_name" content="Recetas Devops">
-  <meta property="og:title" content="Recuperar App Service borrado por error">
+  <meta property="og:title" content="Cómo recuperar App Service borrado">
   <meta property="og:description" content="En el artículo de hoy, vamos a ver como podemos recuperar un App Service que hemos borrado accidentalmente.
 Antes de ver los pasos para recuperar un App Service, vamos a comentar las siguientes limitaciones:
-No podemos recuperar Azure Functions de tipo Consumption o en Elastic Premium Plan borrados. Disponemos de 30 días desde el día en el que el App Service fue borrado. Tampoco podemos recuperar App Services en App Services Environment.">
+No podemos recuperar Azure Functions de tipo Consumption o en Elastic Premium Plan borrados.
+Disponemos de 30 días para poder recuperar nuestro App Service desde el día en el que este fue borrado.
+Tampoco podemos recuperar App Services en App Services Environment.">
   <meta property="og:locale" content="en-us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="post">
@@ -56,30 +58,37 @@ No podemos recuperar Azure Functions de tipo Consumption o en Elastic Premium Pl
 <main class="main" role="main">
 	<article class="post">
 		<header class="post__header">
-			<h1 class="post__title">Recuperar App Service borrado por error</h1>
+			<h1 class="post__title">Cómo recuperar App Service borrado</h1>
 			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-05-05T00:00:00&#43;01:00">May 05, 2024</time></div></div>
 		</header>
 		<div class="content post__content clearfix">
 			<img src="/images/post16/meme.jpg"  />
+<br>
 <p>En el artículo de hoy, vamos a ver como podemos recuperar un <strong>App Service</strong> que hemos borrado accidentalmente.</p>
 <p>Antes de ver los pasos para recuperar un <strong>App Service</strong>, vamos a comentar las siguientes limitaciones:</p>
 <ul>
-<li>No podemos recuperar <strong>Azure Functions</strong> de tipo <strong>Consumption</strong> o en <strong>Elastic Premium</strong> Plan borrados.</li>
-<li>Disponemos de 30 días desde el día en el que el  <strong>App Service</strong> fue borrado.</li>
-<li>Tampoco podemos recuperar <strong>App Services</strong> en <strong>App Services Environment</strong>.</li>
+<li>
+<p>No podemos recuperar <strong>Azure Functions</strong> de tipo <strong>Consumption</strong> o en <strong>Elastic Premium</strong> Plan borrados.</p>
+</li>
+<li>
+<p>Disponemos de 30 días para poder recuperar nuestro App Service desde el día en el que este fue borrado.</p>
+</li>
+<li>
+<p>Tampoco podemos recuperar <strong>App Services</strong> en <strong>App Services Environment</strong>.</p>
+</li>
 </ul>
-<p>Ahora ya sí , vamos a ponernos el lío.</p>
-<p>Me voy al portal de Azure y elimino el App Service con nombre <strong>recetasdevops-appsvc</strong>:</p>
+<p>Ahora ya sí , vamos a ponernos al lío.</p>
+<p>Me voy al portal de Azure y elimino el <strong>App Service</strong> con nombre <strong>recetasdevops-appsvc</strong>:</p>
 <img src="/images/post16/image01.png" style="zoom:57%;" />
 <img src="/images/post16/image02.png" style="zoom:67%;" />
 <br>
-<p>Los pasos para recuperar este App Service, deben hacerse a través de <strong>Powershell</strong>. No hay forma desde el portal de Azure de recuperar un App Service.</p>
+<p>Los pasos para recuperar este App Service, deben hacerse a través de <strong>Powershell</strong>. No hay forma desde el portal de Azure de recuperar un <strong>App Service</strong>.</p>
 <p>Los pasos son los siguientes:</p>
 <ol>
 <li>
-<p>Conectarnos a Azure con Powershell</p>
+<p>Conectarnos a Azure con Powershell:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Connect-AzAccount -Tenant <span style="color:#e6db74">&#34;[put_your_tenant_id_here]&#34;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Set-AzContext -Subscription <span style="color:#e6db74">&#34;[put_your_subscription_id_here]&#34;</span>
@@ -96,19 +105,20 @@ No podemos recuperar Azure Functions de tipo Consumption o en Elastic Premium Pl
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Get-AzDeletedWebApp
 </span></span></code></pre></div><ol start="4">
 <li>
-<p>Ahora con el siguiente comando  a ejecutar y la información obtenida con el comando <strong>Get-AzDeletedWebApp</strong>, vamos a recuperar nuestro App Service en el App service Plan y resource group original de donde fue borrado.</p>
+<p>Ahora con  la información obtenida con el comando <strong>Get-AzDeletedWebApp</strong>, y usando el comando <strong>Restore-AzDeleteWebApp</strong> vamos a recuperar el App Service, en el App service Plan y resource group original de donde fue borrado.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Restore-AzDeletedWebApp -ResourceGroupName <span style="color:#e6db74">&#34;rg-app-services&#34;</span> -Name <span style="color:#e6db74">&#34;recetasdevops-appsvc&#34;</span> -TargetAppServicePlanName <span style="color:#e6db74">&#34;svcplan&#34;</span>
 </span></span></code></pre></div></li>
 <li>
-<p>Ahora escribimos <strong>Yes</strong>  y pulsamos <strong>Enter</strong> para confirmar que queremos restaurar nuestro App Service.</p>
+<p>Ahora escribimos <strong>Yes</strong>  y pulsamos <strong>Enter</strong> para confirmar que queremos restaurar nuestro <strong>App Service</strong>.</p>
 <p><img src="/images/post16/image04.png" alt=""></p>
 </li>
 <li>
-<p>Y después de muy poco recibiremos la confirmación de que nuestro App Service ha sido restaurado. Si vamos al portal el App Service aparece de nuevo :)</p>
+<p>En muy poco tiempo, recibiremos la confirmación de que nuestro <strong>App Service</strong> ha sido restaurado. Si vamos al portal el <strong>App Service</strong> aparece de nuevo :)</p>
 </li>
 </ol>
 <img src="/images/post16/image05.png" style="zoom:67%;" />
-<p>Solo me queda comentaros dos cosas. la documentación oficial de como recuperar un App Service la podéis consultar en el siguiente enlace:</p>
+<br>
+<p>Solo me queda comentaros dos cosas. la documentación oficial de como recuperar un <strong>App Service</strong> la podéis consultar en el siguiente enlace:</p>
 <p><a href="https://learn.microsoft.com/en-us/azure/app-service/app-service-undelete">https://learn.microsoft.com/en-us/azure/app-service/app-service-undelete</a></p>
 <p>Por último y no menos importante, el comando <strong>Restore-AzDeletedWebApp</strong> tiene muchas opciones tales como:</p>
 <ul>
@@ -159,7 +169,7 @@ No podemos recuperar Azure Functions de tipo Consumption o en Elastic Premium Pl
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/post/appservicerecover/">Recuperar App Service borrado por error</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/appservicerecover/">Cómo recuperar App Service borrado</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/recoveryservicevaultotraregion/">¿Puedo crear un recovery service vault o Backup Vault en la paired region en vez de en la misma región donde tengo mis recursos que voy a proteger?</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/charlabackupsglozalazure2024/">Global Azure 2024 Spain - Charla Backups en Azure - Manual de superviviencia</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/primerospasosconpulumi/">Primeros pasos con Pulumi en Azure usando C#</a></li>
