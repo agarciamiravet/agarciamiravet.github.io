@@ -6,8 +6,15 @@
     <description>Recent content on Recetas Devops</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 May 2024 00:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Sun, 05 May 2024 00:00:00 +0100</lastBuildDate>
     <atom:link href="https://www.recetasdevops.dev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Recuperar App Service borrado por error</title>
+      <link>https://www.recetasdevops.dev/post/appservicerecover/</link>
+      <pubDate>Sun, 05 May 2024 00:00:00 +0100</pubDate>
+      <guid>https://www.recetasdevops.dev/post/appservicerecover/</guid>
+      <description>En el artículo de hoy, vamos a ver como podemos recuperar un App Service que hemos borrado accidentalmente.&#xA;Antes de ver los pasos para recuperar un App Service, vamos a comentar las siguientes limitaciones:&#xA;No podemos recuperar Azure Functions de tipo Consumption o en Elastic Premium Plan borrados. Disponemos de 30 días desde el día en el que el App Service fue borrado. Tampoco podemos recuperar App Services en App Services Environment.</description>
+    </item>
     <item>
       <title>¿Puedo crear un recovery service vault o Backup Vault en la paired region en vez de en la misma región donde tengo mis recursos que voy a proteger?</title>
       <link>https://www.recetasdevops.dev/post/recoveryservicevaultotraregion/</link>
