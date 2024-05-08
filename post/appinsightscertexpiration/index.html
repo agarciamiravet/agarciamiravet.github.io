@@ -3,17 +3,16 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Alertas cuando un certificado caduca con Application Insights - Recetas Devops</title>
+	<title>Generar alertas cuando un certificado caduca usando Application Insights - Recetas Devops</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 		<meta property="og:url" content="https://www.recetasdevops.dev/post/appinsightscertexpiration/">
   <meta property="og:site_name" content="Recetas Devops">
-  <meta property="og:title" content="Alertas cuando un certificado caduca con Application Insights">
-  <meta property="og:description" content="En el post de hoy, vamos a ver como podemos con Application Insights ser informados cuando nuestros certificados TLS van a caducar, son incorrectos, han sido revocados etc..
+  <meta property="og:title" content="Generar alertas cuando un certificado caduca usando Application Insights">
+  <meta property="og:description" content="En el post de hoy, vamos a ver como podemos con Application Insights ser informados cuando nuestros certificados TLS van a caducar, son incorrectos, han sido revocados. En resumen cuando nuestros certificado tienen algún problema.
 Lo primero que necesitamos (claro esta), es tener un Application Insights creado.
 Los pasos a seguir son:
-Vamos al portal de Azure, y vamos a nuestro Applicaction Insights. En nuestro ejemplo, el nuestro se llama appi-recetasdevops:
-Una vez dentro, vamos a Avaliability.">
+Vamos al portal de Azure, y vamos a nuestro Applicaction Insights. En nuestro ejemplo, el nuestro se llama appi-recetasdevops:">
   <meta property="og:locale" content="en-us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="post">
@@ -58,7 +57,7 @@ Una vez dentro, vamos a Avaliability.">
 <main class="main" role="main">
 	<article class="post">
 		<header class="post__header">
-			<h1 class="post__title">Alertas cuando un certificado caduca con Application Insights</h1>
+			<h1 class="post__title">Generar alertas cuando un certificado caduca usando Application Insights</h1>
 			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-05-08T00:00:00&#43;02:00">May 08, 2024</time></div></div>
@@ -66,7 +65,7 @@ Una vez dentro, vamos a Avaliability.">
 		<div class="content post__content clearfix">
 			<img src="/images/post17/meme.jpg" style="zoom:80%;" />
 <p>
-<p>En el post de hoy, vamos a ver como podemos con <strong>Application Insights</strong> ser informados cuando nuestros <strong>certificados TLS</strong> van a caducar, son incorrectos, han sido revocados etc..</p>
+<p>En el post de hoy, vamos a ver como podemos con <strong>Application Insights</strong> ser informados cuando nuestros <strong>certificados TLS</strong> van a caducar, son incorrectos, han sido revocados. En resumen cuando nuestros certificado tienen algún problema.</p>
 <p>Lo primero que necesitamos (claro esta), es tener un <strong>Application Insights</strong> creado.</p>
 <p>Los pasos a seguir son:</p>
 <ol>
@@ -90,16 +89,16 @@ Una vez dentro, vamos a Avaliability.">
 </ol>
 <img src="/images/post17/image03.png" style="zoom:67%;" />
 <p></p>
-4. Configuramos el nombre del test, en nuestro ejemplo **TestCertificate**. Decimos que url vamos a "monitorizar", en el ejemplo va a ser la url de este blob. 
-<p>Por último, decimos que valide el certificado de nuestra url, y además que compruebe si el certificado va a caducar antes de los días de preaviso que establezcamos a través de la opción <strong>Proactive lifetime check</strong>. Podemos configurar 1, 7, 30, 90 o 365 días.</p>
+4. Configuramos el nombre del test, en nuestro ejemplo **TestCertificate**. Decimos que url vamos a "monitorizar", en el ejemplo va a ser la url de este blob, https://recetasdevops.dev
+<p>Por último, decimos que valide el certificado de nuestra url, y además que compruebe si el certificado va a caducar antes de los días de preaviso que establezcamos a través de la opción <strong>Proactive lifetime check</strong>. Podemos configurar 1, 7, 30, 90 o 365 días. Nosotros ponemos 365 días, para que nos salté la alerta.</p>
 <p>
 <img src="/images/post17/image04.png" style="zoom:67%;" />
 <p>
-5. Dejamos la opción por defecto de la frecuencia en la que se ejecutan los tests, es decir cada 5 minutos, así como el tene habilitadas las alertas. Pulsamos en **Create**:
+5. Dejamos la opción por defecto de la frecuencia en la que se ejecutan los tests, es decir cada 5 minutos, así como el tener habilitadas las alertas. Pulsamos en **Create**:
    <img src="/images/post17/image05.png" style="zoom:67%;" />
 <p>
 <ol start="6">
-<li>Una vez creado el test, podemos que el test no ha ido bien. Pulsamos en el nombre del test.</li>
+<li>Una vez creado el test, podemos ver que el test no ha ido bien. Pulsamos en el nombre del test.</li>
 </ol>
 <p><img src="/images/post17/image06.png" alt=""></p>
 <p>
@@ -120,7 +119,7 @@ Una vez dentro, vamos a Avaliability.">
 </p>
 </li>
 <li>
-<p>Viendo el detalle, podemos ver como recibimos la información diciéndonos que en 86 días nuestro certificado caducará. Como hemos dicho que el test falle si el certificado expira en menos de 1 año, por eso el test falló.<br>
+<p>Viendo el detalle, podemos ver como se nos dice que en 86 días nuestro certificado caducará. Como hemos dicho que el test falle si el certificado expira en menos de 1 año, el test falló.<br>
 <img src="/images/post17/image09.png" style="zoom:67%;" /></p>
 </li>
 </ol>
@@ -224,7 +223,7 @@ Una vez dentro, vamos a Avaliability.">
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/post/appinsightscertexpiration/">Alertas cuando un certificado caduca con Application Insights</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/appinsightscertexpiration/">Generar alertas cuando un certificado caduca usando Application Insights</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/appservicerecover/">Cómo recuperar un App Service borrado</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/recoveryservicevaultotraregion/">¿Puedo crear un recovery service vault o Backup Vault en la paired region en vez de en la misma región donde tengo mis recursos que voy a proteger?</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/charlabackupsglozalazure2024/">Global Azure 2024 Spain - Charla Backups en Azure - Manual de superviviencia</a></li>
