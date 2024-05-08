@@ -90,12 +90,14 @@ Vamos al portal de Azure, y vamos a nuestro Applicaction Insights. En nuestro ej
 <img src="/images/post17/image03.png" style="zoom:67%;" />
 <p></p>
 4. Configuramos el nombre del test, en nuestro ejemplo **TestCertificate**. Decimos que url vamos a "monitorizar", en el ejemplo va a ser la url de este blob, https://recetasdevops.dev
-<p>Por último, decimos que valide el certificado de nuestra url, y además que compruebe si el certificado va a caducar antes de los días de preaviso que establezcamos a través de la opción <strong>Proactive lifetime check</strong>. Podemos configurar 1, 7, 30, 90 o 365 días. Nosotros ponemos 365 días, para que nos salté la alerta.</p>
-<p>
+<p>También decimos que valide el certificado de nuestra url, y además que compruebe si el certificado va a caducar antes de los días de preaviso que establezcamos a través de la opción <strong>Proactive lifetime check</strong>. Podemos configurar 1, 7, 30, 90 o 365 días. Nosotros ponemos 365 días, para que nos salté la alerta.</p>
 <img src="/images/post17/image04.png" style="zoom:67%;" />
-<p>
-5. Dejamos la opción por defecto de la frecuencia en la que se ejecutan los tests, es decir cada 5 minutos, así como el tener habilitadas las alertas. Pulsamos en **Create**:
-   <img src="/images/post17/image05.png" style="zoom:67%;" />
+<ol start="5">
+<li>
+<p>Dejamos la opción por defecto de la frecuencia en la que se ejecutan los tests, es decir cada 5 minutos, así como el tener habilitadas las alertas. Pulsamos en <strong>Create</strong>:</p>
+<img src="/images/post17/image05.png" style="zoom:67%;" />
+</li>
+</ol>
 <p>
 <ol start="6">
 <li>Una vez creado el test, podemos ver que el test no ha ido bien. Pulsamos en el nombre del test.</li>
