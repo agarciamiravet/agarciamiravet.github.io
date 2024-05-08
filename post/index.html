@@ -75,6 +75,25 @@ Tampoco podemos recuperar App Services en App Services Environment.
 	
 	<header class="list__header">
 		<h2 class="list__title post__title">
+			<a href="/post/appinsightscertexpiration/" rel="bookmark">
+			Alertas cuando un certificado caduca con Application Insights
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-05-05T00:00:00&#43;02:00">May 05, 2024</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		En el post de hoy, vamos a ver como podemos con Application Insights ser informados cuando nuestros certificados TLS van a caducar, son incorrectos, han sido revocados etc..
+Lo primero que necesitamos (claro esta), es tener un Application Insights creado.
+Los pasos a seguir son:
+Vamos al portal de Azure, y vamos a nuestro Applicaction Insights. En nuestro ejemplo, el nuestro se llama appi-recetasdevops:
+Una vez dentro, vamos a Avaliability.
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
 			<a href="/post/recoveryservicevaultotraregion/" rel="bookmark">
 			¿Puedo crear un recovery service vault o Backup Vault en la paired region en vez de en la misma región donde tengo mis recursos que voy a proteger?
 			</a>
@@ -213,24 +232,6 @@ No es lo mismo crear una VM de tipo D2 v3 que vale 0,191€ la hora , que te equ
 		Los errores ocurren, y de los creadores de los clásicos &ldquo;He borrado una base de datos en producción&rdquo; o &ldquo;No te olvides de poner el where en el delete from&rdquo;, ahora viene una nueva super producción llamada &ldquo;He borrado un storage account de Azure en producción&rdquo;.
 En este artículo vamos a ver como podemos intentar recuperar ese storage account borrado. Recalco lo de INTENTAR, porque tal y como dicen en la documentación de Azure, Microsoft hará su best effort pero que la recuperación en ningún momento esta garantizada:
 	</div>
-</article><article class="list__item post">
-	
-	<header class="list__header">
-		<h2 class="list__title post__title">
-			<a href="/post/auditaazureconazqr/" rel="bookmark">
-			Sigue las mejores prácticas y recomendaciones en Azure con Azure Quick Review
-			</a>
-		</h2>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-01-18T00:00:00&#43;01:00">January 18, 2024</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Azure Quick Review (a partir de ahora azqr), es una herramienta en línea de comandos muy útil.
-Esta herramienta, te permite de manera muy sencilla comprobar si tu infraestructura en Azure cumple con las mejores prácticas y recomendaciones.
-Lo primero que vamos a hacer es instalarlo, en el caso de de Windows 10/11 deberíamos lanzar la siguiente línea en el terminal:
-winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas de hacerlo:
-	</div>
 </article>
 </main>
 
@@ -253,10 +254,10 @@ winget install azqr Una vez instalado, debemos autenticarnos. Tenemos 2 formas d
 	<div class="widget__content">
 		<ul class="widget__list">
 			<li class="widget__item"><a class="widget__link" href="/post/appservicerecover/">Cómo recuperar un App Service borrado</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/appinsightscertexpiration/">Alertas cuando un certificado caduca con Application Insights</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/recoveryservicevaultotraregion/">¿Puedo crear un recovery service vault o Backup Vault en la paired region en vez de en la misma región donde tengo mis recursos que voy a proteger?</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/charlabackupsglozalazure2024/">Global Azure 2024 Spain - Charla Backups en Azure - Manual de superviviencia</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/primerospasosconpulumi/">Primeros pasos con Pulumi en Azure usando C#</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/changeanalysisrescate/">Mi infra en Azure no funciona, algo cambió pero no se que fue. Change Analysis al rescate</a></li>
 		</ul>
 	</div>
 </div>
