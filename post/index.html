@@ -10,7 +10,7 @@
   <meta property="og:site_name" content="Recetas Devops">
   <meta property="og:title" content="Posts">
   <meta property="og:description" content="Recetas DevOps - Blog de Alejandro García">
-  <meta property="og:locale" content="en-us">
+  <meta property="og:locale" content="en_us">
   <meta property="og:type" content="website">
 
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,6 +53,23 @@
 	<header class="main__header">
 		<h1 class="main__title">Posts</h1>
 	</header><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/certificados01crearnuevocertificado/" rel="bookmark">
+			Hablemos de Certificados TLS/SSL - Crear un nuevo certificado a través de un CSR
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-05-15T00:00:00&#43;02:00">May 15, 2024</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Este artículo va a ser el primero de una serie de artículos, en los que voy a hablar de certificados.
+Creo que por norma, la gente en los que yo me incluyó, se suele liar bastante con el tema de los certificados. Espero que estos artículos puedan ayudaros en algo :)
+Dicho esto, en este primer artículo vamos a ver como generar un certificado SSL/TLS a través de un CSR.
+	</div>
+</article><article class="list__item post">
 	
 	<header class="list__header">
 		<h2 class="list__title post__title">
@@ -215,22 +232,6 @@ En el siguiente paso, vamos a decir en que nivel vamos a crear la alerta.
 		En el artículo de hoy, vamos a hablar de como restringir a través de Azure Policy que solo se creen ciertos tipos de máquinas virtuales. Esto es muy importante para el control de los costes, porque por ejemplo:
 No es lo mismo crear una VM de tipo D2 v3 que vale 0,191€ la hora , que te equivoques y crees una de tipo EC96ads que vale 10,30 € la hora (jajaja).
 	</div>
-</article><article class="list__item post">
-	
-	<header class="list__header">
-		<h2 class="list__title post__title">
-			<a href="/post/borradostorageaccount/" rel="bookmark">
-			He borrado por error un Storage Account de Azure en producción. ¿Y ahora que hago?
-			</a>
-		</h2>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-01-22T00:00:00&#43;01:00">January 22, 2024</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Los errores ocurren, y de los creadores de los clásicos &ldquo;He borrado una base de datos en producción&rdquo; o &ldquo;No te olvides de poner el where en el delete from&rdquo;, ahora viene una nueva super producción llamada &ldquo;He borrado un storage account de Azure en producción&rdquo;.
-En este artículo vamos a ver como podemos intentar recuperar ese storage account borrado. Recalco lo de INTENTAR, porque tal y como dicen en la documentación de Azure, Microsoft hará su best effort pero que la recuperación en ningún momento esta garantizada:
-	</div>
 </article>
 </main>
 
@@ -252,11 +253,11 @@ En este artículo vamos a ver como podemos intentar recuperar ese storage accoun
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/certificados01crearnuevocertificado/">Hablemos de Certificados TLS/SSL - Crear un nuevo certificado a través de un CSR</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/appinsightscertexpiration/">Generar alertas cuando un certificado caduca usando Application Insights</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/appservicerecover/">Cómo recuperar un App Service borrado</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/recoveryservicevaultotraregion/">¿Puedo crear un recovery service vault o Backup Vault en la paired region en vez de en la misma región donde tengo mis recursos que voy a proteger?</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/charlabackupsglozalazure2024/">Global Azure 2024 Spain - Charla Backups en Azure - Manual de superviviencia</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/primerospasosconpulumi/">Primeros pasos con Pulumi en Azure usando C#</a></li>
 		</ul>
 	</div>
 </div>

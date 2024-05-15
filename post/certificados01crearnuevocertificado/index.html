@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Hablemos de Certificados TLS/SSL - Crear un nuevo certificado a través de un CSR - Recetas Devops</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:url" content="https://www.recetasdevops.dev/post/certificados01crearnuevocertificado/">
+  <meta property="og:site_name" content="Recetas Devops">
+  <meta property="og:title" content="Hablemos de Certificados TLS/SSL - Crear un nuevo certificado a través de un CSR">
+  <meta property="og:description" content="Este artículo va a ser el primero de una serie de artículos, en los que voy a hablar de certificados.
+Creo que por norma, la gente en los que yo me incluyó, se suele liar bastante con el tema de los certificados. Espero que estos artículos puedan ayudaros en algo :)
+Dicho esto, en este primer artículo vamos a ver como generar un certificado SSL/TLS a través de un CSR.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2024-05-15T00:00:00+02:00">
+    <meta property="article:modified_time" content="2024-05-15T00:00:00+02:00">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+  
+
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="Recetas Devops" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.png">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">Recetas Devops</div>
+					<div class="logo__tagline">Tus recetas para DevOps de confianza</div>
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Hablemos de Certificados TLS/SSL - Crear un nuevo certificado a través de un CSR</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-05-15T00:00:00&#43;02:00">May 15, 2024</time></div></div>
+		</header>
+		<div class="content post__content clearfix">
+			<p><img src="/images/post18/meme.jpg" alt=""></p>
+<p>
+</p>
+<br>
+<p>Este artículo va a ser el primero de una serie de artículos, en los que voy a hablar de certificados.</p>
+<p>Creo que por norma, la gente en los que yo me incluyó, se suele liar bastante con el tema de los certificados. Espero que estos artículos puedan ayudaros en algo :)</p>
+<p>Dicho esto, en este primer artículo vamos a ver como generar un certificado SSL/TLS a través de un CSR. CSR son las siglas de <strong>Certificate Signing Request</strong> .</p>
+<p>Pero antes que nada hablemos brevemente de los certificados TLS. Lo primero que vamos a ver es una definición sobre que son los certificados TLS. Por ejemplo, a mí me gusta mucho la definición de <strong>Digicert</strong> (<a href="https://www.digicert.com/es/tls-ssl/tls-ssl-certificates">https://www.digicert.com/es/tls-ssl/tls-ssl-certificates</a>)</p>
+<p><em>Los certificados TLS (Transport Layer Security o «seguridad de la capa de transporte»), generalmente llamados certificados digitales o SSL, son la base de la seguridad en Internet. Los certificados TLS/SSL protegen las conexiones a Internet mediante el cifrado de los datos que intercambian el navegador, el sitio web y el servidor de este. Garantizan que los datos se transmitan de forma privada y sin que se produzcan alteraciones, pérdidas ni robos.</em></p>
+<p>Teniendo una definición de que son los certificados, la siguiente pregunta es:</p>
+<p><strong>¿Cómo funcionan los certificados?</strong></p>
+<p>Lo primero que hay que decir es que necesitamos un certificado emitido por una <strong>entidad certificadora válida</strong> (<a href="https://en.wikipedia.org/wiki/Certificate_authority)">https://en.wikipedia.org/wiki/Certificate_authority)</a>.</p>
+<p>Una entidad certificadora (<strong>CA</strong>) es aquella entidad o corporación encargada de emitir los certificados (<a href="https://community.rsa.com/s/article/List-of-Trusted-Certificate-Authorities-for-HFED-and-Trusted-Headers-Applications-0453c48e)">https://community.rsa.com/s/article/List-of-Trusted-Certificate-Authorities-for-HFED-and-Trusted-Headers-Applications-0453c48e)</a>.</p>
+<p>Los navegadores/servicios confiaran en estas entidades certificadoras cuando se visiten sitios con certificados emitidos por estas.</p>
+<p>Es decir si tu llegas y en tu equipo te creas un <strong>certificado autofirmado</strong>,  es decir que no has usado una entidad certificadora, y lo instalas en tu dominio, pues el navegador web  fallará diciendo que ese certificado no es válido.</p>
+<img src="/images/post18/self01.png" style="zoom:67%;" />
+<p>
+</p>
+<p><strong>Ni falta me hace deciros que si entráis en un sitio y veis la imagen de arriba, salgáis de allí de forma inmediata jeje.</strong></p>
+<p>Vale pues ya tenemos nuestro certificado emitido por una entidad certificadora, y lo hemos instalado.</p>
+<p>Ahora voy a intentar explicarme de la forma más claro que pueda, de como funciona un certificado en un navegador web:</p>
+<ol>
+<li>
+<p>Un usuario accede a un sitio web usando <strong>https:</strong>//nombredeldominio.com.</p>
+<p>El navegador le envía al servidor que versiones de TLS soporta, la suite de cifrado (<a href="https://www.flu-project.com/2020/09/suites-de-cifrado-tlsssl-parte-i.html">https://www.flu-project.com/2020/09/suites-de-cifrado-tlsssl-parte-i.html</a>) soportado por el navegador y un numero aleatorio generado llamado <strong>Client Random</strong>.</p>
+</li>
+<li>
+<p>El <strong>servidor</strong> escoge que versión de TLS y suite de cifrado van a usar en base a la información que le manda el navegador, y la suite de cifrado y versión de TLS que el servidor soporta.</p>
+<p>El servidor le envía de vuelta al navegador:</p>
+<ul>
+<li>
+<p>La versión de TLS a usar.</p>
+</li>
+<li>
+<p>La suite de cifrado a usar.</p>
+</li>
+<li>
+<p>El certificado con la firma digital de la entidad certificadora y  la clave pública <strong>(OJO QUE NUNCA SE ENVÍA LA CLAVE PRIVADA¡¡¡)</strong></p>
+</li>
+<li>
+<p>Un número aleatorio generado llamado <strong>Server Random.</strong></p>
+</li>
+</ul>
+</li>
+<li>
+<p>El <strong>navegador</strong> web, una vez recibido el certificado y la demás información, verifica que el certificado es válido (no ha caducado, no ha sido recocado &hellip;).</p>
+<p>Además comprueba que esta firmado por una entidad certificadora de confianza.</p>
+</li>
+<li>
+<p>Vale ahora el <strong>navegador</strong>, sabe que el certificado es válido.</p>
+<p>El tema ahora es validar que la clave privada del certificado que tiene el servidor es buena buena (jejeje). Para ello el <strong>navegador</strong>, crea un número aleatorio random llamado <strong>pre-master secret</strong> .</p>
+<p>Este <strong>pre-master secret</strong> es encriptado usando la clave pública del certificado y envíado al servidor, por lo que si el servidor tiene la clave privada buena debe ser capaz de desencriptarlo.</p>
+</li>
+<li>
+<p>Vale, ahora tanto el navegador como el servidor poseen los siguientes datos:</p>
+<ul>
+<li>
+<p>La <strong>pre-master secret.</strong></p>
+</li>
+<li>
+<p>El <strong>Server Random.</strong></p>
+</li>
+<li>
+<p>El  <strong>Client Random.</strong></p>
+</li>
+</ul>
+<p>Con estos datos, navegador y servidor pueden calcular y crear lo que se conoce como la <strong>clave de sesión compartida</strong>.</p>
+</li>
+<li>
+<p>Después el <strong>navegador</strong>, enviara un mensaje al servidor, encriptandolo con esta <strong>clave de sesión compartida</strong>.</p>
+</li>
+<li>
+<p>El <strong>servidor</strong>, recibirá este mensaje desencriptándolo también con la <strong>clave de sesión compartida</strong>, y comprobando si es correcto.</p>
+<p>Sí es así, el navegador sabe que la <strong>clave de sesión compartida</strong> del servidor es buena.</p>
+</li>
+<li>
+<p>El <strong>servidor</strong> , después envía un mensaje encriptándolo también con la <strong>clave de sesión compartida</strong>.</p>
+</li>
+<li>
+<p>El navegador, usando la clave de <strong>sesión compartida</strong>, lo desencripta y comprueba si es correcto. Si es así, el servidor sabe que la <strong>clave de sesión compartida</strong> del navegador es buena, y por tanto en resumen la <strong>clave de sesión compartida</strong> se ha <strong>calculado correctamente tanto en el navegador como en el servidor</strong> .</p>
+</li>
+<li>
+<p>A partir de ahora, ya <strong>rock and roll¡¡¡</strong> , el navegador y el servidor usando esta <strong>clave de sesión compartida</strong> se enviarán la información encriptada, durante lo que dure lo que se conoce como <strong>sesión TLS</strong>.</p>
+</li>
+</ol>
+<p>A estos pasos descritos arriba se le conoce como <strong>SSL Handshake  (SSL apretón de manos)</strong>.</p>
+<p>Se que a priori, pueda parecer complicado este proceso de SSL Handshake. Por eso quizás este gráfico de la página <a href="https://ssl.com">https://ssl.com</a> pueda seros de ayuda:</p>
+<p><img src="/images/post18/SSLTLS-Handshake-600x600.png" alt=""></p>
+<p>Una vez que sabemos que es un certificado y para que sirve, vamos a abrir el primer melón de este artículo:</p>
+<p><strong>¿ Qúe son, certificados SSL o TLS?</strong></p>
+<p>SSL es un protocolo de comunicación creado en 1994, que ha tenido tres versiones:</p>
+<ul>
+<li><strong>SSL 1.0</strong>  en el año 1994 creado por Nestscape, que nunca fue usado en producción.</li>
+<li><strong>SSL 2.0</strong> que en el año 1995 , ahora sí usado en Netscape Navigator.</li>
+<li><strong>SSL 3.0</strong> apareció en el año 1996 y fue deprecado en 2015.</li>
+<li><strong>TLS 1.0</strong> apareció en 1999 como una evolución de SSL, quedando deprecado en 2021.</li>
+<li><strong>TLS 1.2</strong> apareció en 2008.</li>
+<li><strong>TLS 1.3</strong> es la última versión del protocolo aparecida en 2018.</li>
+</ul>
+<p>Resumiendo sobre el tema de de SSL o TLS, TLS es una evolución de SSL y cuando la gente suele hablar de certificados SSL en realidad habla de certificados TLS, es decir <strong>SSL y TLS suelen ser términos intercambiables</strong>. Sobre el tema de que versiones usar del protocolo, usar únicamente TLS 1.2 o 1.3 que son los que actualmente no estan deprecados, aunque lo mejor es <strong>USAR SOLO TLS 1.3</strong>.</p>
+<p>Ahora hablemos sobre los tipos de certificados existentes, dependiendo de como deben ser validados por la entidad certificadora, para que estas nos emitan un certificado.</p>
+<p>Estos tipos de certificado son:</p>
+<ul>
+<li>
+<p><strong>Certificados de dominio (DV) :</strong> Para que te emitan estos certificados, solo con acreditar que eres el dueño del dominio te lo dan.</p>
+<p>Para demostrar que el dominio es tuyo suelen pedir que metas unas entradas DNS o bien recibir un correo en la cuenta de email asociado al dominio en el registro <strong>WHOIS</strong> (<a href="https://en.wikipedia.org/wiki/WHOIS">https://en.wikipedia.org/wiki/WHOIS</a>) .</p>
+<p>Este el tipo de certificado más barato, y suele usarse en blogs , sitios personales, etc.</p>
+<p>En el navegador estos certificados suelen verse sin una organización definida en el campo <strong>Subject</strong>:</p>
+<img src="/images/post18/cert_type01.png" style="zoom:67%;" />
+<p>
+</p>
+</li>
+<li>
+<p><strong>Certificados con validación de organización (OV)</strong>: Son certificados que se suelen emitir a empresas, y al contrario que con los certificados de dominio, las  entidades certificadoras hacen más comprobaciones.</p>
+<p>Se comprueban cosas tales como:</p>
+<ul>
+<li>
+<p>Que la empresa exista de verdad.</p>
+</li>
+<li>
+<p>Que exista el domicilio especificado.</p>
+</li>
+<li>
+<p>Comprobaciones en bases de datos oficiales.</p>
+</li>
+<li>
+<p>Llamadas directamente a la empresa para corroborar los datos.</p>
+</li>
+</ul>
+<p>Estos tipos de certificados suelen ser usados por comercios medianos, empresas que no trabajan con dinero etc&hellip;</p>
+<p>En el navegador podemos ver, que en estos tipos de certificados la propiedad <strong>subject</strong> contiene la información de la empresa:</p>
+</li>
+</ul>
+<img src="/images/post18/cert_type02.png" style="zoom:67%;" />
+<br>
+<br>
+<ul>
+<li>
+<p><strong>Certificados con validación extendida (EV):</strong>  Son los certificados con el nivel de seguridad mayor, ya que para que te den este tipo de certificado, la entidad certificadora realiza muchas comprobaciones para emitirte este certificado.</p>
+<p>Entre alguna de las comprobaciones que hacen están:</p>
+<ul>
+<li>Comprobar que existe la empresa y que los datos que se han proporcionado por parte de la empresa son correctos.</li>
+<li>Llamada de verificación a la empresa, contactando con un responsable para confirmar los datos.</li>
+<li>En esta llamada se comprobará también, que si la persona que solicitó el certificado tiene permitido gestionar los certificados, etc&hellip;</li>
+<li>Exigir documentación adicional a la empresa.</li>
+</ul>
+</li>
+</ul>
+<p>Sin lugar a dudas este certificado es el que cuesta más dinero, de los 3 tipos de certificados comentados.</p>
+<p>Estos tipos de certificados son usados por bancos, los gigantes del comercio online como Ebay. En general con empresas que trabajan con dinero vamos.</p>
+<p>En el navegador este tipo de certificados pueden verse fácilmente viendo la propiedad <strong>Issued to</strong></p>
+<img src="/images/post18/cert_type03_01.png" style="zoom:67%;" />
+<img src="/images/post18/cert_type03_02.png" style="zoom:80%;" />
+<p>
+</p>
+<p>Por último, y antes meternos en faena, vamos a ver los tipos de certificados, según si serán emitidos para un dominio, un dominio y sus subdominios , o por el contrario para más de un dominio.</p>
+<p>Estos tipos de certificados son:</p>
+<ul>
+<li>
+<p><strong>Certificados para un sólo dominio:</strong>  Como su nombre indica sirven para una sola web/domino.</p>
+<p>Por ejemplo emitir un certificado para la web <a href="https://hablemosdecertificados.recetasdevops.dev">https://hablemosdecertificados.recetasdevops.dev</a>.</p>
+</li>
+<li>
+<p><strong>Certificados wildcard:</strong> Con este tipo de certificado podríamos proteger un dominio así como todos los subdominios que creeemos.</p>
+<p>Por ejemplo, podríamos usarlo para :</p>
+<ul>
+<li>
+<p><a href="https://recetasdevops.dev">https://recetasdevops.dev</a> (dominio).</p>
+</li>
+<li>
+<p><a href="https://mail.recetadevops.dev">https://mail.recetadevops.dev</a> (subdominio).</p>
+</li>
+<li>
+<p><a href="https://blog.recetasdevops.dev">https://blog.recetasdevops.dev</a> (subdominio).</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Certificados de multidominio (SAN):</strong>   Este tipo de certificado sirve para ser usado para más de un dominio. En la mayoria de las entidades certificadoras, se puede usar un certificado SAN para un máximo de <strong>100 dominios</strong>.</p>
+</li>
+<li>
+<p>Este tipo de certificado es más caro que un certificado wildcard y de un solo dominio. Por ejemplo, podríamos usarlo en:</p>
+</li>
+<li>
+<p><a href="https://recetasdevops.dev">https://recetasdevops.dev</a></p>
+</li>
+<li>
+<p><a href="https://recetadevops.com">https://recetadevops.com</a></p>
+</li>
+<li>
+<p><a href="https://misrecetasdevops.com">https://misrecetasdevops.com</a></p>
+</li>
+<li>
+<p><a href="https://tusrecetasdevops.com">https://tusrecetasdevops.com</a></p>
+</li>
+</ul>
+<p>Ahora ya, después de toda la parrafada que os he metido (que creo era necesaria jajaja),  vamos a ver como generar una petición de certificado, más conocido como CSR  (<strong>Certificate Signing Request</strong>).</p>
+<p>En este artículo voy a crear una petición de certificado para mi dominio <a href="https://hablemosdecertificados.recetadevops.dev">https://hablemosdecertificados.recetadevops.dev</a></p>
+<p>Este CSR lo voy a generar desde mi máquina de Windows 11. Solo comentaros, una afirmación que me  han dicho en más de una ocasión.</p>
+<p>Esa afirmación es:</p>
+<p><strong>El CSR , siempre lo debo de generar en el servidor donde vaya a instalar el certificado.</strong></p>
+<p>Esto es totalmente <strong>FALSO</strong> y aparte imposible para muchos casos. Otra cosa, es que por ejemplo, tu tienes un único servidor con un IIS y quieres hacerlo directamente en el servidor donde se va instalar el certificado.</p>
+<p>Pero es que muchas veces es imposible, sino:</p>
+<ul>
+<li>¿Como genero mi certificado en un App Service?</li>
+<li>¿Como genero mi certificado en un Application gateway?</li>
+<li>&hellip;.</li>
+</ul>
+<p>Teniendo las herramientas necesarias, incluso online, tal y como ofrecen muchas entidades certificadoras, tu creas la petición <strong>CSR DONDE TE DE LA GANA</strong>.</p>
+<p>Aclarado esto (sino no me quedaba a gusto), vamos a ver los pasos a seguir:</p>
+<ol>
+<li>
+<p>Descargamos <strong>Open SSL para Windows</strong> en el siguiente enlace:</p>
+<p><a href="https://slproweb.com/products/Win32OpenSSL.html">https://slproweb.com/products/Win32OpenSSL.html</a></p>
+</li>
+<li>
+<p>Descargamos la versión full:</p>
+<p><img src="/images/post18/image01.png" alt=""></p>
+</li>
+<li>
+<p>Lo instalamos, usando las configuraciones por defecto como la ruta de instalación por defecto (<strong>C:\Program Files\OpenSSL-Win64</strong>)</p>
+ <img src="/images/post18/image02.png" style="zoom:67%;" />
+</li>
+</ol>
+<p><br><br></p>
+<img src="/images/post18/image03.png" style="zoom:67%;" />
+<p><br><br></p>
+<img src="/images/post18/image04.png" style="zoom:67%;" />
+<p><br><br></p>
+<img src="/images/post18/image06.png" style="zoom:67%;" />
+<p><br><br><br>
+4. Ahora, vamos a agregar a la variable de entorno <strong>Path</strong>, la ruta donde esta el ejecutable del OpenSSL. De esa formas, vamos a poder ejecutar desde cualquier directorio de en la Terminal de Windows 11.</p>
+<p>La ruta a poner es  <strong>C:\Program Files\OpenSSL-Win64\bin</strong></p>
+   <img src="/images/post18/image07.png" style="zoom:67%;" />
+<p><br><br></p>
+<ol start="5">
+<li>
+<p>Ahora abrimos el Terminal de Windows, y testeamos que funciona OpenSSL:</p>
+ <img src="/images/post18/image08.png" style="zoom:67%;" />
+</li>
+</ol>
+<p><br><br></p>
+<ol start="6">
+<li>
+<p>Como hemos dicho, vamos a generar un CSR para nuestro certificado del dominio <a href="https://hablemosdecertificados.recetasdevops.dev">https://hablemosdecertificados.recetasdevops.dev</a></p>
+<p>Vamos a generar un CSR y una clave privada que sera cifrada con <strong>RSA de 2048 bit</strong>. Desde hace mucho se suele usar RSA de 2048 bit, pero esta pisando con mucha fuerza usar <strong>ECDSA</strong>, por una serie de ventajas. En el siguiente enlace podeís ver una comparativa sobre <strong>RSA</strong>  y <strong>ECDSA</strong>:</p>
+<p><a href="https://nordvpn.com/es/blog/ecdsa-vs-rsa/#:~:text=The%20RSA%20algorithm%20uses%20significantly,security%20to%20reach%20this%20standard">https://nordvpn.com/es/blog/ecdsa-vs-rsa/#:~:text=The%20RSA%20algorithm%20uses%20significantly,security%20to%20reach%20this%20standard</a>.</p>
+<p>Lanzamos el siguiente comando:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>openssl req -new -newkey rsa:2048 -nodes -out hablemosdecertificados.csr -keyout hablemosdecertificados.key
+</span></span></code></pre></div></li>
+</ol>
+<p>Comentemos los parametros más importantes :</p>
+<ul>
+<li><strong>out</strong>: Aqui indicamos el nombre del fichero CSR que se va a crear.</li>
+<li><strong>keyout:</strong> Aquí  definimos el nombre del fichero con la clave privada del certificado que se va a crear.</li>
+</ul>
+<ol start="7">
+<li>
+<p>Se nos pide una serie de datos:</p>
+<img src="/images/post18/image09.png" style="zoom:67%;" />
+</li>
+</ol>
+<p>Estos datos son:</p>
+<ul>
+<li><strong>Country name:</strong> País de la empresa/persona en formato ISO.</li>
+<li><strong>State or province name:</strong> Provincia de la empresa/persona.</li>
+<li><strong>Locality name:</strong> Ciudad o pueblo de la empresa persona.</li>
+<li><strong>Organization name:</strong> Nombre de la empresa.</li>
+<li><strong>Organization Unit Name:</strong> Departamento dentro de la empresa.</li>
+<li><strong>Common Name:</strong> Esto es lo más <strong>IMPORTANTE</strong>, el dominio para el que pedimos el certificado.</li>
+<li><strong>Email address:</strong> El mail que quedará asociado al certificado.</li>
+</ul>
+<p>Como vamos a pedir un <strong>certificado de validación de dominio (DV)</strong> (acordaros al príncipio del artículo), pues la información que pongamos no será en realidad validada. Esto no ocurrirá, si pedimos que un certificado para la empresa sea de <strong>validación de organización (OV)</strong> o <strong>validación extendida (EV).</strong></p>
+<ol start="8">
+<li>El resultado de ejecutar el comando anterior, será que se generaran los siguientes ficheros:</li>
+</ol>
+<img src="/images/post18/image10.png" style="zoom:67%;" />
+<p>
+</p>
+<ol start="9">
+<li>Si vemos el fichero CSR, por dentro vemos lo siguiente:</li>
+</ol>
+<img src="/images/post18/image11.png" style="zoom:67%;" />
+<p>
+</p>
+<ol start="10">
+<li>
+<p>Vale, ya tenemos nuestro certificado CSR. Ahora debemos enviarselo a la entidad certificadora. El proceso de cómo enviar el CSR  a la entidad certificadora será diferente en cada una de estas.</p>
+<p>En nuestro ejemplo usamos <a href="https://ssl.com">https://ssl.com</a>, y se lo envíamos a través de un formulario:</p>
+<img src="/images/post18/image12.png" style="zoom:67%;" />
+<p>
+</p>
+</li>
+<li>
+<p>Luego pues se nos va a pedir demostrar que somos los propietarios o tenemos acceso a ese dominio que vamos a validar.</p>
+<p>Nosotros vamos a hacerlo a través de una entrada de DNS.</p>
+<p>Esto ya dependiendo de vuestro proveedor de DNS deberéis de hacerlo de una forma u otra.</p>
+<img src="/images/post18/image13.png" style="zoom: 50%;" />
+<p>
+</p>
+</li>
+<li>
+<p>Vale ya hemos validado a través de DNS que somos los propietarios del dominio, y nuestra entidad certificadora nos ha generado nuestro certificado con la clave pública.</p>
+<p>Ahora bajamos el fichero:</p>
+<img src="/images/post18/image14.png" style="zoom:77%;" />
+<p>
+</p>
+</li>
+<li>
+<p>Ponemos el fichero en el mismo directorio donde tenemos la clave privada y la el fichero CSR. El fichero CSR lo podemos borrar ya:</p>
+<p><img src="/images/post18/image15.png" alt=""></p>
+<p>
+</p>
+</li>
+<li>
+<p>En el caso de querer instalar este certificado en <strong>Apache</strong> o <strong>Nginx</strong>, no tenemos que hacer nada más. Únicamente poner la clave privada y pública en los servidores.</p>
+<p>Pero en el caso de usar el certificado en  IIS o en servicios de Azure como App Service o Application Gateway, debemos generar un fichero pfx, donde dentro de un único fichero tengamos la clave pública y privada del certificado.</p>
+<p>Para generar un fichero pfx, en nuestro ejemplo lanzamos lo siguiente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>openssl pkcs12 -export -certpbe PBE-SHA1-3DES -keypbe PBE-SHA1-3DES -nomac -inkey hablemosdecertificados.key -in hablemosdecertificados_recetasdevops_dev.chained.crt -out hablemosdecertificados.key.pfx
+</span></span></code></pre></div><p>Comentamos los parámetros más importantes:</p>
+<ul>
+<li><strong>inkey:</strong> Nombre del fichero que tiene la clave privada.</li>
+<li><strong>in</strong>: Nombre del fichero que tiene la clave pública.</li>
+<li><strong>out</strong>: Nombre del fichero pfx que se va a generar.</li>
+</ul>
+</li>
+</ol>
+<p>Nos pide una password. Esta password será usada cuando instalemos este certificado con el fichero pfx generado:</p>
+<p>​                    <img src="/images/post18/image16.png" style="zoom:67%;" /></p>
+<br>
+<ol start="15">
+<li>
+<p>Y con esto tendríamos ya nuestro pfx listo para ser instalado:</p>
+<p><img src="/images/post18/image17.png" alt=""></p>
+</li>
+</ol>
+<p>Y con esto acabamos este artículo extenso, pero que espero os pueda ayudar.</p>
+<p>En nuestro próximo artículo veremos como instalar este certificado en un App Service :)</p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Alejandro García avatar" src="/images/foto.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Alejandro García</span>
+	</div>
+	<div class="authorbox__description">
+		Apasionado por la tecnología.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/appinsightscertexpiration/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Generar alertas cuando un certificado caduca usando Application Insights</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://www.recetasdevops.dev/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/certificados01crearnuevocertificado/">Hablemos de Certificados TLS/SSL - Crear un nuevo certificado a través de un CSR</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/appinsightscertexpiration/">Generar alertas cuando un certificado caduca usando Application Insights</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/appservicerecover/">Cómo recuperar un App Service borrado</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/recoveryservicevaultotraregion/">¿Puedo crear un recovery service vault o Backup Vault en la paired region en vez de en la misma región donde tengo mis recursos que voy a proteger?</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/charlabackupsglozalazure2024/">Global Azure 2024 Spain - Charla Backups en Azure - Manual de superviviencia</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 Recetas Devops.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>
