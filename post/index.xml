@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Recetas Devops</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 May 2024 00:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Sun, 26 May 2024 00:00:00 +0200</lastBuildDate>
     <atom:link href="https://www.recetasdevops.dev/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hablemos de Certificados TLS/SSL - Instalar certificados en App Services usando Azure Key Vault</title>
+      <link>https://www.recetasdevops.dev/post/certificados02instalarcertificadoenappservice/</link>
+      <pubDate>Sun, 26 May 2024 00:00:00 +0200</pubDate>
+      <guid>https://www.recetasdevops.dev/post/certificados02instalarcertificadoenappservice/</guid>
+      <description>En este segundo post sobre certificados TLS/SSL, os voy a hablar sobre como instalar nuestro certificado en un Azure App Service usando Azure Key Vault.&#xA;Si quieres leer mi primer post sobre certificados, puedes pulsar en el siguiente enlace:&#xA;https://www.recetasdevops.dev/post/certificados01crearnuevocertificado/&#xA;Pues vamos entonces, a poneros manos a la obra.&#xA;Los pasos a seguir son los siguientes:&#xA;Agregar dominio al App Service Vamos al portal de Azure usando la url https://portal.</description>
+    </item>
     <item>
       <title>Hablemos de Certificados TLS/SSL - Crear un nuevo certificado a través de un CSR</title>
       <link>https://www.recetasdevops.dev/post/certificados01crearnuevocertificado/</link>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Hablemos de Certificados TLS/SSL - Instalar certificados en App Services usando Azure Key Vault - Recetas Devops</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:url" content="https://www.recetasdevops.dev/post/certificados02instalarcertificadoenappservice/">
+  <meta property="og:site_name" content="Recetas Devops">
+  <meta property="og:title" content="Hablemos de Certificados TLS/SSL - Instalar certificados en App Services usando Azure Key Vault">
+  <meta property="og:description" content="En este segundo post sobre certificados TLS/SSL, os voy a hablar sobre como instalar nuestro certificado en un Azure App Service usando Azure Key Vault.
+Si quieres leer mi primer post sobre certificados, puedes pulsar en el siguiente enlace:
+https://www.recetasdevops.dev/post/certificados01crearnuevocertificado/
+Pues vamos entonces, a poneros manos a la obra.
+Los pasos a seguir son los siguientes:
+Agregar dominio al App Service Vamos al portal de Azure usando la url https://portal.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2024-05-26T00:00:00+02:00">
+    <meta property="article:modified_time" content="2024-05-26T00:00:00+02:00">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+  
+
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="Recetas Devops" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.png">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">Recetas Devops</div>
+					<div class="logo__tagline">Tus recetas para DevOps de confianza</div>
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Hablemos de Certificados TLS/SSL - Instalar certificados en App Services usando Azure Key Vault</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-05-26T00:00:00&#43;02:00">May 26, 2024</time></div></div>
+		</header>
+		<div class="content post__content clearfix">
+			<p><img src="/images/post19/meme.jpg" alt=""></p>
+<p>En este segundo post sobre <strong>certificados TLS/SSL</strong>, os voy a hablar sobre como instalar nuestro certificado en un <strong>Azure App Service</strong> usando <strong>Azure Key Vault</strong>.</p>
+<p>Si quieres leer mi primer post sobre certificados, puedes pulsar en el siguiente enlace:</p>
+<p><a href="https://www.recetasdevops.dev/post/certificados01crearnuevocertificado/">https://www.recetasdevops.dev/post/certificados01crearnuevocertificado/</a></p>
+<p>Pues vamos entonces, a poneros manos a la obra.</p>
+<p>Los pasos a seguir son los siguientes:</p>
+<h2 id="agregar-dominio-al-app-service">Agregar dominio al App Service</h2>
+<ol>
+<li>
+<p>Vamos al portal de Azure usando la url <a href="https://portal.azure.com">https://portal.azure.com</a></p>
+</li>
+<li>
+<p>Tenemos un key vault llamado <strong>kv-cert-recetasdevops</strong> y un app service llamado <strong>app-hablemosdecertificados</strong>.</p>
+<p><img src="/images/post19/image01.png" alt=""></p>
+</li>
+<li>
+<p>En este App Service vamos a usar el dominio <a href="https://hablemosdecertificados.recetasdevops.dev/">https://hablemosdecertificados.recetasdevops.dev/</a> , y para ello necesitamos un certificado.</p>
+<p>Este certificado ya lo generamos en nuestro primer artículo (<a href="https://www.recetasdevops.dev/post/certificados01crearnuevocertificado/)">https://www.recetasdevops.dev/post/certificados01crearnuevocertificado/)</a>.</p>
+</li>
+<li>
+<p>Lo primero que hacemos, es agregar el dominio <strong>hablemosdecertificados.recetasdevops.dev</strong>. Para ellos vamos a nuestro App Service y luego  pulsamos en <strong>Custom domains</strong>.</p>
+<img src="/images/post19/image02.png" style="zoom:67%;" />
+<p>
+</p>
+</li>
+<li>
+<p>Una vez dentro, pulsamos en el botón <strong>+Add custom domain</strong>.</p>
+<img src="/images/post19/image03.png" style="zoom:67%;" />
+<p>
+</p>
+</li>
+<li>
+<p>Le indicamos, en nuestro caso que nuestro Domain Provider es <strong>All other domain services</strong>.</p>
+<p>Además le indicamos el nombre de nuestro dominio.</p>
+<img src="/images/post19/image04.png" style="zoom:67%;" />
+<p>
+</p>
+</li>
+<li>
+<p>Se nos facilitará unos <strong>registros de DNS,</strong> que debemos de agregar dentro de nuestro <strong>proveedor de DNS.</strong> Una vez agregados estos registros le damos al botón <strong>Validate</strong>.</p>
+<img src="/images/post19/image05.png" style="zoom:67%;" />
+<p>
+</p>
+</li>
+<li>
+<p>Si los registros DNS se introdujeron correctamente, se nos dirá que todo esta OK y podremos darle al botón <strong>Add</strong>.</p>
+<img src="/images/post19/image06.png" style="zoom:67%;" />
+</li>
+</ol>
+<p><br><br></p>
+<h2 id="agregar-permisos-necesarios-al-azure-key-vault">Agregar permisos necesarios al Azure Key Vault</h2>
+<ol>
+<li>
+<p>Vale ya tenemos asociado el dominio al <strong>App Service</strong>. Ahora lo que tenemos que hacer es agregar el certificado que vamos a usar al <strong>Azure Key Vault</strong>.</p>
+<p>Para ello lo primero que debemos hacer es dar permiso a nuestro usuario de Azure para que pueda agregar el certificado al <strong>Azure Key Vault.</strong> Debemos de tener cualquiera de los 3 roles marcados en rojo en la imagen de abajo para poder agregar el certificado:</p>
+<p><img src="/images/post19/image08.png" alt=""></p>
+<p>
+</p>
+</li>
+<li>
+<p>Aparte de dar permiso a nuestro usuario, también debemos de dar permiso a nuestro <strong>App Service</strong> para que pueda usar el certificado del <strong>Azure Key Vault</strong>.</p>
+<p>Para ello, debemos ir dar el permiso de <strong>Key Vault Secret User</strong> a un <strong>Service Principal</strong> concreto.</p>
+ <img src="/images/post19/image09.png" style="zoom:67%;" />
+<p>
+</p>
+</li>
+<li>
+<p>En la pestaña de Members, debemos de seleccionar <strong>User, group or service principal</strong>.  Luego pulsamos en <strong>+ Select members</strong>.</p>
+ <img src="/images/post19/image10.png" style="zoom:67%;" />
+</li>
+</ol>
+  <p>
+<br>
+<br>
+<ol start="4">
+<li>
+<p>En <strong>Select members,</strong>  buscamos <strong>Microsoft Azure App Service</strong> y pulsamos sobre el nombre. Luego pulsamos en <strong>Select</strong>.</p>
+ <img src="/images/post19/image12.png" style="zoom:67%;" />
+</li>
+</ol>
+<p>
+</p>
+<ol start="5">
+<li>Por último pulsamos en <strong>Review + assign</strong> para finalizar la asignación del permiso.</li>
+</ol>
+<p><img src="/images/post19/image13.png" alt=""></p>
+<br>
+<br>
+<h2 id="agregar-certificado-al-key-vault">Agregar certificado al Key Vault</h2>
+<ol>
+<li>
+<p>Vale con los permisos necesarios, vamos a agregar el certificado al Azure Key vault. Para ellos vamos al Azure Key Vault y pulsamos la opción <strong>Certificates</strong>  y luego en  <strong>Generate/Import</strong>.</p>
+ <img src="/images/post19/image14.png" style="zoom:67%;" />
+</li>
+</ol>
+  <p>
+  </p>
+<ol start="2">
+<li>
+<p>En <strong>Method of Certificate Creation</strong>, seleccionamos <strong>Import</strong>:</p>
+ <img src="/images/post19/image15.png" style="zoom:67%;" />
+</li>
+</ol>
+  <p>
+  </p>
+<ol start="3">
+<li>
+<p>Pulsamos en el icono de la carpeta en  <strong>Upload Certificate File</strong>.</p>
+<p><img src="/images/post19/image16.png" alt=""></p>
+</li>
+<li>
+<p>Aquí vamos a buscar nuestro fichero <strong>pfx</strong> del certificado. Eso sí, recordad que para App Service, únicamente se  aceptan certificados  en formato <strong>pfx</strong>.</p>
+<img src="/images/post19/image17.png" style="zoom:67%;" />
+<p>
+</p>
+</li>
+<li>
+<p>Le damos un nombre descriptivo a nuestro certificado y ponemos el <strong>password</strong> asociado al fichero pfx. Por último pulsamos en <strong>Create</strong>.</p>
+<img src="/images/post19/image18.png" style="zoom:67%;" />
+</li>
+</ol>
+<p>
+</p>
+<br>
+<br>
+<h2 id="asociar-certificado-al-dominio-en-el-app-service">Asociar certificado al dominio en el App Service</h2>
+<ol>
+<li>
+<p>Vale con nuestro certificado en el Key Vault, es hora de asociarlo al App Service. Vamos a nuestro App Service y pulsamos en <strong>Custom domains.</strong> Pulsamos en <strong>Add binding</strong> en nuestro dominio.</p>
+<img src="/images/post19/image19.png" style="zoom:67%;" />
+</li>
+</ol>
+<p>
+</p>
+<ol start="2">
+<li>
+<p>En <strong>TLS/SSL Type</strong> dejamos la opción de <strong>SNI SSL.</strong> En <strong>Source</strong>, elegimos la opción de <strong>Import from Key Vault</strong>.</p>
+<img src="/images/post19/image20.png" style="zoom:67%;" />
+<p>
+</p>
+</li>
+<li>
+<p>Pulsamos en <strong>Select key vault certificate</strong>.</p>
+<img src="/images/post19/image21.png" style="zoom:67%;" />
+<p>
+</p>
+</li>
+<li>
+<p>Elegimos la suscripción donde está el Azure Key Vault y el Azure Key Vault. Por último elegimos nuestro certificado.</p>
+<img src="/images/post19/image22.png" style="zoom:67%;" />
+<p>
+</p>
+</li>
+<li>
+<p>Pulsamos en <strong>Select</strong>.</p>
+<img src="/images/post19/image23.png" style="zoom:67%;" />
+<p>
+</p>
+</li>
+<li>
+<p>Luego pulsamos en <strong>Validate</strong>.</p>
+<p><img src="/images/post19/image24.png" alt=""></p>
+<p>
+</p>
+</li>
+<li>
+<p>Si validación esta OK, podemos pulsar en el botón <strong>Add</strong>.</p>
+<p><img src="/images/post19/image25.png" alt=""></p>
+<p>
+</p>
+</li>
+<li>
+<p>Al poco tiempo, se nos notifica que el certificado ha sido correctamente configurado.</p>
+<p><img src="/images/post19/image26.png" alt=""></p>
+<p>
+</p>
+</li>
+<li>
+<p>Si vamos a un navegador  y vamos a nuestra página, veremos que el certificado se configuró correctamente :)</p>
+<p><img src="/images/post19/image28.png" alt=""></p>
+</li>
+</ol>
+<p><br><br></p>
+<h2 id="actualizar-certificado-existente">Actualizar certificado existente</h2>
+<p>Cuando vayamos a actualizar un certificado ya existente que va a caducar, los pasos son supersencillos.</p>
+<ol>
+<li>
+<p>Vamos al key vault donde tenemos nuestro certificado. Entramos dentro del certificado y pulsamos <strong>New Version</strong>.</p>
+<p><img src="/images/post19/image32.png" alt=""></p>
+</li>
+</ol>
+<p>
+</p>
+<ol start="2">
+<li>
+<p>Metemos el nuevo pfx que hemos creado, la password y listo ya tenemos nueva versión del certificado :)</p>
+<p>
+</p>
+</li>
+<li>
+<p>Tal y como dice la documentación, el App service dentro de las siguietes 24 horas actualizará el certificado.</p>
+<p><img src="/images/post19/image33.png" alt=""></p>
+</li>
+</ol>
+<p>
+</p>
+<ol start="4">
+<li>
+<p>Pero si eres impaciente como yo o simplemente quieres ver que ya se use tu nuevo certificado, debes ir al App Service y dentro de <strong>Certificates</strong> vas a nuestro certificado. Una vez dentro de das al botón de <strong>Sync</strong>.</p>
+<p><img src="/images/post19/image30.png" alt=""></p>
+</li>
+</ol>
+<p>
+</p>
+<ol start="5">
+<li>
+<p>Al poco tiempo, saldrá un mensaje de que el certificado se ha sincronizado corrrectamente:</p>
+<p><img src="/images/post19/image31.png" alt=""></p>
+</li>
+</ol>
+<p>Bueno espero os haya gustado este extenso artículo, jaja.</p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Alejandro García avatar" src="/images/foto.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Alejandro García</span>
+	</div>
+	<div class="authorbox__description">
+		Apasionado por la tecnología.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/certificados01crearnuevocertificado/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Hablemos de Certificados TLS/SSL - Crear un nuevo certificado a través de un CSR</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://www.recetasdevops.dev/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/certificados02instalarcertificadoenappservice/">Hablemos de Certificados TLS/SSL - Instalar certificados en App Services usando Azure Key Vault</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/certificados01crearnuevocertificado/">Hablemos de Certificados TLS/SSL - Crear un nuevo certificado a través de un CSR</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/appinsightscertexpiration/">Generar alertas cuando un certificado caduca usando Application Insights</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/appservicerecover/">Cómo recuperar un App Service borrado</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/recoveryservicevaultotraregion/">¿Puedo crear un recovery service vault o Backup Vault en la paired region en vez de en la misma región donde tengo mis recursos que voy a proteger?</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 Recetas Devops.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>
