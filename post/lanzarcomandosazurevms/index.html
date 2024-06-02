@@ -10,8 +10,8 @@
   <meta property="og:site_name" content="Recetas Devops">
   <meta property="og:title" content="Lanzar comandos sin entrar a tus Máquinas virtuales de Azure usando Run Command">
   <meta property="og:description" content="En el post de hoy vamos a ver que es Run Command, y vamos a ver su utilidad.
-Tal y como dice la documentación oficial (https://learn.microsoft.com/en-us/azure/virtual-machines/run-command-overview), nos permite ejecutar scripts haciendo uso del Virtual Machine Agent, tanto en Windows (https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-windows), como en Linux (https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux).
-Lo mejor de Run Command, que no necesitamos entrar en cada una de las máquinas virtuales para ejecutar estos scripts, sino que vamos a poder ejecutar estos scripts desde el Portal de Azure, Powershell, azcli, o a través directamente de la API Rest.">
+Tal y como dice la documentación oficial (https://learn.microsoft.com/en-us/azure/virtual-machines/run-command-overview), nos permite ejecutar scripts haciendo uso del Virtual Machine Agent, tanto en Windows (https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-windows) como en Linux (https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux).
+Lo mejor de Run Command, que no necesitamos entrar en cada una de las máquinas virtuales para ejecutar estos scripts, sino que vamos a poder ejecutar estos scripts desde el Portal de Azure, Powershell, azcli, o directamente a través de la API Rest.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="post">
@@ -66,8 +66,8 @@ Lo mejor de Run Command, que no necesitamos entrar en cada una de las máquinas 
 <br>
 <br>
 <p>En el post de hoy vamos a ver que es <strong>Run Command</strong>, y vamos a ver su utilidad.</p>
-<p>Tal y como dice la documentación oficial (<a href="https://learn.microsoft.com/en-us/azure/virtual-machines/run-command-overview)">https://learn.microsoft.com/en-us/azure/virtual-machines/run-command-overview)</a>, <strong>nos permite ejecutar scripts</strong> haciendo uso del <strong>Virtual Machine Agent</strong>, tanto en Windows  (<a href="https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-windows)">https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-windows)</a>, como en Linux (<a href="https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux)">https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux)</a>.</p>
-<p>Lo mejor de <strong>Run Command</strong>, que no necesitamos entrar en cada una de las máquinas virtuales para ejecutar estos scripts, sino que vamos a poder ejecutar estos scripts desde el <strong>Portal de Azure</strong>, <strong>Powershell</strong>, <strong>azcli</strong>,  o a través directamente de la <strong>API Rest.</strong></p>
+<p>Tal y como dice la documentación oficial (<a href="https://learn.microsoft.com/en-us/azure/virtual-machines/run-command-overview)">https://learn.microsoft.com/en-us/azure/virtual-machines/run-command-overview)</a>, <strong>nos permite ejecutar scripts</strong> haciendo uso del <strong>Virtual Machine Agent</strong>, tanto en Windows  (<a href="https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-windows">https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-windows</a>) como en Linux (<a href="https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux)">https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux)</a>.</p>
+<p>Lo mejor de <strong>Run Command</strong>, que no necesitamos entrar en cada una de las máquinas virtuales para ejecutar estos scripts, sino que vamos a poder ejecutar estos scripts desde el <strong>Portal de Azure</strong>, <strong>Powershell</strong>, <strong>azcli</strong>,  o directamente a través de la <strong>API Rest.</strong></p>
 <p>En este artículo nos vamos a centrar principalmente en como hacerlo a través de Powershell, pero voy a explicaros de manera breve como podríais hacerlo desde el Portal de Azure.</p>
 <p>Los pasos a seguir para hacerlo desde el Portal de Azure serían:</p>
 <ol>
@@ -83,7 +83,7 @@ Lo mejor de Run Command, que no necesitamos entrar en cada una de las máquinas 
 <li>
 <p>A continuación le damos a <strong>RunPowerShellScript</strong>.</p>
 <p><img src="/images/post20/image02.png" alt=""></p>
-<p>Fijaros como en la imagen de arriba, a parte de poder lanzar un 		script de Powershell existen otras acciones predefinidas como 			Deshabilitar Windows Update, habilitar el usuario administrador 		etc.. Estas acciones no son más que scripts a lanzar en la VM, pero 	Azure te las ofrece de serie por así decirlo sin necesidad de que tu 	crees el script.</p>
+<p>Fijaros como en la imagen de arriba, a parte de poder lanzar un script de Powershell existen otras acciones predefinidas como Deshabilitar Windows Update, habilitar el usuario administrador 		etc.. Estas acciones no son más que scripts a lanzar en la VM, pero Azure te las ofrece de manera nativa sin necesidad de que tú crees el script.</p>
 </li>
 </ol>
 <br>
@@ -103,8 +103,9 @@ Lo mejor de Run Command, que no necesitamos entrar en cada una de las máquinas 
 <br>
 <br>
 <p>Una vez explicado brevemente como realizar esto, vamos a ver un ejemplo de como hacerlo con PowerShell.</p>
-<p>Imaginemos que yo tengo muchas máquinas virtuales Windows , de las cuales yo necesito crear un usuario administrador local en cada una de estas máquinas virtuales. Para realizar esta tarea, podría entrar al Portal de Azure y lanzar los  comandos de crear este usuario administrador haciendo uso de Run Commands. Pero claro, ya os digo que a la tercera máquina virtual estaría hasta el gorro de hacerlo.</p>
-<p>Y porque no usamos un Powershell y la potencia de <strong>RunCommands</strong>. Pues no se diga más, pongamos manos a la obra.</p>
+<p>Imaginemos que yo tengo muchas máquinas virtuales Windows , de las cuales yo necesito crear un usuario administrador local en cada una de estas máquinas virtuales. Para realizar esta tarea, podría entrar al Portal de Azure y lanzar los  comandos de crear este usuario administrador haciendo uso de Run Commands. También podría entrar a cada una de las máquinas por escritorio remoto y hacerlo.</p>
+<p>Pero claro, ya os digo que a la tercera máquina virtual estaría hasta el gorro de hacerlo.</p>
+<p>¿ Y porqué no usamos un Powershell y la potencia de <strong>Run Command</strong> ?. Pues no se diga más, pongamonos manos a la obra.</p>
 <p>Podría hacer un script de la siguiente manera:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#75715e">#Connect to azure</span>
 </span></span><span style="display:flex;"><span>Connect-AzAccount
@@ -176,11 +177,12 @@ Lo mejor de Run Command, que no necesitamos entrar en cada una de las máquinas 
 <p>Por último comentaros dos cosas:</p>
 <ul>
 <li>
-<p>La primera es que en el <strong>Activity Log</strong> podéis ver cuando se ejecutan los scripts usando Run Command</p>
-<p>en las máquinas virtuales.</p>
+<p>La primera, es que en el <strong>Activity Log</strong> podéis ver cuando se ejecutan los scripts usando Run Command en las máquinas virtuales.</p>
 </li>
 <li>
-<p>Como puedes ver, con RunCommand puedes hacer de todo como si de un administrador de la máquina virtual se tratará. El permiso necesario es <strong>Microsoft.Compute/virtualMachines/runCommand/action</strong>, y está desde el rol de <strong>Virtual Machine Contributor</strong> hacia roles con más permisos como <strong>Contributor</strong> y <strong>Owner</strong>. Con esto os quiero decir que <strong>CUIDADO</strong> a quien dais este permiso.</p>
+<p>Como puedes ver, con Run Command puedes hacer de todo como si de un administrador de la máquina virtual se tratará. El permiso necesario es <strong>Microsoft.Compute/virtualMachines/runCommand/action</strong>, y está desde el rol de <strong>Virtual Machine Contributor</strong> hacia roles con más permisos como <strong>Contributor</strong> y <strong>Owner</strong>. Con esto os quiero decir que <strong>CUIDADO</strong> a quien dais este permiso.</p>
+<br>
+<br>
 </li>
 </ul>
 <p>Y esto es todo, hasta la próxima y gracias.</p>
