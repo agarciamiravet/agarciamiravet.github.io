@@ -3,15 +3,15 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Lanzar comandos sin entrar a tus Máquinas virtuales de Azure usando Run Command - Recetas Devops</title>
+	<title>Lanzar comandos y scripts a tus Máquinas virtuales de Azure usando Run Command - Recetas Devops</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 		<meta property="og:url" content="https://www.recetasdevops.dev/post/lanzarcomandosazurevms/">
   <meta property="og:site_name" content="Recetas Devops">
-  <meta property="og:title" content="Lanzar comandos sin entrar a tus Máquinas virtuales de Azure usando Run Command">
+  <meta property="og:title" content="Lanzar comandos y scripts a tus Máquinas virtuales de Azure usando Run Command">
   <meta property="og:description" content="En el post de hoy vamos a ver que es Run Command, y vamos a ver su utilidad.
-Tal y como dice la documentación oficial (https://learn.microsoft.com/en-us/azure/virtual-machines/run-command-overview), nos permite ejecutar scripts haciendo uso del Virtual Machine Agent, tanto en Windows (https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-windows) como en Linux (https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux).
-Lo mejor de Run Command, que no necesitamos entrar en cada una de las máquinas virtuales para ejecutar estos scripts, sino que vamos a poder ejecutar estos scripts desde el Portal de Azure, Powershell, azcli, o directamente a través de la API Rest.">
+Tal y como dice la documentación oficial (https://learn.microsoft.com/en-us/azure/virtual-machines/run-command-overview), nos permite ejecutar comanfos y scripts haciendo uso del Virtual Machine Agent, tanto en Windows (https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-windows) como en Linux (https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux).
+Lo mejor de Run Command, es que no necesitamos entrar en cada una de las máquinas virtuales para ejecutar estos comandos y scripts, sino que vamos a poder ejecutar estos desde el Portal de Azure, Powershell, azcli, o directamente a través de la API Rest.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="post">
@@ -56,7 +56,7 @@ Lo mejor de Run Command, que no necesitamos entrar en cada una de las máquinas 
 <main class="main" role="main">
 	<article class="post">
 		<header class="post__header">
-			<h1 class="post__title">Lanzar comandos sin entrar a tus Máquinas virtuales de Azure usando Run Command</h1>
+			<h1 class="post__title">Lanzar comandos y scripts a tus Máquinas virtuales de Azure usando Run Command</h1>
 			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-06-02T00:00:00&#43;02:00">June 02, 2024</time></div></div>
@@ -66,8 +66,8 @@ Lo mejor de Run Command, que no necesitamos entrar en cada una de las máquinas 
 <br>
 <br>
 <p>En el post de hoy vamos a ver que es <strong>Run Command</strong>, y vamos a ver su utilidad.</p>
-<p>Tal y como dice la documentación oficial (<a href="https://learn.microsoft.com/en-us/azure/virtual-machines/run-command-overview)">https://learn.microsoft.com/en-us/azure/virtual-machines/run-command-overview)</a>, <strong>nos permite ejecutar scripts</strong> haciendo uso del <strong>Virtual Machine Agent</strong>, tanto en Windows  (<a href="https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-windows">https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-windows</a>) como en Linux (<a href="https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux)">https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux)</a>.</p>
-<p>Lo mejor de <strong>Run Command</strong>, que no necesitamos entrar en cada una de las máquinas virtuales para ejecutar estos scripts, sino que vamos a poder ejecutar estos scripts desde el <strong>Portal de Azure</strong>, <strong>Powershell</strong>, <strong>azcli</strong>,  o directamente a través de la <strong>API Rest.</strong></p>
+<p>Tal y como dice la documentación oficial (<a href="https://learn.microsoft.com/en-us/azure/virtual-machines/run-command-overview)">https://learn.microsoft.com/en-us/azure/virtual-machines/run-command-overview)</a>, <strong>nos permite ejecutar comanfos y scripts</strong> haciendo uso del <strong>Virtual Machine Agent</strong>, tanto en Windows  (<a href="https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-windows">https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-windows</a>) como en Linux (<a href="https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux)">https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux)</a>.</p>
+<p>Lo mejor de <strong>Run Command</strong>, es que no necesitamos entrar en cada una de las máquinas virtuales para ejecutar estos comandos y scripts, sino que vamos a poder ejecutar estos desde el <strong>Portal de Azure</strong>, <strong>Powershell</strong>, <strong>azcli</strong>,  o directamente a través de la <strong>API Rest.</strong></p>
 <p>En este artículo nos vamos a centrar principalmente en como hacerlo a través de Powershell, pero voy a explicaros de manera breve como podríais hacerlo desde el Portal de Azure.</p>
 <p>Los pasos a seguir para hacerlo desde el Portal de Azure serían:</p>
 <ol>
@@ -225,7 +225,7 @@ Lo mejor de Run Command, que no necesitamos entrar en cada una de las máquinas 
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/post/lanzarcomandosazurevms/">Lanzar comandos sin entrar a tus Máquinas virtuales de Azure usando Run Command</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/lanzarcomandosazurevms/">Lanzar comandos y scripts a tus Máquinas virtuales de Azure usando Run Command</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/certificados02instalarcertificadoenappservice/">Hablemos de Certificados TLS/SSL - Instalar certificados en App Services usando Azure Key Vault</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/certificados01crearnuevocertificado/">Hablemos de Certificados TLS/SSL - Crear un nuevo certificado a través de un CSR</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/appinsightscertexpiration/">Generar alertas cuando un certificado caduca usando Application Insights</a></li>
