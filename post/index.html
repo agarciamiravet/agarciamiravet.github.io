@@ -56,6 +56,23 @@
 	
 	<header class="list__header">
 		<h2 class="list__title post__title">
+			<a href="/post/lanzarcomandosazurevms/" rel="bookmark">
+			Lanzar comandos sin entrar a tus Máquinas virtuales de Azure usando Run Command
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-06-02T00:00:00&#43;02:00">June 02, 2024</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		En el post de hoy vamos a ver que es Run Commands, y vamos a ver su utilidad.
+Tal y como dice la documentación oficial (https://learn.microsoft.com/en-us/azure/virtual-machines/run-command-overview), nos permite ejecutar scripts haciendo uso del Virtual Machine Agent, tanto en Windows (https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-windows), como en Linux (https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux).
+Lo mejor de Run Commands, que no necesitamos entrar en cada una de las máquinas virtuales para ejecutar estos scripts, sino que vamos a poder ejecutar estos scripts desde el Portal de Azure, Powershell o a través directamente de la API Rest.
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
 			<a href="/post/certificados02instalarcertificadoenappservice/" rel="bookmark">
 			Hablemos de Certificados TLS/SSL - Instalar certificados en App Services usando Azure Key Vault
 			</a>
@@ -216,31 +233,11 @@ Si vamos a la documentación oficial, nos encontramos la siguiente definición:
 Un proveedor de recursos (resource provider) es una colección de operaciones REST que permite la funcionalidad de un servicio de Azure. Cada proveedor de recursos tiene un espacio de nombres en el formato de company-name.service-label
 Sin estos resource providers, no podríamos crear ningún recurso en Azure, así de sencillo.
 	</div>
-</article><article class="list__item post">
-	
-	<header class="list__header">
-		<h2 class="list__title post__title">
-			<a href="/post/alertascuandoseborranbloqueos/" rel="bookmark">
-			Crea alertas para enterarte cuando borran bloqueos en Azure
-			</a>
-		</h2>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-01-28T00:00:00&#43;01:00">January 28, 2024</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		En más de un artículo, os he comentado la importancia de tener bloqueos en Azure. Es por ello que en este artículo vamos a ver como podemos crear un alerta que nos avise cuando un bloqueo se ha eliminado.
-Pues pongámonos manos a la obra, los pasos a seguir serían:
-Vamos al portal de Azure https://portal.azure.com .
-Buscamos Alerts
-Pulsamos en Create, y luego Alert rule.
-En el siguiente paso, vamos a decir en que nivel vamos a crear la alerta.
-	</div>
 </article>
 </main>
 
 <div class="pagination">
-	<span class="pagination__item pagination__item--current">1/2</span>
+	<span class="pagination__item pagination__item--current">1/3</span>
 	<a class="pagination__item pagination__item--next btn" href="/post/page/2/">»</a>
 </div>
 
@@ -257,11 +254,11 @@ En el siguiente paso, vamos a decir en que nivel vamos a crear la alerta.
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/lanzarcomandosazurevms/">Lanzar comandos sin entrar a tus Máquinas virtuales de Azure usando Run Command</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/certificados02instalarcertificadoenappservice/">Hablemos de Certificados TLS/SSL - Instalar certificados en App Services usando Azure Key Vault</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/certificados01crearnuevocertificado/">Hablemos de Certificados TLS/SSL - Crear un nuevo certificado a través de un CSR</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/appinsightscertexpiration/">Generar alertas cuando un certificado caduca usando Application Insights</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/appservicerecover/">Cómo recuperar un App Service borrado</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/recoveryservicevaultotraregion/">¿Puedo crear un recovery service vault o Backup Vault en la paired region en vez de en la misma región donde tengo mis recursos que voy a proteger?</a></li>
 		</ul>
 	</div>
 </div>
