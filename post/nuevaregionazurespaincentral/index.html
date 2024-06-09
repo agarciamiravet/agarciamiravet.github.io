@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Probamos España Central, la nueva región de Azure - Recetas Devops</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:url" content="https://www.recetasdevops.dev/post/nuevaregionazurespaincentral/">
+  <meta property="og:site_name" content="Recetas Devops">
+  <meta property="og:title" content="Probamos España Central, la nueva región de Azure">
+  <meta property="og:description" content="En el artículo de hoy, vamos a hablar sobre la nueva región Spain Central que ya esta disponible para ser usada.
+Como su nombre indica esta nueva región esta en España, y más concretamente en la Comunidad de Madrid. Pero los planes de Azure para España no se quedan aquí, y parece ser que habrá neuvos centros de datos en Aragón. Podéis leer la noticia del propio Microsoft en el siguiente enlace:">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2024-06-09T00:00:00+02:00">
+    <meta property="article:modified_time" content="2024-06-09T00:00:00+02:00">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+  
+
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="Recetas Devops" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.png">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">Recetas Devops</div>
+					<div class="logo__tagline">Tus recetas para DevOps de confianza</div>
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Probamos España Central, la nueva región de Azure</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-06-09T00:00:00&#43;02:00">June 09, 2024</time></div></div>
+		</header>
+		<div class="content post__content clearfix">
+			<img src="/images/post21/meme.png" style="zoom:67%;" />
+<p>
+</p>
+<p>En el artículo de hoy, vamos a hablar sobre la nueva región <strong>Spain Central</strong> que ya esta disponible para ser usada.</p>
+<p>Como su nombre indica esta nueva región esta  en España, y más concretamente en la Comunidad de Madrid. Pero los planes de Azure para España no se quedan aquí, y parece ser que habrá  neuvos centros de datos en Aragón. Podéis leer la noticia del propio Microsoft en el siguiente enlace:</p>
+<p><a href="https://news.microsoft.com/es-es/2023/10/10/microsoft-anuncia-su-intencion-de-construir-un-campus-de-centros-de-datos-en-aragon-para-proporcionar-servicios-de-nube-inteligente-a-empresas-y-organizaciones-publicas-europeas/">https://news.microsoft.com/es-es/2023/10/10/microsoft-anuncia-su-intencion-de-construir-un-campus-de-centros-de-datos-en-aragon-para-proporcionar-servicios-de-nube-inteligente-a-empresas-y-organizaciones-publicas-europeas/</a></p>
+<p>Después de esta pequeña introducción vamos a meternos en faena.</p>
+<p>Lo primero que voy a hacer es irme al portal de Azure, y ver que si por ejemplo quiero crear una VM me da la posibilidad de crear una máquina virtual en la región de <strong>Spain Central</strong>.</p>
+<p>Y efectivamente, si vamos al portal de Azure vemos esto al crear una VM:</p>
+<img src="/images/post21/01.png" alt="01" style="zoom:67%;" />
+<p>
+</p>
+<p>No solo vemos que efectivamente puedo crear la VM en Spain Central, sino que  además <strong>puedo usar zonas de disponibilidad.</strong></p>
+<p>También <strong>puedo crear VMs como Spot VMs</strong></p>
+<img src="/images/post21/02.png" style="zoom:67%;" />
+<p>
+</p>
+<p>Respecto a los servicios que hay actualmente disponibles en la región de <strong>Spain Central</strong>, tendréis que ver cuales están actualmente están soportados y si se ajusta a la necesidades que tengáis actualmente.</p>
+<p>En el caso de no estar soportados actualmente, seguramente en poco tiempo estos servicios estarán soportados en esta nueva región.</p>
+<p>Bueno ya habéis visto que no os engañaba  (jajaja), que si existe la región de <strong>Spain Central</strong> y podemos que podemos desplegar en esta región a través del portal de Azure. Ahora vamos a desplegar los servicios como me gusta hacerlo: a través de IAC y con Terraform.</p>
+<p>Lo primero que hacemos es <strong>consultar el listado de regiones de Azure a través del azcli</strong> usando el siguiente comando:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>az account list-locations -o table
+</span></span></code></pre></div><p>Este comando nos dará la siguiente información:</p>
+<img src="/images/post21/06.png" style="zoom:67%;" />
+<p>
+</p>
+<p>Este valor que obtenemos de la región de <strong>Spain Central</strong>, lo vamos a necesitar en nuestro código de Terraform. Este valor es <strong>spaincentral</strong>.</p>
+<p>Pues ahora, <strong>vamos a desplegar en la region de Spain Central con Terraform</strong>.</p>
+<p>En nuestro ejemplo, vamos a desplegar un App Service,  algo muy sencillo vamos.</p>
+<p>Nuestro código de <strong>Terraform</strong> es el siguiente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>resource <span style="color:#e6db74">&#34;azurerm_resource_group&#34;</span> <span style="color:#e6db74">&#34;this&#34;</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  name     <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;rg-esc-app-service&#34;</span>
+</span></span><span style="display:flex;"><span>  location <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;spaincentral&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>resource <span style="color:#e6db74">&#34;azurerm_app_service_plan&#34;</span> <span style="color:#e6db74">&#34;this&#34;</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  name                <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;esc-asp-recetasdevops&#34;</span>
+</span></span><span style="display:flex;"><span>  location            <span style="color:#f92672">=</span> azurerm_resource_group.this.location
+</span></span><span style="display:flex;"><span>  resource_group_name <span style="color:#f92672">=</span> azurerm_resource_group.this.name
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  sku <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    tier <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Standard&#34;</span>
+</span></span><span style="display:flex;"><span>    size <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;S1&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>resource <span style="color:#e6db74">&#34;azurerm_app_service&#34;</span> <span style="color:#e6db74">&#34;this&#34;</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  name                <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;esc-app-recetasdevops&#34;</span>
+</span></span><span style="display:flex;"><span>  location            <span style="color:#f92672">=</span> azurerm_resource_group.this.location
+</span></span><span style="display:flex;"><span>  resource_group_name <span style="color:#f92672">=</span> azurerm_resource_group.this.name
+</span></span><span style="display:flex;"><span>  app_service_plan_id <span style="color:#f92672">=</span> azurerm_app_service_plan.this.id
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>Como podéis ver,  en la propiedad <strong>location</strong> he puesto el valor de la región obtenida por el comando del <strong>azcli</strong>:</p>
+<p><img src="/images/post21/07.png" alt=""></p>
+<br>
+<p>Una vez desplegado el código, vemos que nuestros servicios están desplegados en el portal:</p>
+<p><img src="/images/post21/08.png" alt=""></p>
+<br>
+<p>Si comprobamos de donde es la ip pública del App Service desplegado, vemos efectivamente que esa IP es de España y más concretamente de Madrid:</p>
+<img src="/images/post21/09.png" style="zoom:67%;" />
+<p>
+</p>
+<p>Si hacemos una prueba muy de andar por casa con <strong>psping</strong>, para ver la latencia desde mi casa (en España) al App Service que hemos creado en la región de <strong>Spain Central</strong> vemos los siguientes resultados:</p>
+<p><img src="/images/post21/10.png" alt=""></p>
+<p>
+</p>
+<br>
+<p>Si por el contrario hacemos esta misma prueba desde mi casa a la región de <strong>West Europe</strong>, pues como es lógico la latencia sube:</p>
+<p><img src="/images/post21/11.png" alt=""></p>
+<br>
+<p>Pensad en empresas donde la mayoría de sus clientes están en España, pues hay una gran diferencia entre desplegar en una región próxima a sus clientes como <strong>Spain Central</strong>, a tener que desplegar en <strong>West Europe</strong> o <strong>North Europe</strong> en lo que a latencia se refiere.</p>
+<p>Por último comentaros que aún no esta disponible en la calculadora de Azure (<a href="https://azure.microsoft.com/en-us/pricing/calculator/">https://azure.microsoft.com/en-us/pricing/calculator/</a>) , los precios de la región de <strong>Spain Central</strong>, aunque  creo que no le debe de quedar mucho tiempo para que podamos verlos.</p>
+<img src="/images/post21/12.png" style="zoom:67%;" />
+<p>
+</p>
+<p>De cualquier manera, a través de la <strong>api de precios Retail</strong> (<a href="https://learn.microsoft.com/es-es/rest/api/cost-management/retail-prices/azure-retail-prices)">https://learn.microsoft.com/es-es/rest/api/cost-management/retail-prices/azure-retail-prices)</a>,  ya podemos ver los precios de la región de  <strong>Spain Central</strong>.</p>
+<p>Para ver estos precios podemos ir a la siguiente url usando cualquier navegador:</p>
+<p><strong><a href="https://prices.azure.com/api/retail/prices?$filter=armRegionName%20eq%20%27spaincentral%27">https://prices.azure.com/api/retail/prices?$filter=armRegionName%20eq%20%27spaincentral%27</a></strong></p>
+<p>No necesitamos autenticación ninguna y se nos mostrará un JSON como este:</p>
+<img src="/images/post21/13.png" style="zoom:67%;" />
+<p>
+</p>
+<p>Como podréis imaginar, en un solo JSON no &ldquo;entran&rdquo; todos los precios de todos los servicios de Azure en una región. Es por eso que por cada petición se muestran 1000 resultados, y al final del json se nos muestra la siguiente página a pedir para que nos devuelva más resultados:</p>
+<p><img src="/images/post21/14.png" alt=""></p>
+<p>Sobre esta api de precios Retail, comentaros que estos precios son precios al &ldquo;usuario final&rdquo;.  Esto quiere decir que aquellas empresas con contratos a través de CSP y Enterprise aplicarían otras tarifas, descuentos etc&hellip;</p>
+<p>Y con esto acabamos el artículo de hoy.</p>
+<p>Saludos y ¡¡¡¡¡¡¡hasta la próxima!!!!!!.</p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Alejandro García avatar" src="/images/foto.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Alejandro García</span>
+	</div>
+	<div class="authorbox__description">
+		Apasionado por la tecnología.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/lanzarcomandosazurevms/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Lanzar comandos y scripts a tus Máquinas virtuales de Azure usando Run Command</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://www.recetasdevops.dev/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/nuevaregionazurespaincentral/">Probamos España Central, la nueva región de Azure</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/lanzarcomandosazurevms/">Lanzar comandos y scripts a tus Máquinas virtuales de Azure usando Run Command</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/certificados02instalarcertificadoenappservice/">Hablemos de Certificados TLS/SSL - Instalar certificados en App Services usando Azure Key Vault</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/certificados01crearnuevocertificado/">Hablemos de Certificados TLS/SSL - Crear un nuevo certificado a través de un CSR</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/appinsightscertexpiration/">Generar alertas cuando un certificado caduca usando Application Insights</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 Recetas Devops.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

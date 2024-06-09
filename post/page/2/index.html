@@ -56,6 +56,24 @@
 	
 	<header class="list__header">
 		<h2 class="list__title post__title">
+			<a href="/post/registrarresourceprovider/" rel="bookmark">
+			Acabo de crear una suscripción y no puedo ni crear ni una VM. Hablemos de resource Provider
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-02-27T00:00:00&#43;02:00">February 27, 2024</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		En el post de hoy vamos a hablar de los los resource providers, y más concretamente del registro de estos.
+Si vamos a la documentación oficial, nos encontramos la siguiente definición:
+Un proveedor de recursos (resource provider) es una colección de operaciones REST que permite la funcionalidad de un servicio de Azure. Cada proveedor de recursos tiene un espacio de nombres en el formato de company-name.service-label
+Sin estos resource providers, no podríamos crear ningún recurso en Azure, así de sencillo.
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
 			<a href="/post/alertascuandoseborranbloqueos/" rel="bookmark">
 			Crea alertas para enterarte cuando borran bloqueos en Azure
 			</a>
@@ -207,23 +225,6 @@ Para ello vamos a hacer uso de Cost Management, creando un presupuesto (budget) 
 Pero antes que nada, vamos a decir que es Cost Management y para que sirve. Si vamos a a las definiciones oficiales por parte de Microsoft, estas dicen:
 Microsoft Cost Management es un conjunto de herramientas que ayudan a las organizaciones a supervisar, asignar y optimizar el costo de sus cargas de trabajo de Microsoft Cloud.
 	</div>
-</article><article class="list__item post">
-	
-	<header class="list__header">
-		<h2 class="list__title post__title">
-			<a href="/post/renombrarresourcegroups/" rel="bookmark">
-			¿Se pueden renombrar los grupos de recursos en Azure?
-			</a>
-		</h2>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-12-27T19:15:04&#43;02:00">December 27, 2023</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Una pregunta muy recurrente, que me han preguntado bastantes veces a lo largo del tiempo que llevo trabajando en Azure es la de ¿Se pueden renombrar los grupos de recursos de Azure?
-Y la respuesta lamentablemente es NO, no se puede. Esta respuesta es extensible a cualquier recurso creado en Azure, desde el nombre de una máquina virtual, servidor de Azure SQL, nombre de una ip pública etc&hellip;
-Hay otras cosas en Azure que pueden ser renombradas, pero que en realidad no son recursos como tal.
-	</div>
 </article>
 </main>
 
@@ -246,11 +247,11 @@ Hay otras cosas en Azure que pueden ser renombradas, pero que en realidad no son
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/nuevaregionazurespaincentral/">Probamos España Central, la nueva región de Azure</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/lanzarcomandosazurevms/">Lanzar comandos y scripts a tus Máquinas virtuales de Azure usando Run Command</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/certificados02instalarcertificadoenappservice/">Hablemos de Certificados TLS/SSL - Instalar certificados en App Services usando Azure Key Vault</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/certificados01crearnuevocertificado/">Hablemos de Certificados TLS/SSL - Crear un nuevo certificado a través de un CSR</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/appinsightscertexpiration/">Generar alertas cuando un certificado caduca usando Application Insights</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/appservicerecover/">Cómo recuperar un App Service borrado</a></li>
 		</ul>
 	</div>
 </div>

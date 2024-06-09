@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Recetas Devops</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Jun 2024 00:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Sun, 09 Jun 2024 00:00:00 +0200</lastBuildDate>
     <atom:link href="https://www.recetasdevops.dev/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Probamos España Central, la nueva región de Azure</title>
+      <link>https://www.recetasdevops.dev/post/nuevaregionazurespaincentral/</link>
+      <pubDate>Sun, 09 Jun 2024 00:00:00 +0200</pubDate>
+      <guid>https://www.recetasdevops.dev/post/nuevaregionazurespaincentral/</guid>
+      <description>En el artículo de hoy, vamos a hablar sobre la nueva región Spain Central que ya esta disponible para ser usada.&#xA;Como su nombre indica esta nueva región esta en España, y más concretamente en la Comunidad de Madrid. Pero los planes de Azure para España no se quedan aquí, y parece ser que habrá neuvos centros de datos en Aragón. Podéis leer la noticia del propio Microsoft en el siguiente enlace:</description>
+    </item>
     <item>
       <title>Lanzar comandos y scripts a tus Máquinas virtuales de Azure usando Run Command</title>
       <link>https://www.recetasdevops.dev/post/lanzarcomandosazurevms/</link>
