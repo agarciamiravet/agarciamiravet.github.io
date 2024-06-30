@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Recetas Devops</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Jun 2024 00:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Sun, 30 Jun 2024 00:00:00 +0200</lastBuildDate>
     <atom:link href="https://www.recetasdevops.dev/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Apaga y enciende tus máquinas virtuales con Azure Automation y ahorra dinero</title>
+      <link>https://www.recetasdevops.dev/post/apagarvmsconautomationaccount/</link>
+      <pubDate>Sun, 30 Jun 2024 00:00:00 +0200</pubDate>
+      <guid>https://www.recetasdevops.dev/post/apagarvmsconautomationaccount/</guid>
+      <description>Hola muy buenas.&#xA;En el artículo de hoy vamos a hablar sobre como apagar y encender máquinas virtuales en Azure usando Azure Automation y Powershell.&#xA;Por ejemplo, en un entorno de desarrollo, staging, pruebas etc.. estaría genial apagar nuestras máquinas cuando acabáramos la jornada laboral y encenderlas cuando empezáramos nuestra jornada laboral. De esta manera, ahorraríamos dinero lo cuál siempre esta bien.&#xA;Pues dicho esto pongamos el siguiente ejemplo:</description>
+    </item>
     <item>
       <title>Probamos España Central, la nueva región de Azure</title>
       <link>https://www.recetasdevops.dev/post/nuevaregionazurespaincentral/</link>

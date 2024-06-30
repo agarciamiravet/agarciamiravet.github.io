@@ -2,13 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://www.recetasdevops.dev/post/</loc>
-    <lastmod>2024-06-09T00:00:00+02:00</lastmod>
+    <loc>https://www.recetasdevops.dev/post/apagarvmsconautomationaccount/</loc>
+    <lastmod>2024-06-30T00:00:00+02:00</lastmod>
   </url><url>
-    <loc>https://www.recetasdevops.dev/post/nuevaregionazurespaincentral/</loc>
-    <lastmod>2024-06-09T00:00:00+02:00</lastmod>
+    <loc>https://www.recetasdevops.dev/post/</loc>
+    <lastmod>2024-06-30T00:00:00+02:00</lastmod>
   </url><url>
     <loc>https://www.recetasdevops.dev/</loc>
+    <lastmod>2024-06-30T00:00:00+02:00</lastmod>
+  </url><url>
+    <loc>https://www.recetasdevops.dev/post/nuevaregionazurespaincentral/</loc>
     <lastmod>2024-06-09T00:00:00+02:00</lastmod>
   </url><url>
     <loc>https://www.recetasdevops.dev/post/lanzarcomandosazurevms/</loc>

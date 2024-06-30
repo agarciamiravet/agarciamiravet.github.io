@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Apaga y enciende tus máquinas virtuales con Azure Automation y ahorra dinero - Recetas Devops</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:url" content="https://www.recetasdevops.dev/post/apagarvmsconautomationaccount/">
+  <meta property="og:site_name" content="Recetas Devops">
+  <meta property="og:title" content="Apaga y enciende tus máquinas virtuales con Azure Automation y ahorra dinero">
+  <meta property="og:description" content="Hola muy buenas.
+En el artículo de hoy vamos a hablar sobre como apagar y encender máquinas virtuales en Azure usando Azure Automation y Powershell.
+Por ejemplo, en un entorno de desarrollo, staging, pruebas etc.. estaría genial apagar nuestras máquinas cuando acabáramos la jornada laboral y encenderlas cuando empezáramos nuestra jornada laboral. De esta manera, ahorraríamos dinero lo cuál siempre esta bien.
+Pues dicho esto pongamos el siguiente ejemplo:">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2024-06-30T00:00:00+02:00">
+    <meta property="article:modified_time" content="2024-06-30T00:00:00+02:00">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+  
+
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="Recetas Devops" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.png">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">Recetas Devops</div>
+					<div class="logo__tagline">Tus recetas para DevOps de confianza</div>
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Apaga y enciende tus máquinas virtuales con Azure Automation y ahorra dinero</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-06-30T00:00:00&#43;02:00">June 30, 2024</time></div></div>
+		</header>
+		<div class="content post__content clearfix">
+			<p><img src="/images/post22/meme.jpg" alt=""></p>
+<p>
+</p>
+<p>Hola muy buenas.</p>
+<p>En el artículo de hoy vamos a hablar sobre como apagar y encender máquinas virtuales en Azure usando <strong>Azure Automation y Powershell.</strong></p>
+<p>Por ejemplo, en un entorno de desarrollo, staging, pruebas etc.. estaría genial apagar nuestras máquinas cuando acabáramos la jornada laboral  y encenderlas cuando empezáramos nuestra jornada laboral. De esta manera, ahorraríamos dinero lo cuál siempre esta bien.</p>
+<p>Pues dicho esto pongamos el siguiente ejemplo:</p>
+<p><em><strong>&ldquo;Quiero apagar mis máquinas de mi suscripción de staging a las 20:00 de la tarde y que se enciendan a las 08:00 de la mañana, de lunes a viernes. Además quiero que los fines de semana no se enciendan, es decir que se apaguen a las 20:00 del viernes y se enciendan el lunes a las 08:00 de la mañana&rdquo;</strong></em></p>
+<p>Los pasos que deberíamos hacer es:</p>
+<ol>
+<li>
+<p>Crear un <strong>Automation Account</strong>, por ejemplo usando Terraform.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>resource <span style="color:#e6db74">&#34;azurerm_resource_group&#34;</span> <span style="color:#e6db74">&#34;this&#34;</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  name     <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;rg-autoaccount-weu&#34;</span>
+</span></span><span style="display:flex;"><span>  location <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;westeurope&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>resource <span style="color:#e6db74">&#34;azurerm_automation_account&#34;</span> <span style="color:#e6db74">&#34;this&#34;</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  name                <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;autoacc-recetasdevops-weu&#34;</span>
+</span></span><span style="display:flex;"><span>  location            <span style="color:#f92672">=</span> azurerm_resource_group.this.location
+</span></span><span style="display:flex;"><span>  resource_group_name <span style="color:#f92672">=</span> azurerm_resource_group.this.name
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  sku_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Basic&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   identity <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    type <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SystemAssigned&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div></li>
+</ol>
+<p>En este código de Terraform,  creamos un automation account llamado <strong>autoacc-recetasdevops-weu</strong>. También <strong>habilitamos el system managed identity del automation account</strong>.</p>
+<p>Para una información más completa sobre como crear un Automation Account con Terraform, ver la documentación oficial en el siguiente link:</p>
+<p><a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_account">https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_account</a></p>
+<p>Una vez desplegado el código de Terraform,  si vamos al portal de Azure veremos que efectivamente tenemos nuestro Automation Account creado:</p>
+<img src="/images/post22/image01.png" style="zoom: 67%;" />
+<p><br><br></p>
+<ol start="2">
+<li>
+<p>Vale ahora lo que vamos a hacer es dar permisos a nuestro Automation Account para que pueda encender y apagar máquinas virtuales. Este permiso lo voy a dar a nivel de suscripción.  Lo primero que hago es ir a <strong>Suscriptions</strong> y pulso en la suscripción.</p>
+ <img src="/images/post22/image02.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="3">
+<li>Ahora vamos a <strong>Access Control (IAM)</strong> y pulsamos.</li>
+</ol>
+<img src="/images/post22/image03.png" style="zoom:67%;" />
+<p><br><br></p>
+<ol start="4">
+<li>
+<p>Ahora pulsamos en <strong>Add role assignment</strong>.</p>
+<img src="/images/post22/image04.png" style="zoom:67%;" />
+<p><br><br></p>
+</li>
+<li>
+<p>En el apartado de <strong>Job function roles</strong>  seleccionamos <strong>Virtual Machine Contributor</strong>. Este es un rol que nos permitirá apagar y encender las máquinas virtuales.</p>
+<img src="/images/post22/image05.png" style="zoom:67%;" />
+<br>
+<br>
+</li>
+<li>
+<p>Pulsamos en <strong>Next</strong>.</p>
+<img src="/images/post22/image06.png" style="zoom:67%;" />
+<br>
+<br>
+</li>
+<li>
+<p>En <strong>Members</strong>, seleccionamos <strong>Managed Identity</strong> y luego en + Select Members</p>
+<img src="/images/post22/image07.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="8">
+<li>Seleccionamos la suscripción y luego el tipo de managed identity a buscar, en nuestro caso Automation Account.</li>
+</ol>
+<img src="/images/post22/image08.png" style="zoom:67%;" />
+<br>
+<br>
+<ol start="9">
+<li>
+<p>Seleccionamos nuestro Managed Identity y luego pulsamos en <strong>Select</strong>.</p>
+<img src="/images/post22/image09.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="11">
+<li>
+<p>Por último pulsamos en <strong>Review + assign</strong>. Un mensaje nos saldrá confirmando que el rol ha sido asignado.</p>
+<img src="/images/post22/image10.png" style="zoom:67%;" />
+</li>
+</ol>
+<img src="/images/post22/image11.png" style="zoom:67%;" />
+<br>
+<br>
+<ol start="12">
+<li>Vale ahora vamos a crear un runbook para iniciar y apagar las máquinas virtuales. Lo primero que hacemos es dentro del Automation Account ir a la sección de <strong>Runbooks</strong>.</li>
+</ol>
+<img src="/images/post22/image12.png" style="zoom:67%;" />
+<br>
+<br>
+<ol start="13">
+<li>
+<p>Una vez dentro pulsamos en  <strong>+ Create a runbook</strong>.</p>
+<img src="/images/post22/image13.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="14">
+<li>
+<p>Elegimos un nombre para el <strong>Runbook</strong>. También decimos que vamos a crear un script de tipo Powershell usando la versión 7.2 de Powershell.</p>
+<img src="/images/post22/image14.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="15">
+<li>
+<p>Pulsamos en <strong>Create</strong>.</p>
+<p><img src="/images/post22/image15.png" alt=""></p>
+<br>
+<br>
+</li>
+<li>
+<p>En la parte de poner el script, vamos a poner el siguiente script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#66d9ef">Param</span>(
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> [ValidateSet(<span style="color:#e6db74">&#34;Startup&#34;</span>, <span style="color:#e6db74">&#34;Shutdown&#34;</span>)]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> [<span style="color:#66d9ef">string</span>]$VmAction
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Disable-AzContextAutosave -Scope <span style="color:#66d9ef">Process</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#75715e"># Connect to Azure with system-assigned managed identity</span>
+</span></span><span style="display:flex;"><span>$AzureContext = (Connect-AzAccount -Identity).context
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">#Set and store context</span>
+</span></span><span style="display:flex;"><span>$AzureContext = Set-AzContext -SubscriptionName $AzureContext.Subscription -DefaultProfile $AzureContext
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$VirtualMachines = Get-AzVM
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> ($VmAction <span style="color:#f92672">-eq</span> <span style="color:#e6db74">&#34;Startup&#34;</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">foreach</span>($VirtualMachine <span style="color:#66d9ef">in</span> $VirtualMachines)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Write-Output <span style="color:#e6db74">&#34;Start VM </span>$($VirtualMachine.Name)<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Start-AzVM -Name $VirtualMachine.Name -ResourceGroupName $VirtualMachine.ResourceGroupName
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> ($VmAction <span style="color:#f92672">-eq</span> <span style="color:#e6db74">&#34;Shutdown&#34;</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">foreach</span>($VirtualMachine <span style="color:#66d9ef">in</span> $VirtualMachines)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>       Write-Output <span style="color:#e6db74">&#34;Stop VM </span>$($VirtualMachine.Name)<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       Stop-AzVM -Name $VirtualMachine.Name -ResourceGroupName $VirtualMachine.ResourceGroupName -Force
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Cosas importantes en este script:</p>
+<p><strong>Línea 12:</strong> Usamos la managed identity del Automation Account para hacer login.</p>
+<p><strong>Línea 17:</strong> Obtenemos todas las máquinas  virtuales de la suscripción.</p>
+<p><strong>Líneas 19 a la 28:</strong> En caso de pasar al script el parámetro <strong>VmAction</strong> el valor <strong>Startup</strong>, recorremos todas las máquinas virtuales de la suscripción y las encendemos.</p>
+<p><strong>Líneas 30 a la 38:</strong> En caso de pasar al script el parámetro <strong>VmAction</strong> el valor <strong>Shutdown</strong>, recorremos todas las máquinas virtuales de la suscripción y las apagamos.</p>
+</li>
+</ol>
+<br>
+<br>
+<ol start="17">
+<li>vale ya tenemos el script. Ahora pulsamos en <strong>Publish</strong> y confirmamos.</li>
+</ol>
+<img src="/images/post22/image16.png" style="zoom:67%;" />
+<img src="/images/post22/image17.png" style="zoom:67%;" />
+<br>
+<br>
+<ol start="18">
+<li>Vale ya con el script creado y publicado, vamos a programar cuando queremos que se ejecute el script. Para ello, pulsamos en la sección de <strong>Schedules</strong>:</li>
+</ol>
+<img src="/images/post22/image18.png" style="zoom:67%;" />
+<br>
+<br>
+<ol start="19">
+<li>
+<p>Luego pulsamos en <strong>+ Add a schedule.</strong></p>
+<img src="/images/post22/image19.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="20">
+<li>
+<p>Primero vamos a programar cuando queremos iniciar las máquinas virtuales. Ponemos un nombre y decimos que se debe ejecutar a las 8 de la mañana hora de España y de manera recurrente.</p>
+<img src="/images/post22/image22.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="21">
+<li>
+<p>Ponemos la opción <strong>Recur every a 1 Week</strong>  y seleccionamos todos los días menos los Sábados y Domingos. Decimos que no expire esta programación y pulsamos en <strong>Create</strong>.</p>
+<img src="/images/post22/image23.png" style="zoom:67%;" />
+<br>
+<br>
+</li>
+<li>
+<p>Ahora pulsamos en <strong>Parameters and run settings</strong>.</p>
+<img src="/images/post22/image24.png" style="zoom:67%;" />
+<br>
+<br>
+</li>
+<li>
+<p>En el valor del parámetro <strong>VMACTION</strong> ponemos como valor <strong>Startup</strong>, ya que  esta programación es para poder encender las máquinas virtuales. Pulsamos en <strong>OK</strong>.</p>
+<img src="/images/post22/image25.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="24">
+<li>
+<p>Pulsamos en <strong>OK</strong> para finalizar esta programación.</p>
+<img src="/images/post22/image26.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="25">
+<li>En el listado <strong>Schedules</strong>, deberíamos ver la programación que hemos creado avisándonos de la próxima ejecución.</li>
+</ol>
+<p><img src="/images/post22/image27.png" alt=""></p>
+<br>
+<br>
+<ol start="26">
+<li>
+<p>Ahora deberíamos crear la programación para cuando queremos que las máquinas virtuales se apaguen.  Para no repetirme <strong>deberíamos realizar de nuevo los pasos 18 y 19.</strong> Una vez realizados estos pasos de nuevos, ponemos el nombre para la programación y cuando queremos que se ejecute la programación en este caso las 8 de la tarde , hora de España. Ahora ponemos que se ejecute de forma recurrente.</p>
+<img src="/images/post22/image28.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="27">
+<li>Ponemos la opción <strong>Recur every a 1 Week</strong>  y seleccionamos todos los días menos los Sábados y Domingos. Decimos que no expire esta programación y pulsamos en <strong>Create</strong>.</li>
+</ol>
+<img src="/images/post22/image29.png" style="zoom:67%;" />
+<br>
+<br>
+<ol start="28">
+<li>
+<p>Ahora debemos seguir el paso 22 explicado anteriormente. Después deberíamos poner como valor del parámetro VMACTION, <strong>Shutdown</strong>.</p>
+<img src="/images/post22/image30.png" style="zoom:67%;" />
+<br>
+<br>
+</li>
+<li>
+<p>Pulsamos en <strong>OK</strong> para finalizar esta programación.</p>
+<img src="/images/post22/image26.png" style="zoom:67%;" />
+<br>
+<br>
+</li>
+<li>
+<p>Y con esto ya tenemos nuestras dos programaciones finalizadas.</p>
+</li>
+</ol>
+<img src="/images/post22/image31.png" style="zoom:67%;" />
+<br>
+<br>
+<p>La verdad es que el artículo me ha quedado bastante largo (jajaja), pero la verdad me gusta de primeras explicar como hacer las cosas de manera gráfica. Porque yo creo que así queda más claro los conceptos.</p>
+<p>Una vez ya entendido los conceptos, pues ya si me pondría en modo automatización y hacerlo usando Powershell, az cli etc&hellip;.</p>
+<p>Espero que este artículo os haya gustado.</p>
+<p>¡Hasta la próxima!</p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Alejandro García avatar" src="/images/foto.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Alejandro García</span>
+	</div>
+	<div class="authorbox__description">
+		Apasionado por la tecnología.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/nuevaregionazurespaincentral/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Probamos España Central, la nueva región de Azure</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://www.recetasdevops.dev/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/apagarvmsconautomationaccount/">Apaga y enciende tus máquinas virtuales con Azure Automation y ahorra dinero</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nuevaregionazurespaincentral/">Probamos España Central, la nueva región de Azure</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/lanzarcomandosazurevms/">Lanzar comandos y scripts a tus Máquinas virtuales de Azure usando Run Command</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/certificados02instalarcertificadoenappservice/">Hablemos de Certificados TLS/SSL - Instalar certificados en App Services usando Azure Key Vault</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/certificados01crearnuevocertificado/">Hablemos de Certificados TLS/SSL - Crear un nuevo certificado a través de un CSR</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 Recetas Devops.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>
