@@ -56,6 +56,24 @@
 	
 	<header class="list__header">
 		<h2 class="list__title post__title">
+			<a href="/post/primerospasosconpulumi/" rel="bookmark">
+			Primeros pasos con Pulumi en Azure usando C#
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-03-22T00:00:00&#43;02:00">March 22, 2024</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		En el artículo vamos a hablar de Pulumi. Vamos a ver como podemos usarlo para desplegar nuestra infraestructura de Azure usando C#.
+Tal y como dicen en la página oficial:
+&ldquo;Pulumi es una plataforma de infraestructura como código que le permite utilizar lenguajes y herramientas de programación familiares para construir, implementar y administrar infraestructura en la nube.&rdquo;
+Creo en mi opinión, que el mayor punto fuerte es que podemos usar un lenguaje que ya conocemos y usamos para programar, sin que tener que aprender otro lenguaje diferente.
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
 			<a href="/post/changeanalysisrescate/" rel="bookmark">
 			Mi infra en Azure no funciona, algo cambió pero no se que fue. Change Analysis al rescate
 			</a>
@@ -210,22 +228,6 @@ Creo que no hace falta que cuente en detalle, que suele pasar con los mails, y s
 Este &ldquo;fenómeno&rdquo; ocurre por dos posibles causas tal y como dice la documentación de Microsoft (https://learn.microsoft.com/en-us/azure/role-based-access-control/troubleshooting):
 Recientemente se ha invitado a un usuario, y al al crear una asignación de roles esta entidad de seguridad todavía está en el proceso de replicación entre regiones.
 	</div>
-</article><article class="list__item post">
-	
-	<header class="list__header">
-		<h2 class="list__title post__title">
-			<a href="/post/limitaraccesostorageblob/" rel="bookmark">
-			Limitar el borrado de blobs en Azure Storage con permisos muy específicos usando RBAC y conditions
-			</a>
-		</h2>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-01-04T00:00:00&#43;02:00">January 04, 2024</time></div></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Hace no mucho tiempo, necesitábamos crear un proceso que borrara ciertos blobs de unas rutas determinadas de unos storage accounts. Para ello creamos un rbac custom role que sólo permitiera listar los blobs y borrarlos.
-Pero como a mí, y supongo que a más de uno como yo, cuando oye la palabra borrar pues le da un poco de &ldquo;miedito&rdquo; (jajaja). Y claro el permiso de borrar los blobs es para todo el storage account no sólo las carpeta que queremos borrar.
-	</div>
 </article>
 </main>
 
@@ -248,11 +250,11 @@ Pero como a mí, y supongo que a más de uno como yo, cuando oye la palabra borr
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/azureupdatermanagerintroduccion/">Actualiza tus máquinas virtuales en Azure con Azure Updater Manager</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/apagarvmsconautomationaccount/">Apaga y enciende tus máquinas virtuales con Azure Automation y ahorra dinero</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/nuevaregionazurespaincentral/">Probamos España Central, la nueva región de Azure</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/lanzarcomandosazurevms/">Lanzar comandos y scripts a tus Máquinas virtuales de Azure usando Run Command</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/certificados02instalarcertificadoenappservice/">Hablemos de Certificados TLS/SSL - Instalar certificados en App Services usando Azure Key Vault</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/certificados01crearnuevocertificado/">Hablemos de Certificados TLS/SSL - Crear un nuevo certificado a través de un CSR</a></li>
 		</ul>
 	</div>
 </div>

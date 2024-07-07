@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Actualiza tus máquinas virtuales en Azure con Azure Updater Manager - Recetas Devops</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:url" content="https://www.recetasdevops.dev/post/azureupdatermanagerintroduccion/">
+  <meta property="og:site_name" content="Recetas Devops">
+  <meta property="og:title" content="Actualiza tus máquinas virtuales en Azure con Azure Updater Manager">
+  <meta property="og:description" content="En el artículo de hoy os voy a hacer una introducción sobre el servicio Azure Update Manager.
+Este servicio nos va a ayudar en esa tarea tan poco gratificante pero tan necesaria, como es la de actualizar nuestras máquinas virtuales.
+Antes de hablar de este servicio, os voy a hablar sobre otro servicio que actualmente existe también para realizar actualizaciones pero que NO debéis usar ahora mismo bajo ningún concepto.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2024-07-06T00:00:00+02:00">
+    <meta property="article:modified_time" content="2024-07-06T00:00:00+02:00">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+  
+
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="Recetas Devops" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.png">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">Recetas Devops</div>
+					<div class="logo__tagline">Tus recetas para DevOps de confianza</div>
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Actualiza tus máquinas virtuales en Azure con Azure Updater Manager</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-07-06T00:00:00&#43;02:00">July 06, 2024</time></div></div>
+		</header>
+		<div class="content post__content clearfix">
+			<p><img src="/images/post23/meme.jpg" alt=""></p>
+<p>En el artículo de hoy os voy a hacer una introducción sobre el servicio <strong>Azure Update Manager</strong>.</p>
+<p>Este servicio nos va a ayudar en esa tarea tan poco gratificante pero tan necesaria, como es la de actualizar nuestras máquinas virtuales.</p>
+<p>Antes de hablar de este servicio, os voy a hablar sobre otro servicio que actualmente existe también para realizar actualizaciones pero que <strong>NO debéis usar ahora mismo bajo ningún concepto</strong>.</p>
+<p>No debéis usarlo porque a partir del 31 de Agosto de 2024 va a dejar de existir, es decir en menos de 2 meses. Este servicio se llama <strong>Update Management</strong> y en realidad no es un servicio independiente, sino que  esta integrado dentro de <strong>Azure Automation Account</strong> y tiene dependencia con <strong>Log Analytics Agent</strong>.</p>
+<p>En realidad, el que no se pueda usar este servicio a partir del 31 de agosto, viene porque en esa fecha <strong>Log Analytics Agent</strong> deja de existir (teniendo que migrar a Azure Monitor Agent). Por tanto, todo servicio/característica asociado con  <strong>Log Analytics Agent</strong> muere también.</p>
+<p>Para más información sobre como <strong>migrar Log Analytics Agent al nuevo Azure Monitor Agent</strong>, podéis ver la guía de migración oficial:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-migration">https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-migration</a></p>
+<p><img src="/images/post23/image01.png" alt=""></p>
+<br>
+<p>Ahora ya sí nos metemos en faena y vamos a hablar de <strong>Azure Update Manager</strong>.  La definición de este servicio ofrecido por Microsoft (<a href="https://learn.microsoft.com/es-es/azure/update-manager/overview?tabs=azure-vms">https://learn.microsoft.com/es-es/azure/update-manager/overview?tabs=azure-vms</a>) es muy clara:</p>
+<blockquote>
+<p>&ldquo;Update Manager es un servicio unificado que ayuda a administrar y controlar las actualizaciones de todas las máquinas. Puede supervisar el cumplimiento de las actualizaciones de Windows y Linux en las implementaciones de Azure, en el entorno local y en otras plataformas en la nube desde un único panel. También puede usar Update Manager para realizar actualizaciones en tiempo real o programarlas dentro de una ventana de mantenimiento definida.&rdquo;</p>
+</blockquote>
+<p>Ahora veamos un ejemplo sencillo para ver como empezamos a usar <strong>Azure Update Manager</strong>.</p>
+<p>En el ejemplo, tengo 2 máquinas virtuales de Azure:</p>
+<ul>
+<li>1 Máquina de Windows 2022</li>
+<li>1 Máquina de Red Hat 9.3</li>
+</ul>
+<p>Lo que vamos  a querer hacer con <strong>Azure Update Manager</strong> es:</p>
+<ol>
+<li>
+<p>Cambiar la configuración de las actualizaciones de la máquina para que se instalen en unas horas específicas definidas por nosotros,  y no automáticamente.</p>
+</li>
+<li>
+<p>Revisar si tengo actualizaciones pendientes en las dos máquinas.</p>
+</li>
+<li>
+<p>Si tengo actualizaciones pendientes, directamente instalarlas desde el portal de Azure.</p>
+</li>
+<li>
+<p>Configurar que periódicamente se revisen si tengo actualizaciones pendientes.</p>
+</li>
+<li>
+<p>Programar cuando se pueden instalar las actualizaciones sin necesidad de tener que instalarlas automáticamente.</p>
+</li>
+</ol>
+<p>Una vez claro que queremos hacer, vamos a ver los pasos a seguir para conseguirlo:</p>
+<ol>
+<li>
+<p>Lo primero que hacemos es ir al portal de Azure usando la url <a href="https://portal.azure.com/">https://portal.azure.com/</a></p>
+</li>
+<li>
+<p>Ahora buscamos <strong>Azure Update Manager</strong> y pulsamos:</p>
+<img src="/images/post23/image02.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="3">
+<li>
+<p>Una vez dentro, en el blade de la izquierda pulsamos en <strong>Machines</strong>:</p>
+<img src="/images/post23/image03.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<ol start="4">
+<li>
+<p>Ahora podéis ver las dos máquinas. Comentaros que no hay que hacer nada para que aparezcan las máquinas en <strong>Azure Update Manager</strong>:</p>
+<p><img src="/images/post23/image04.png" alt=""></p>
+</li>
+</ol>
+<br>
+<ol start="5">
+<li>
+<p>Ahora seleccionamos las dos máquinas:</p>
+<p><img src="/images/post23/image05.png" alt=""></p>
+</li>
+</ol>
+<br>
+<ol start="6">
+<li>
+<p>Ahora pulsamos en <strong>Settings -&gt; Update Settings</strong>:</p>
+<img src="/images/post23/image06.png" style="zoom:80%;" />
+<br>
+<br>
+</li>
+<li>
+<p>Nos sale un mensaje informativo de la acción a realizar. Pulsamos en *<em>Update settings:</em></p>
+   <img src="/images/post23/image07.png" style="zoom:67%;" />
+   <br>
+   <br>
+</li>
+<li>
+<p>En <strong>Patch orchestation</strong> de la máquina de Windows cambio la opción de <strong>Windows automatic updates</strong> a <strong>Customer Managed Schedules</strong>. Yo quiero controlar cuando se instalen las actualizaciones y que no que se instalen, y sobre todo se reinicie la máquina sin ningún tipo de control.</p>
+<p>​</p>
+<p><img src="/images/post23/image08.png" alt=""></p>
+   <br>
+</li>
+<li>
+<p>Pulsamos en <strong>Save</strong>.</p>
+</li>
+</ol>
+<p>​	<img src="/images/post23/image09.png" style="zoom:67%;" /></p>
+<br>
+<ol start="10">
+<li>
+<p>No sale un mensaje indicándonos que el cambio se realizó correctamente:</p>
+ <img src="/images/post23/image11.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="11">
+<li>
+<p>Ahora vamos a buscar si hay actualizaciones en las 2 máquinas. Para ello seleccionamos las dos máquinas y pulsamos en <strong>Check for updates</strong>:</p>
+<img src="/images/post23/image12.png" style="zoom:80%;" />
+<p>
+</p>
+<br>
+<br>
+</li>
+<li>
+<p>Nos sale un mensaje. Se nos advierte, que ninguna operación de actualización se realizará en las máquinas, mientras la operación de comprobar actualizaciones que hemos mandado realizar este ejecutándose. Pulsamos en <strong>Assess now</strong>.</p>
+<img src="/images/post23/image13.png" style="zoom: 67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="13">
+<li>
+<p>Un mensaje nos aparecerá informándonos de la operación:</p>
+ <img src="/images/post23/image14.png" style="zoom:80%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="14">
+<li>
+<p>Si sois desesperados como es mi caso (jajaja), pulsando en el botón <strong>Refresh</strong> empezaran a aparecer cosas:</p>
+<img src="/images/post23/image15.png" style="zoom:80%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="15">
+<li>Ahora, nos saldrá un mensaje diciendo que se finalizó la comprobación de las actualizaciones de las 2 máquinas.</li>
+</ol>
+<p>​		<img src="/images/post23/image16.png" style="zoom:80%;" /></p>
+<br>
+<br>
+<ol start="16">
+<li>
+<p>Volvemos a <strong>Machines</strong>. Vemos en la columna <strong>Update status</strong> las actualizaciones que tenemos pendientes:</p>
+<img src="/images/post23/image17.png" style="zoom:67%;" />
+<br>
+<br>
+</li>
+<li>
+<p>Ahora vamos a  pulsar sobre <strong>80 pending updates updates</strong> de la máquina de Linux:</p>
+<p><img src="/images/post23/image18.png" alt=""></p>
+<br>
+<br>
+</li>
+<li>
+<p>Nos va a salir un listado de actualizaciones pendientes:</p>
+<img src="/images/post23/image19.png" style="zoom: 67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="19">
+<li>
+<p>Volvemos a <strong>Machines</strong> y pulsamos <strong>3 pending updates</strong> de la máquina de Windows.</p>
+<img src="/images/post23/image20.png" style="zoom:80%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="20">
+<li>
+<p>Como en el caso de la máquina de Linux, podemos ver las actualizaciones pendientes de la máquina de Windows:</p>
+<img src="/images/post23/image21.png" style="zoom: 67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="21">
+<li>
+<p>Volvemos de nuevo al apartado <strong>Machines</strong> de <strong>Azure Update Manager</strong>. Vemos si están seleccionadas las máquinas (sino las tenemos ya seleccionadas). Ahora vamos a actualizar las dos máquinas pulsando en <strong>One- time update,</strong> de perdidos al río jaja.</p>
+<img src="/images/post23/image22.png" style="zoom:67%;" />
+<br>
+<br>
+</li>
+<li>
+<p>Nos sale un mensaje informativo. Pulsamos en <strong>Install Now.</strong></p>
+<img src="/images/post23/image23.png" style="zoom:67%;" />
+<br>
+<br>
+</li>
+<li>
+<p>De nuevo, debemos de seleccionar las dos máquinas. Pulsamos en <strong>Next</strong>:</p>
+<img src="/images/post23/image24.png" style="zoom:67%;" />
+<br>
+<br>
+</li>
+<li>
+<p>En la parte de <strong>Updates</strong>, podemos seleccionar que actualizaciones instalar. Podemos seleccionar updates por KB ID como son las actualizaciones de sistemas Windows o por fecha de publicación etc&hellip;  Pero para esta demo, yo he venido a jugar y voy a instalar todos las actualizaciones jajaja.</p>
+<p>Pulsamos en <strong>Next</strong>:</p>
+<img src="/images/post23/image25.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="25">
+<li>
+<p>En la parte de <strong>Properties</strong>,  elegimos la opción de si permitimos reiniciar, no reiniciar o solo reiniciar cuando sea necesario.</p>
+<p><img src="/images/post23/image26.png" alt=""></p>
+</li>
+</ol>
+<br>
+<br>
+<ol start="26">
+<li>
+<p>Después podemos configurar la ventana de tiempo para poder instalar estas actualizaciones. Por defecto esta marcado en <strong>235 minutos, que es el máximo permitido</strong>, siendo <strong>el mínimo en 60 minutos.</strong></p>
+<p><img src="/images/post23/image27.png" style="zoom:67%;" /></p>
+<br>
+<br>
+</li>
+<li>
+<p>Pulsamos en <strong>Next</strong>:</p>
+<img src="/images/post23/image28.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="28">
+<li>
+<p>Por último, vemos un resumen de lo que se va a instalar. Pulsamos en <strong>Install</strong>.</p>
+<img src="/images/post23/image29.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="29">
+<li>
+<p>Un mensaje nos indica que la operación de instalación esta en progreso. Se nos indica  que podemos ver el estado de la instalación desde el apartado <strong>History</strong> de <strong>Azure Update Manager</strong>.</p>
+<p><img src="/images/post23/image30.png" alt=""></p>
+</li>
+<li>
+<p>Si vamos efectivamente al apartado <strong>History</strong>, vemos como <strong>Azure Update Manager</strong> esta haciendo su magia:</p>
+<img src="/images/post23/image31.png" style="zoom:67%;" />
+<p>
+</p>
+<p><strong>Nota:</strong> Filtrar por Update operation con el valor Install Updates para ver las operaciones de instalación de actualizaciones.</p>
+<br>
+<br>
+</li>
+<li>
+<p>Después de un rato (dependiendo de cuanto haya que instalar), veremos que se instalaron correctamente las actualizaciones:</p>
+<img src="/images/post23/image32.png" style="zoom:67%;" />
+<br>
+<br>
+</li>
+<li>
+<p>Si por ejemplo, entramos a la máquina de Windows vemos que efectivamente se han instalado las 3 actualizaciones:</p>
+<img src="/images/post23/image33.png" style="zoom:67%;" />
+<br>
+<br>
+</li>
+<li>
+<p>Vale,  ahora vamos a ver la forma de comprobar las actualizaciones pendientes de las máquinas, pero sin necesidad de tener que hacerlo de forma manual. Para ello, volvemos a pulsar en <strong>Machines</strong> dentro de <strong>Azure Update Manager</strong>.</p>
+<img src="/images/post23/image34.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="34">
+<li>
+<p>Seleccionamos las máquinas. Luego pulsamos en <strong>Settings &ndash;&gt; Update settings</strong></p>
+<img src="/images/post23/image35.png" style="zoom:67%;" />
+<br>
+<br>
+</li>
+<li>
+<p>De nuevo nos sale un mensaje advirtiendo que vamos a configurar ciertas configuraciones. Pulsamos en <strong>Update settings</strong>.</p>
+<img src="/images/post23/image36.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="36">
+<li>
+<p>En la columna <strong>Periodic assessment</strong>, ponemos el valor <strong>Enable</strong>. De esta manera cada 24 horas se comprobara si hay actualizaciones pendientes. Pulsamos en <strong>Save</strong> para guardar los cambios.</p>
+<img src="/images/post23/image37.png" style="zoom:67%;" />
+</li>
+</ol>
+<p><strong>NOTA IMPORTANTE:</strong> Sobre lo configurar que se compruebe las actualizaciones 		pendientes de cada máquina. Esta forma que explico aquí para configurarlas esta bien 	con pocas máquinas. El tema cambia cuando tenemos muchas máquinas o  estamos 	continuamente creando nuevas máquinas. Una forma mejor es hacerlo con muchas máquinas es hacerlo a través de Azure Policy , de esta manera lo haríamos de forma automatizada  tal y como se explica en el siguiente enlace:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/update-manager/tutorial-assessment-deployment-using-policy">https://learn.microsoft.com/en-us/azure/update-manager/tutorial-assessment-deployment-using-policy</a></p>
+<ol start="37">
+<li>
+<p>Y ya por último, vamos a configurar una ventana de actualización para instalar las actualizaciones.  Para ello vamos a <strong>Machines</strong>:</p>
+<img src="/images/post23/image39.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="38">
+<li>
+<p>Una vez dentro seleccionamos las 2 máquinas y pulsamos en <strong>Schedule updates</strong>.</p>
+<img src="/images/post23/image40.png" style="zoom:67%;" />
+</li>
+</ol>
+<br>
+<br>
+<ol start="39">
+<li>
+<p>Una vez dentro configuramos el nombre de la configuración y  en que resource group se va a crear. Cosas importantes en esta ventana son el <strong>Maintenance scope</strong> y el <strong>Reboot setting</strong>. Dejamos la configuración por defecto:</p>
+<img src="/images/post23/image41.png" style="zoom:67%;" />
+<br>
+<br>
+</li>
+<li>
+<p>Ahora vamos a configurar cuando queremos que se instalen las actualizaciones. Para ello pulsamos en <strong>Add Schedule</strong>.</p>
+<img src="/images/post23/image42.png" style="zoom:80%;" />
+</li>
+<li>
+<p>Vamos a realizar la siguiente configuración:</p>
+<ul>
+<li>
+<p>Desde el 7 de Julio de 2024 va a estar operativa esta configuración.</p>
+</li>
+<li>
+<p>La ventana de tiempo disponible para instalar actualizaciones va a ser de 2 horas.</p>
+</li>
+<li>
+<p>Esta se va a ejecutar el primer sábado de cada mes, es decir una vez al mes.</p>
+</li>
+<li>
+<p>Esta configuración no tiene fecha de fin.</p>
+<p>Pulsamos en <strong>Save</strong> :</p>
+</li>
+</ul>
+<img src="/images/post23/image43.png" style="zoom:80%;" />
+<br>
+<br>
+<ol start="42">
+<li>
+<p>Sobre el resto de configuraciones, no me voy a meter porque sino estáis hasta mañana leyendo el artículo jajaja. Pulsamos en <strong>Review + create</strong>:</p>
+<p><img src="/images/post23/image44.png" style="zoom:67%;" /></p>
+</li>
+</ol>
+</li>
+<li>
+<p>Para finalizar la configuración, pulsamos en <strong>Create</strong>:</p>
+<img src="/images/post23/image45.png" style="zoom:67%;" />
+<br>
+<br>
+<p><strong>NOTA IMPORTANTE:</strong> Al igual que ocurre con la configuración de comprobar si hay actualizaciones pendientes, cuando tenéis muchas máquinas o estáis constantemente creando nuevas máquinas, podéis hacer uso de <strong>Azure Policy</strong>- De esta manera configuración  se haría de manera automatizada. Para ver como hacer esta misma configuración con <strong>Azure Policy,</strong> ir al siguiente enlace:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/update-manager/scheduled-patching?tabs=schedule-updates-single-machine%2Cschedule-updates-scale-overview%2Cwindows-maintenance#onboard-to-schedule-by-using-azure-policy">https://learn.microsoft.com/en-us/azure/update-manager/scheduled-patching?tabs=schedule-updates-single-machine%2Cschedule-updates-scale-overview%2Cwindows-maintenance#onboard-to-schedule-by-using-azure-policy</a></p>
+<p>También, sino queréis usar Azure Policy por lo que sea  y no queréis usar el Portal de Azure y hacer las cosas bien, por ejemplo usando Terraform, tenéis disponible el siguiente resource para poder hacerlo en Terraform:</p>
+<p><a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/maintenance_configuration.html">https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/maintenance_configuration.html</a></p>
+</li>
+</ol>
+<p>Respecto al coste de este servicio, comentaros dos cosas:</p>
+<ul>
+<li>
+<p>Para máquinas en Azure es <strong>TOTALMENTE GRATUITO</strong>.</p>
+</li>
+<li>
+<p>Para máquinas en On-Premise,  u otros proveedores de Cloud necesitaríamos hacer uso de <strong>Azure Arc</strong> con un coste de 5€ por máquina. Pero por ejemplo, si tenéis una máquina que no es de Azure con Microsoft Defender for Servers Plan 2, este servicio es totalmente gratuito.</p>
+</li>
+</ul>
+<p>Para más información y ver todas las combinaciones posibles sobre el coste del servicio, ir al siguiente enlace:</p>
+<p><a href="https://azure.microsoft.com/en-us/pricing/details/azure-update-management-center/">https://azure.microsoft.com/en-us/pricing/details/azure-update-management-center/</a></p>
+<p>Soy consciente de que acabo de hacer el post más largo realizado en este blog jajaja.</p>
+<p>Como podéis ver es un tema muy amplio este de las actualizaciones de las máquinas virtuales. Realmente creo que daría fácilmente para un libro. Sé que me he dejado muchas cosas del servicio por explicar, pero espero que esta introducción al servicio os anime a investigarlo y a usarlo.</p>
+<p>También recordad que si alguno de vosotros, estáis usando el servicio de <strong>Update Management</strong> , esté va a dejar de ser válido el 31 de Agosto de 2024, es decir en menos de dos meses.</p>
+<p>Saludos y espero no haberos aburrido.</p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Alejandro García avatar" src="/images/foto.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Alejandro García</span>
+	</div>
+	<div class="authorbox__description">
+		Apasionado por la tecnología.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/apagarvmsconautomationaccount/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Apaga y enciende tus máquinas virtuales con Azure Automation y ahorra dinero</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://www.recetasdevops.dev/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/azureupdatermanagerintroduccion/">Actualiza tus máquinas virtuales en Azure con Azure Updater Manager</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/apagarvmsconautomationaccount/">Apaga y enciende tus máquinas virtuales con Azure Automation y ahorra dinero</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nuevaregionazurespaincentral/">Probamos España Central, la nueva región de Azure</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/lanzarcomandosazurevms/">Lanzar comandos y scripts a tus Máquinas virtuales de Azure usando Run Command</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/certificados02instalarcertificadoenappservice/">Hablemos de Certificados TLS/SSL - Instalar certificados en App Services usando Azure Key Vault</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 Recetas Devops.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

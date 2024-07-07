@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Recetas Devops</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Jun 2024 00:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jul 2024 00:00:00 +0200</lastBuildDate>
     <atom:link href="https://www.recetasdevops.dev/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Actualiza tus máquinas virtuales en Azure con Azure Updater Manager</title>
+      <link>https://www.recetasdevops.dev/post/azureupdatermanagerintroduccion/</link>
+      <pubDate>Sat, 06 Jul 2024 00:00:00 +0200</pubDate>
+      <guid>https://www.recetasdevops.dev/post/azureupdatermanagerintroduccion/</guid>
+      <description>En el artículo de hoy os voy a hacer una introducción sobre el servicio Azure Update Manager.&#xA;Este servicio nos va a ayudar en esa tarea tan poco gratificante pero tan necesaria, como es la de actualizar nuestras máquinas virtuales.&#xA;Antes de hablar de este servicio, os voy a hablar sobre otro servicio que actualmente existe también para realizar actualizaciones pero que NO debéis usar ahora mismo bajo ningún concepto.</description>
+    </item>
     <item>
       <title>Apaga y enciende tus máquinas virtuales con Azure Automation y ahorra dinero</title>
       <link>https://www.recetasdevops.dev/post/apagarvmsconautomationaccount/</link>
